@@ -68,8 +68,7 @@ struct SettingsView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 6)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(NSColor.controlBackgroundColor))
-                    .cornerRadius(6)
+                    .glassCard(cornerRadius: 6)
             }
             .padding(.horizontal)
 
@@ -92,8 +91,7 @@ struct SettingsView: View {
             // Update display path after view appears, ensuring sandbox is fully initialized
             updateDisplayPath()
         }
-        .onChange(of: downloadPath) { _ in
-            // Update display path when download path changes
+        .onChange(of: downloadPath) {
             updateDisplayPath()
         }
         .fileImporter(

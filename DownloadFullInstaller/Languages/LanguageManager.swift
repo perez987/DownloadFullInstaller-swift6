@@ -1,0 +1,172 @@
+//
+//  LanguageManager.swift
+//  Language selection dialog implementation
+//
+//  Created by Emilio P Egido on 2025/07/09
+//
+
+import Foundation
+import SwiftUI
+
+struct SupportedLanguage {
+    let code: String
+    let localizedName: String
+    let nativeName: String
+}
+
+class LanguageManager: ObservableObject {
+    @Published var currentLanguage: String = "en"
+    @Published var availableLanguages: [SupportedLanguage] = []
+
+    private let userDefaults = UserDefaults.standard
+    private let languageKey = "SelectedLanguage"
+    private var hasLoadedLanguages = false
+
+    init() {
+        // Diagnostic logging for sandbox initialization
+//        print("=== LanguageManager init() started ===")
+        // Don't access file system here - will be loaded lazily when first accessed
+        // File system access during init happens too early, before sandbox is fully initialized
+//        print("LanguageManager initialized without loading languages")
+//        print("=== LanguageManager init() completed ===")
+    }
+
+    /// Load languages - call this from UI when ready (e.g., in .onAppear)
+    func loadLanguagesIfNeeded() {
+        ensureLanguagesLoaded()
+    }
+
+    /// Load languages lazily on first access
+    private func ensureLanguagesLoaded() {
+        guard !hasLoadedLanguages else { return }
+        hasLoadedLanguages = true
+        loadAvailableLanguages()
+        loadCurrentLanguage()
+    }
+
+    private func sortLanguages(_ lhs: SupportedLanguage, _ rhs: SupportedLanguage) -> Bool {
+        // English should always be first
+        if lhs.code == "en" { return true }
+        if rhs.code == "en" { return false }
+
+        // Spanish should be second (after English)
+        if lhs.code == "es" && rhs.code != "en" { return true }
+        if rhs.code == "es" && lhs.code != "en" { return false }
+
+        // All other languages sorted alphabetically by code
+        return lhs.code < rhs.code
+    }
+
+    private func loadAvailableLanguages() {
+        // Check main bundle for .lproj directories in Languages subdirectory
+        guard let languagesPath = Bundle.main.path(forResource: "Languages", ofType: nil) else {
+            // Fallback: check main bundle root for .lproj directories
+            let mainBundle = Bundle.main
+            let languagePaths = mainBundle.paths(forResourcesOfType: "lproj", inDirectory: nil)
+
+            availableLanguages = languagePaths.compactMap { path in
+                let languageCode = URL(fileURLWithPath: path).deletingPathExtension().lastPathComponent
+                return createSupportedLanguage(from: languageCode)
+            }.sorted(by: sortLanguages)
+            return
+        }
+
+        // Check Languages directory for .lproj subdirectories
+        let fileManager = FileManager.default
+        guard let contents = try? fileManager.contentsOfDirectory(atPath: languagesPath) else {
+            // Fallback to default language
+            availableLanguages = [createSupportedLanguage(from: "en")]
+            return
+        }
+
+        availableLanguages = contents.compactMap { fileName in
+            if fileName.hasSuffix(".lproj") {
+                let languageCode = String(fileName.dropLast(6)) // Remove ".lproj"
+                return createSupportedLanguage(from: languageCode)
+            }
+            return nil
+        }.sorted(by: sortLanguages)
+    }
+
+    private func createSupportedLanguage(from code: String) -> SupportedLanguage {
+        let locale = Locale(identifier: code)
+        let nativeName = locale.localizedString(forIdentifier: code) ?? code
+        let localizedName = Locale.current.localizedString(forIdentifier: code) ?? code
+
+        return SupportedLanguage(
+            code: code,
+            localizedName: localizedName.capitalized,
+            nativeName: nativeName.capitalized
+        )
+    }
+
+    private func loadCurrentLanguage() {
+        if let savedLanguage = userDefaults.string(forKey: languageKey) {
+            currentLanguage = savedLanguage
+        } else {
+            // Use system preferred language if available, otherwise default to English
+            let preferredLanguages = Locale.preferredLanguages
+            for preferred in preferredLanguages {
+                let code = String(preferred.prefix(2))
+                if availableLanguages.contains(where: { $0.code == code }) {
+                    currentLanguage = code
+                    break
+                }
+            }
+        }
+    }
+
+    func setLanguage(_ languageCode: String) {
+        ensureLanguagesLoaded()
+        currentLanguage = languageCode
+        userDefaults.set(languageCode, forKey: languageKey)
+
+        // Set the app's language preference
+        UserDefaults.standard.set([languageCode], forKey: "AppleLanguages")
+        UserDefaults.standard.synchronize()
+
+        // Post notification for UI refresh
+        NotificationCenter.default.post(name: .languageChanged, object: nil)
+
+        switch languageCode {
+        case "en-US", "en":
+            print("Language changed to: English (\(languageCode))")
+        case "es-ES", "es":
+            print("Language changed to: Spanish (\(languageCode))")
+        case "fr-CA":
+            print("Language changed to: Canadian French (\(languageCode))")
+        case "fr-FR", "fr":
+            print("Language changed to: French (\(languageCode))")
+        case "it-IT", "it":
+            print("Language changed to: Italian (\(languageCode))")
+        case "ko-KR", "ko":
+            print("Language changed to: South Korean (\(languageCode))")
+        case "uk-UA", "uk":
+            print("Language changed to: Ukrainian (\(languageCode))")
+        case "zh-Hans", "zh":
+            print("Language changed to: Simplified Chinese (\(languageCode))")
+        case "pt-BR", "pt":
+            print("Language changed to: Brazilian Portuguese (\(languageCode))")
+        case "ru-RU", "ru":
+            print("Language changed to: Russian (\(languageCode))")
+        case "ar":
+            print("Language changed to: Arabic (\(languageCode))")
+        case "sl-SI", "sl":
+            print("Language changed to: Slovenian (\(languageCode))")
+        default:
+            print("Language changed to default: English (\(languageCode))")
+        }
+    }
+
+    func getCurrentLanguageDisplayName() -> String {
+        ensureLanguagesLoaded()
+        guard let language = availableLanguages.first(where: { $0.code == currentLanguage }) else {
+            return "English"
+        }
+        return language.nativeName
+    }
+}
+
+extension Notification.Name {
+    static let languageChanged = Notification.Name("LanguageChanged")
+}

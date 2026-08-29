@@ -179,7 +179,7 @@ struct InstallerView: View {
                     // Check if downloaded after view appears, ensuring sandbox is fully initialized
                     checkIfDownloaded()
                 }
-                .onChange(of: multiDownloadManager.completedDownloads) { _ in
+                .onChange(of: multiDownloadManager.completedDownloads) {
                     // Update download status when downloads complete
                     checkIfDownloaded()
                 }
@@ -210,7 +210,7 @@ struct InstallerView: View {
         NSWorkspace.shared.open(pkgURL, configuration: NSWorkspace.OpenConfiguration()) { _, error in
             Prefs.stopAccessingDownloadURL(accessStarted)
 
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 self.isCreatingInstaller = false
 
                 if let error {

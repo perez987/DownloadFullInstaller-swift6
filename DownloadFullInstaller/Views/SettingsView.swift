@@ -53,7 +53,7 @@ struct SettingsView: View {
                         .font(.title3)
                         .fontWeight(.semibold)
                 }
-                .padding(.top, 24)
+                .padding(.top, 6)
                 .padding(.bottom, 20)
 
                 Divider()
@@ -63,7 +63,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 14) {
                     Label {
                         Text(NSLocalizedString("Download Location", comment: "Download location label"))
-                            .font(.callout)
+                            .font(.body)
                             .fontWeight(.medium)
                             .foregroundStyle(.secondary)
                     } icon: {
@@ -78,7 +78,7 @@ struct SettingsView: View {
                             .foregroundStyle(.blue.opacity(0.8))
 
                         Text(displayPath)
-                            .font(.callout)
+                            .font(.body)
                             .foregroundStyle(.primary)
                             .lineLimit(2)
                             .truncationMode(.middle)
@@ -106,8 +106,9 @@ struct SettingsView: View {
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 18)
+                .padding(.bottom, 20)
 
-                Spacer()
+//                Spacer()
 
                 Divider()
                     .padding(.horizontal, 20)
@@ -124,7 +125,7 @@ struct SettingsView: View {
                 .padding(.vertical, 14)
             }
         }
-        .frame(width: 400, height: 280)
+        .frame(width: 400, height: 340)
         .clipShape(RoundedRectangle(cornerRadius: 14))
         .onAppear {
             // Update display path after view appears, ensuring sandbox is fully initialized

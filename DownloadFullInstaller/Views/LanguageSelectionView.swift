@@ -59,8 +59,8 @@ struct LanguageSelectionView: View {
                         }
                     }
                 }
-                .frame(height: 320)
-                .background(.regularMaterial)
+                .frame(height: 300)
+                .background(.ultraThinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -95,12 +95,12 @@ struct LanguageSelectionView: View {
 
                     HStack(spacing: 10) {
                         Image(systemName: "exclamationmark.triangle.fill")
-                            .font(.system(size: 14))
+                            .font(.system(size: 18))
                             .foregroundStyle(.orange)
 
                         Text(NSLocalizedString("Clear app settings?", comment: ""))
-                            .font(.callout)
-                            .foregroundStyle(.secondary)
+                            .font(.body)
+                            .foregroundStyle(.primary)
 
                         Spacer()
 
@@ -124,7 +124,7 @@ struct LanguageSelectionView: View {
                 .padding(.bottom, 24)
             }
         }
-        .frame(width: 416, height: 560)
+        .frame(width: 370, height: 560)
         .clipShape(RoundedRectangle(cornerRadius: 14))
         .onAppear {
             // Load languages when view appears, ensuring sandbox is fully initialized

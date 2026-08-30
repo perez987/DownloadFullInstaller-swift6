@@ -352,7 +352,7 @@ final class DisplayLinkObserver: @unchecked Sendable {
         }
     }
 
-    private var caDisplayLink: AnyObject?
+    private var caDisplayLink: CADisplayLink?
     private var caDisplayLinkTarget: AnyObject?
     private var cvDisplayLink: CVDisplayLink?
 
@@ -379,8 +379,8 @@ final class DisplayLinkObserver: @unchecked Sendable {
             let target = CADisplayLinkTarget()
             target.observer = self
             caDisplayLinkTarget = target
-            let link = CADisplayLink(target: target, selector: #selector(CADisplayLinkTarget.displayLinkFired(_:)))
-            link.add(to: .main, forMode: .common)
+            let link = NSScreen.main?.displayLink(target: target, selector: #selector(CADisplayLinkTarget.displayLinkFired(_:)))
+            link?.add(to: .main, forMode: .common)
             caDisplayLink = link
         } else {
             guard let displayLink = cvDisplayLink else {
@@ -398,9 +398,7 @@ final class DisplayLinkObserver: @unchecked Sendable {
 
     func stop() {
         if #available(macOS 14.0, *) {
-            if let link = caDisplayLink as? CADisplayLink {
-                link.invalidate()
-            }
+            caDisplayLink?.invalidate()
             caDisplayLink = nil
             caDisplayLinkTarget = nil
         } else {
@@ -422,13 +420,19 @@ private func displayLinkOutputCallback(
 ) -> CVReturn {
     let observer = unsafeBitCast(displayLinkContext, to: DisplayLinkObserver.self)
 
-    var refreshPeriod = CVDisplayLinkGetActualOutputVideoRefreshPeriod(displayLink)
-    if refreshPeriod == 0 {
-        print("Warning: CVDisplayLinkGetActualOutputVideoRefreshPeriod failed. Assuming 60 Hz...")
-        refreshPeriod = 1.0 / 60.0
-    }
+    let refreshPeriod = cvDisplayLinkRefreshPeriod(displayLink)
 
     observer.callback(observer, refreshPeriod)
 
     return kCVReturnSuccess
+}
+
+@available(macOS, deprecated: 15.0)
+private func cvDisplayLinkRefreshPeriod(_ displayLink: CVDisplayLink) -> Double {
+    let period = CVDisplayLinkGetActualOutputVideoRefreshPeriod(displayLink)
+    if period == 0 {
+        print("Warning: CVDisplayLinkGetActualOutputVideoRefreshPeriod failed. Assuming 60 Hz...")
+        return 1.0 / 60.0
+    }
+    return period
 }

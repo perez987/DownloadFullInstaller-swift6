@@ -31,6 +31,7 @@ import Foundation
     private var maxRetries = 100
     private var retryTimer: Timer?
     @Published var isRetrying = false
+    private var lastProgressUpdate: Date = .distantPast
 
     // Security-scoped resource tracking
     private var destinationURL: URL?
@@ -154,9 +155,7 @@ import Foundation
             localURL = nil
             downloadURL = nil
             progress = 0.0
-            Task { @MainActor in
-                DockProgress.progress = 0.0
-            }
+            DockProgress.progress = 0.0
             retryCount = 0
             retryTimer?.invalidate()
             retryTimer = nil
@@ -340,9 +339,13 @@ extension DownloadManager: URLSessionDownloadDelegate {
     }
 
     func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didWriteData _: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        // Throttle UI updates to at most 20 per second to avoid flooding the main actor queue
+        let now = Date()
+        guard now.timeIntervalSince(lastProgressUpdate) >= 0.05 else { return }
+        lastProgressUpdate = now
         let prog = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
         let str = "\(byteFormatter.string(fromByteCount: totalBytesWritten))/\(byteFormatter.string(fromByteCount: totalBytesExpectedToWrite))"
-        Task { @MainActor [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.progress = prog
             self?.progressString = str
             DockProgress.progress = prog
@@ -354,7 +357,7 @@ extension DownloadManager: URLSessionDownloadDelegate {
         print("Download resumed at offset: \(fileOffset) bytes")
         let prog = Double(fileOffset) / Double(expectedTotalBytes)
         let str = "\(byteFormatter.string(fromByteCount: fileOffset))/\(byteFormatter.string(fromByteCount: expectedTotalBytes))"
-        Task { @MainActor [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.progress = prog
             self?.progressString = str
             DockProgress.progress = prog

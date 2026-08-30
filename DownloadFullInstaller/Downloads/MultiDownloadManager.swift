@@ -30,6 +30,7 @@ class DownloadItem: NSObject, ObservableObject, Identifiable, @unchecked Sendabl
     private var retryCount = 0
     private var maxRetries = 100
     private var retryTimer: Timer?
+    private var lastProgressUpdate: Date = .distantPast
 
     // Security-scoped resource tracking
     private var destinationURL: URL?
@@ -82,6 +83,7 @@ class DownloadItem: NSObject, ObservableObject, Identifiable, @unchecked Sendabl
         startDownload()
     }
 
+    @MainActor
     private func startDownload() {
         guard let url = downloadURL else { return }
 
@@ -91,11 +93,8 @@ class DownloadItem: NSObject, ObservableObject, Identifiable, @unchecked Sendabl
         }
         isRetrying = false
 
-        // Update dock progress
-        let mgr = manager
-        Task { @MainActor in
-            mgr?.updateDockProgress()
-        }
+        // Update dock progress directly (already on main actor)
+        manager?.updateDockProgress()
 
         if let resumeData = resumeData {
             downloadTask = urlSession.downloadTask(withResumeData: resumeData)
@@ -110,6 +109,7 @@ class DownloadItem: NSObject, ObservableObject, Identifiable, @unchecked Sendabl
         downloadTask?.resume()
     }
 
+    @MainActor
     func cancel() {
         if isDownloading, downloadTask != nil {
             downloadTask?.cancel { [weak self] _ in
@@ -131,11 +131,8 @@ class DownloadItem: NSObject, ObservableObject, Identifiable, @unchecked Sendabl
             DispatchQueue.global(qos: .utility).async { [weak self] in
                 self?.cleanupTempDirectory()
             }
-            let item = self
-            let mgr = manager
-            Task { @MainActor in
-                mgr?.downloadCancelled(item)
-            }
+            // Remove from active downloads immediately on the main actor (no Task wrapper needed)
+            manager?.downloadCancelled(self)
         }
         print("Cancelled download of \(filename ?? "InstallerAssistant.pkg")")
     }
@@ -292,9 +289,13 @@ extension DownloadItem: URLSessionDownloadDelegate {
     }
 
     func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didWriteData _: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        // Throttle UI updates to at most 20 per second to avoid flooding the main actor queue
+        let now = Date()
+        guard now.timeIntervalSince(lastProgressUpdate) >= 0.05 else { return }
+        lastProgressUpdate = now
         let prog = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
         let str = "\(byteFormatter.string(fromByteCount: totalBytesWritten))/\(byteFormatter.string(fromByteCount: totalBytesExpectedToWrite))"
-        Task { @MainActor [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.progress = prog
             self?.progressString = str
             self?.manager?.updateDockProgress()
@@ -305,7 +306,7 @@ extension DownloadItem: URLSessionDownloadDelegate {
         print("Download resumed at offset: \(fileOffset) bytes")
         let prog = Double(fileOffset) / Double(expectedTotalBytes)
         let str = "\(byteFormatter.string(fromByteCount: fileOffset))/\(byteFormatter.string(fromByteCount: expectedTotalBytes))"
-        Task { @MainActor [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.progress = prog
             self?.progressString = str
             self?.manager?.updateDockProgress()

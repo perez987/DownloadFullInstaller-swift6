@@ -77,6 +77,7 @@ struct ContentView: View {
         VStack(alignment: .center, spacing: 4) {
             List(sucatalog.installers, id: \.id) { installer in
                 InstallerView(product: installer)
+                    .listRowSeparator(.hidden)
             }
             .cornerRadius(8)
             .padding(4)
@@ -99,6 +100,7 @@ struct ContentView: View {
             ZStack {
                 List(firmwareCatalog.filteredFirmwares(for: osNameID), id: \.id) { firmware in
                     FirmwareView(firmware: firmware)
+                        .listRowSeparator(.hidden)
                 }
                 .cornerRadius(8)
                 .padding(4)

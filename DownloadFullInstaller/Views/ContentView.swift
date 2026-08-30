@@ -82,18 +82,6 @@ struct ContentView: View {
                 .cornerRadius(8)
                 .padding(4)
                 .contentMargins(.leading, 1, for: .scrollContent)
-            } else if #available(macOS 14.0, *) {
-                List(sucatalog.installers, id: \.id) { installer in
-                    InstallerView(product: installer)
-                }
-                .cornerRadius(8)
-                .padding(4)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(.tertiary, lineWidth: 1)
-                        .padding(5)
-                )
-                .contentMargins(.leading, 1, for: .scrollContent)
             } else {
                 List(sucatalog.installers, id: \.id) { installer in
                     InstallerView(product: installer)
@@ -120,18 +108,6 @@ struct ContentView: View {
                     }
                     .cornerRadius(8)
                     .padding(4)
-                    .contentMargins(.leading, 1, for: .scrollContent)
-                } else if #available(macOS 14.0, *) {
-                    List(firmwareCatalog.filteredFirmwares(for: osNameID), id: \.id) { firmware in
-                        FirmwareView(firmware: firmware)
-                    }
-                    .cornerRadius(8)
-                    .padding(4)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(.tertiary, lineWidth: 1)
-                            .padding(5)
-                    )
                     .contentMargins(.leading, 1, for: .scrollContent)
                 } else {
                     List(firmwareCatalog.filteredFirmwares(for: osNameID), id: \.id) { firmware in

@@ -336,16 +336,37 @@ enum Easing {
  This is useful for creating smooth animations that synchronize with the screen's refresh rate.
  */
 final class DisplayLinkObserver: @unchecked Sendable {
-    private var displayLink: CVDisplayLink?
     fileprivate let callback: (DisplayLinkObserver, Double) -> Void
+
+    @available(macOS 14.0, *)
+    private final class CADisplayLinkTarget: NSObject {
+        weak var observer: DisplayLinkObserver?
+
+        @objc func displayLinkFired(_ link: CADisplayLink) {
+            guard let observer else {
+                return
+            }
+            let duration = link.duration
+            let refreshPeriod = duration > 0 ? duration : 1.0 / 60.0
+            observer.callback(observer, refreshPeriod)
+        }
+    }
+
+    private var caDisplayLink: AnyObject?
+    private var caDisplayLinkTarget: AnyObject?
+    private var cvDisplayLink: CVDisplayLink?
 
     init(_ callback: @escaping (DisplayLinkObserver, Double) -> Void) {
         self.callback = callback
 
-        guard CVDisplayLinkCreateWithActiveCGDisplays(&displayLink) == kCVReturnSuccess else {
-            assertionFailure("Failed to create CVDisplayLink")
-            print("Failed to create CVDisplayLink")
-            return
+        if #available(macOS 14.0, *) {
+            // caDisplayLink is set up in start()
+        } else {
+            guard CVDisplayLinkCreateWithActiveCGDisplays(&cvDisplayLink) == kCVReturnSuccess else {
+                assertionFailure("Failed to create CVDisplayLink")
+                print("Failed to create CVDisplayLink")
+                return
+            }
         }
     }
 
@@ -354,26 +375,40 @@ final class DisplayLinkObserver: @unchecked Sendable {
     }
 
     func start() {
-        guard let displayLink else {
-            return
+        if #available(macOS 14.0, *) {
+            let target = CADisplayLinkTarget()
+            target.observer = self
+            caDisplayLinkTarget = target
+            let link = CADisplayLink(target: target, selector: #selector(CADisplayLinkTarget.displayLinkFired(_:)))
+            link.add(to: .main, forMode: .common)
+            caDisplayLink = link
+        } else {
+            guard let displayLink = cvDisplayLink else {
+                return
+            }
+            let result = CVDisplayLinkSetOutputCallback(
+                displayLink,
+                displayLinkOutputCallback,
+                UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
+            )
+            assert(result == kCVReturnSuccess, "Failed to set CVDisplayLink output callback")
+            CVDisplayLinkStart(displayLink)
         }
-
-        let result = CVDisplayLinkSetOutputCallback(
-            displayLink,
-            displayLinkOutputCallback,
-            UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
-        )
-        assert(result == kCVReturnSuccess, "Failed to set CVDisplayLink output callback")
-
-        CVDisplayLinkStart(displayLink)
     }
 
     func stop() {
-        guard let displayLink else {
-            return
+        if #available(macOS 14.0, *) {
+            if let link = caDisplayLink as? CADisplayLink {
+                link.invalidate()
+            }
+            caDisplayLink = nil
+            caDisplayLinkTarget = nil
+        } else {
+            guard let displayLink = cvDisplayLink else {
+                return
+            }
+            CVDisplayLinkStop(displayLink)
         }
-
-        CVDisplayLinkStop(displayLink)
     }
 }
 

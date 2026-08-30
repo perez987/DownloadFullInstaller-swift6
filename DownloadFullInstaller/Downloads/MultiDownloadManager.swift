@@ -127,8 +127,10 @@ class DownloadItem: NSObject, ObservableObject, Identifiable, @unchecked Sendabl
             retryTimer = nil
             // Stop accessing security-scoped resource
             stopAccessingSecurityScope()
-            // Clean up temporary files
-            cleanupTempDirectory()
+            // Clean up temporary files off the main thread to avoid UI stalls
+            DispatchQueue.global(qos: .utility).async { [weak self] in
+                self?.cleanupTempDirectory()
+            }
             let item = self
             let mgr = manager
             Task { @MainActor in

@@ -230,16 +230,23 @@ struct FirmwareView: View {
     @StateObject var multiDownloadManager = MultiDownloadManager.shared
     @State private var activeAlert: AppAlertType?
     @State private var failed = false
-
-    private var isDownloaded: Bool {
+    @State private var isDownloaded = false
+    
+    private func checkIfDownloaded() {
         let destination = Prefs.downloadURL
         let file = destination.appendingPathComponent(firmware.filename)
-
-        if FileManager.default.fileExists(atPath: file.path) {
-            return true
+        
+        let accessStarted = Prefs.startAccessingDownloadURL()
+        defer {
+            Prefs.stopAccessingDownloadURL(accessStarted)
         }
 
-        return multiDownloadManager.completedDownloads.contains { $0.filename == firmware.filename }
+        if FileManager.default.fileExists(atPath: file.path) {
+            isDownloaded = true
+            return
+        }
+
+        isDownloaded = multiDownloadManager.completedDownloads.contains { $0.filename == firmware.filename }
     }
 
     var body: some View {
@@ -337,6 +344,15 @@ struct FirmwareView: View {
             default:
                 break
             }
+        }
+        .onAppear {
+            checkIfDownloaded()
+        }
+        .onChange(of: multiDownloadManager.completedDownloads) {
+            checkIfDownloaded()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .downloadPathChanged)) { _ in
+            checkIfDownloaded()
         }
     }
 }

@@ -32,6 +32,12 @@ extension View {
                 .glassEffect(.regular, in: RoundedRectangle(cornerRadius: cornerRadius))
         } else {
             self
+                .padding(6)
+                .background(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(.quaternary)
+                )
+                .listRowBackground(Color.clear)
         }
     }
 

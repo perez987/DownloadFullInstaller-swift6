@@ -162,6 +162,7 @@ struct InstallerView: View {
                         Text(String(format: NSLocalizedString("Copy %@ %@ (%@) %@ URL", comment: ""), product.osName ?? "", product.productVersion ?? "", product.buildVersion ?? "", package))
                     }
                 }
+                .glassRow()
                 // Handle multiple different alerts in a single view using appAlert extension
                 .appAlert(item: $activeAlert) { alertType in
                     switch alertType {
@@ -324,6 +325,7 @@ struct FirmwareView: View {
                 Text(String(format: NSLocalizedString("Copy %@ %@ (%@) %@ URL", comment: ""), firmware.osName, firmware.productVersion, firmware.buildVersion, firmware.filename))
             }
         }
+        .glassRow()
         .appAlert(item: $activeAlert) { alertType in
             switch alertType {
             case .replaceFile:

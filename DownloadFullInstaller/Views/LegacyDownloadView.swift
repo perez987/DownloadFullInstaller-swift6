@@ -152,8 +152,7 @@ struct LegacyVersionRow: View {
         }
         .frame(width: 320.0, height: 32.0)
         .padding(12)
-        .background(Color(NSColor.controlBackgroundColor))
-        .cornerRadius(8)
+        .glassCard(cornerRadius: 8)
     }
 
     func downloadLegacyVersion() {

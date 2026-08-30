@@ -22,6 +22,19 @@ extension View {
         }
     }
 
+    /// Applies a macOS 26+ glass effect suitable for List rows.
+    /// Falls back to a subtle material background with rounded corners on earlier systems.
+    @ViewBuilder
+    func glassRow(cornerRadius: CGFloat = 8) -> some View {
+        if #available(macOS 26.0, *) {
+            self
+                .listRowBackground(Color.clear)
+                .glassEffect(.regular, in: RoundedRectangle(cornerRadius: cornerRadius))
+        } else {
+            self
+        }
+    }
+
     /// Applies a subtle macOS 26+ glass effect.
     /// Falls back to a thin material background on earlier systems.
     @ViewBuilder

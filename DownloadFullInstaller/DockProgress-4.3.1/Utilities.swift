@@ -410,6 +410,7 @@ final class DisplayLinkObserver: @unchecked Sendable {
     }
 }
 
+@available(macOS, deprecated: 15.0)
 private func displayLinkOutputCallback(
     displayLink: CVDisplayLink,
     inNow _: UnsafePointer<CVTimeStamp>,

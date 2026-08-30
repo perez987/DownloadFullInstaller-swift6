@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C0000001A000000100000001 /* MultiDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000001A000000200000001 /* MultiDownloadManager.swift */; };
-		C0000002B000000100000001 /* GlassEffects+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000002B000000200000001 /* GlassEffects+Extensions.swift */; };
 		C0000002A000000100000001 /* Alert+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000002A000000200000001 /* Alert+Extensions.swift */; };
+		C0000002B000000100000001 /* GlassEffects+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000002B000000200000001 /* GlassEffects+Extensions.swift */; };
 		D9690FB42F4ECEED00265627 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9690FB22F4ECEED00265627 /* Utilities.swift */; };
 		D9690FB52F4ECEED00265627 /* DockProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9690FB12F4ECEED00265627 /* DockProgress.swift */; };
 		D971B3C52FF9AB0D00F96A4F /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = D971B3C42FF9AB0D00F96A4F /* Sparkle */; };
@@ -61,8 +61,8 @@
 
 /* Begin PBXFileReference section */
 		C0000001A000000200000001 /* MultiDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiDownloadManager.swift; sourceTree = "<group>"; };
-		C0000002B000000200000001 /* GlassEffects+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlassEffects+Extensions.swift"; sourceTree = "<group>"; };
 		C0000002A000000200000001 /* Alert+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Extensions.swift"; sourceTree = "<group>"; };
+		C0000002B000000200000001 /* GlassEffects+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlassEffects+Extensions.swift"; sourceTree = "<group>"; };
 		D5C3B4E13958C3E2E27EE685 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D9168EAD2F2C1E390054D5AF /* Caffeine-IOKit.pwr_mgt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Caffeine-IOKit.pwr_mgt.swift"; sourceTree = "<group>"; };
 		D9168EAE2F2C1E390054D5AF /* Caffeine-NSObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Caffeine-NSObjectProtocol.swift"; sourceTree = "<group>"; };
@@ -578,7 +578,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 260;
+				CURRENT_PROJECT_VERSION = 0500;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DownloadFullInstaller/Preview Content\"";
 				DEVELOPMENT_TEAM = ER43ZD2S4U;
@@ -607,7 +607,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 4.6.0;
+				MARKETING_VERSION = 500;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = perez987.DownloadFullInstaller;
 				PRODUCT_NAME = "Download Full Installer";
@@ -628,7 +628,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 260;
+				CURRENT_PROJECT_VERSION = 0500;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DownloadFullInstaller/Preview Content\"";
 				DEVELOPMENT_TEAM = ER43ZD2S4U;
@@ -657,7 +657,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 4.6.0;
+				MARKETING_VERSION = 500;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = perez987.DownloadFullInstaller;
 				PRODUCT_NAME = "Download Full Installer";

@@ -41,7 +41,7 @@ import Foundation
     // Active download count tracking
     // Thread-safe counter for active downloads, designed for future multi-download support
     nonisolated(unsafe) private static var activeDownloadCount: Int = 0
-    nonisolated(unsafe) private static let downloadCountLock = NSLock()
+    private static let downloadCountLock = NSLock()
 
     /// Returns the current number of active downloads
     /// This function can be used with DockProgress badge style:

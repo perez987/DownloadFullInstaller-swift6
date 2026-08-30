@@ -319,9 +319,13 @@ extension DownloadItem: URLSessionTaskDelegate {
     func urlSession(_: URLSession, task _: URLSessionTask, didCompleteWithError error: Error?) {
         guard let error = error else { return }
 
-        print("Download error: \(error.localizedDescription)")
-
+        // Ignore cancellation errors — these are expected when the user cancels a download
         let nsError = error as NSError
+        if nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorCancelled {
+            return
+        }
+
+        print("Download error: \(error.localizedDescription)")
         let isNetworkError = nsError.domain == NSURLErrorDomain &&
             (nsError.code == NSURLErrorNotConnectedToInternet ||
                 nsError.code == NSURLErrorNetworkConnectionLost ||

@@ -148,7 +148,7 @@ extension NSColor {
 }
 
 extension NSFont {
-    static let helveticaNeueBold = NSFont(name: "HelveticaNeue-Bold", size: 0)
+    nonisolated(unsafe) static let helveticaNeueBold = NSFont(name: "HelveticaNeue-Bold", size: 0)
 }
 
 extension CGRect {

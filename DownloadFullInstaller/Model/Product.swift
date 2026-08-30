@@ -24,9 +24,8 @@ class Product: Codable, Identifiable, ObservableObject {
     @Published var osName: String?
     @Published var title: String?
     @Published var buildVersion: String?
-    var id: String {
-        return key ?? "<no id yet>"
-    }
+    private let _id = UUID().uuidString
+    nonisolated var id: String { _id }
 
     @Published var productVersion: String?
     @Published var installerVersion: String?

@@ -157,7 +157,7 @@ enum Prefs {
         UserDefaults.standard.set(false, forKey: Prefs.key(.languageSelectionShown))
     }
 
-    static let byteFormatter = ByteCountFormatter()
+    nonisolated(unsafe) static let byteFormatter = ByteCountFormatter()
 }
 
 extension Notification.Name {

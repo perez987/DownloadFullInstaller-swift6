@@ -155,7 +155,7 @@ import Foundation
             localURL = nil
             downloadURL = nil
             progress = 0.0
-            DockProgress.progress = 0.0
+            Task { @MainActor in DockProgress.progress = 0.0 }
             retryCount = 0
             retryTimer?.invalidate()
             retryTimer = nil

@@ -80,7 +80,7 @@ class DownloadItem: NSObject, ObservableObject, Identifiable, @unchecked Sendabl
             resumeData = nil
         }
 
-        startDownload()
+        Task { @MainActor [weak self] in self?.startDownload() }
     }
 
     @MainActor

@@ -348,8 +348,10 @@ final class DisplayLinkObserver {
     }
 
     deinit {
-        timer?.invalidate()
-        timer = nil
+        MainActor.assumeIsolated {
+            timer?.invalidate()
+            timer = nil
+        }
     }
 
     func start() {

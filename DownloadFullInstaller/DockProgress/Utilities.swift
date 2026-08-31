@@ -1,5 +1,4 @@
 import Cocoa
-import CoreVideo
 import simd
 
 /**
@@ -341,66 +340,43 @@ enum Easing {
  */
 @MainActor
 final class DisplayLinkObserver {
-    private nonisolated(unsafe) var displayLink: CVDisplayLink?
+    private var displayLink: CADisplayLink?
     fileprivate let callback: (DisplayLinkObserver, Double) -> Void
 
     init(_ callback: @escaping @MainActor (DisplayLinkObserver, Double) -> Void) {
         self.callback = callback
-
-        guard CVDisplayLinkCreateWithActiveCGDisplays(&displayLink) == kCVReturnSuccess else {
-            assertionFailure("Failed to create CVDisplayLink")
-            print("Failed to create CVDisplayLink")
-            return
-        }
     }
 
     deinit {
         stop()
     }
 
-    nonisolated func start() {
+    func start() {
+        guard displayLink == nil else {
+            return
+        }
+
+        let displayLink = CADisplayLink(target: self, selector: #selector(onDisplayRefresh(_:)))
+        displayLink.add(to: .main, forMode: .common)
+        self.displayLink = displayLink
+    }
+
+    func stop() {
         guard let displayLink else {
             return
         }
 
-        let result = CVDisplayLinkSetOutputCallback(
-            displayLink,
-            displayLinkOutputCallback,
-            UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
-        )
-        assert(result == kCVReturnSuccess, "Failed to set CVDisplayLink output callback")
-
-        CVDisplayLinkStart(displayLink)
+        displayLink.invalidate()
+        self.displayLink = nil
     }
 
-    nonisolated func stop() {
-        guard let displayLink else {
-            return
+    @objc
+    private func onDisplayRefresh(_ displayLink: CADisplayLink) {
+        let refreshPeriod = displayLink.duration > 0 ? displayLink.duration : (1.0 / 60.0)
+        if displayLink.duration == 0 {
+            print("Warning: CADisplayLink duration is zero. Assuming 60 Hz...")
         }
 
-        CVDisplayLinkStop(displayLink)
+        callback(self, refreshPeriod)
     }
-}
-
-private func displayLinkOutputCallback(
-    displayLink: CVDisplayLink,
-    inNow _: UnsafePointer<CVTimeStamp>,
-    inOutputTime _: UnsafePointer<CVTimeStamp>,
-    flagsIn _: CVOptionFlags,
-    flagsOut _: UnsafeMutablePointer<CVOptionFlags>,
-    displayLinkContext: UnsafeMutableRawPointer?
-) -> CVReturn {
-    let observer = unsafeBitCast(displayLinkContext, to: DisplayLinkObserver.self)
-
-    var refreshPeriod = CVDisplayLinkGetActualOutputVideoRefreshPeriod(displayLink)
-    if refreshPeriod == 0 {
-        print("Warning: CVDisplayLinkGetActualOutputVideoRefreshPeriod failed. Assuming 60 Hz...")
-        refreshPeriod = 1.0 / 60.0
-    }
-
-    Task { @MainActor in
-        observer.callback(observer, refreshPeriod)
-    }
-
-    return kCVReturnSuccess
 }

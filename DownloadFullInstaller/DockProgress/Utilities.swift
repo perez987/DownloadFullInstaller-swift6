@@ -338,12 +338,11 @@ enum Easing {
 
  This is useful for creating smooth animations that synchronize with the screen's refresh rate.
  */
-@MainActor
 final class DisplayLinkObserver {
-    private var displayLink: CADisplayLink?
+    private var timer: Timer?
     fileprivate let callback: (DisplayLinkObserver, Double) -> Void
 
-    init(_ callback: @escaping @MainActor (DisplayLinkObserver, Double) -> Void) {
+    init(_ callback: @escaping (DisplayLinkObserver, Double) -> Void) {
         self.callback = callback
     }
 
@@ -352,31 +351,29 @@ final class DisplayLinkObserver {
     }
 
     func start() {
-        guard displayLink == nil else {
+        guard timer == nil else {
             return
         }
 
-        let displayLink = CADisplayLink(target: self, selector: #selector(onDisplayRefresh(_:)))
-        displayLink.add(to: .main, forMode: .common)
-        self.displayLink = displayLink
+        let refreshRate = NSScreen.main?.maximumFramesPerSecond ?? 60
+        let refreshPeriod = 1.0 / Double(refreshRate)
+
+        let timer = Timer(timeInterval: refreshPeriod, repeats: true) { [weak self] _ in
+            guard let self else {
+                return
+            }
+            self.callback(self, refreshPeriod)
+        }
+        RunLoop.main.add(timer, forMode: .common)
+        self.timer = timer
     }
 
     func stop() {
-        guard let displayLink else {
+        guard let timer else {
             return
         }
 
-        displayLink.invalidate()
-        self.displayLink = nil
-    }
-
-    @objc
-    private func onDisplayRefresh(_ displayLink: CADisplayLink) {
-        let refreshPeriod = displayLink.duration > 0 ? displayLink.duration : (1.0 / 60.0)
-        if displayLink.duration == 0 {
-            print("Warning: CADisplayLink duration is zero. Assuming 60 Hz...")
-        }
-
-        callback(self, refreshPeriod)
+        timer.invalidate()
+        self.timer = nil
     }
 }

@@ -14,7 +14,8 @@
 
 ### Preface
 
-As of June 2025, [DownloadFullInstaller](https://github.com/scriptingosx/DownloadFullInstaller) stopped its development. For over three years, my repository was a fork of the original. However, after the original was archived, I created a new repo as standalone (<em>not forked</em>) version.<br>
+As of June 2025, [DownloadFullInstaller](https://github.com/scriptingosx/DownloadFullInstaller) stopped its development. For over three years, my repository was a fork of the original. However, after the original was archived, I created a new repo as standalone (<em>not forked</em>) version.
+
 This repo exists to keep "Download Full Installer" alive and growing. Picking up where the original left off, merging community PRs and adding new features. I'll keep this project active and up to date as long as it is useful to other users. Full credit for the original idea and architecture goes to <em>scriptingosx</em>.
 
 ### Features

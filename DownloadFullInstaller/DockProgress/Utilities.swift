@@ -338,11 +338,12 @@ enum Easing {
 
  This is useful for creating smooth animations that synchronize with the screen's refresh rate.
  */
+@MainActor
 final class DisplayLinkObserver {
     private var timer: Timer?
-    fileprivate let callback: (DisplayLinkObserver, Double) -> Void
+    fileprivate let callback: @MainActor (DisplayLinkObserver, Double) -> Void
 
-    init(_ callback: @escaping (DisplayLinkObserver, Double) -> Void) {
+    init(_ callback: @escaping @MainActor (DisplayLinkObserver, Double) -> Void) {
         self.callback = callback
     }
 

@@ -348,7 +348,8 @@ final class DisplayLinkObserver {
     }
 
     deinit {
-        stop()
+        timer?.invalidate()
+        timer = nil
     }
 
     func start() {

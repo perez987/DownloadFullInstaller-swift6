@@ -1,12 +1,12 @@
 # Download Full Installer
 
 
-![Platform](https://img.shields.io/badge/macOS-13+-orange.svg)
-![Swift](https://img.shields.io/badge/Swift-5+-lavender.svg)
-![Xcode](https://img.shields.io/badge/Xcode-15+-green.svg)
+![Platform](https://img.shields.io/badge/macOS-26+-orange.svg)
+![Swift](https://img.shields.io/badge/Swift-6-lavender.svg)
+![Xcode](https://img.shields.io/badge/Xcode-16+-green.svg)
 ![GitHub Downloads](https://img.shields.io/github/downloads/perez987/DownloadFullInstaller/total?style=flat&label=Downloads&color=blue)
 
-**Download Full Installer** is a macOS application written in SwiftUI that downloads PKG installers or IPSW firmwares for the **Install macOS Big Sur** application and newer. Runs on macOS 13 Ventura through macOS 27 Golden Gate.
+**Download Full Installer** is a macOS application written in SwiftUI that downloads PKG installers or IPSW firmwares for the **Install macOS Big Sur** application and newer. Runs on macOS 26 Tahoe and later.
 
 |     |
 | --- |
@@ -24,9 +24,9 @@ Full credit for the original idea and architecture goes to <em>scriptingosx</em>
 ### Features
 
 - Target and requirements
-   - Minimum macoS Ventura 13
-   - Update to macOS 27 Golden Gate
-   - Xcode 15 requires macOS 13 Ventura or newer
+   - Minimum macOS 26 Tahoe
+   - Swift 6
+   - Xcode 16 requires macOS 26 Tahoe or newer
 - Main UI
    - Add Silicon firmwares tab to download IPSW files to restore T2 or Silicon Macs
 - Preferences

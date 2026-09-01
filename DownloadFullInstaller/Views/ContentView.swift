@@ -15,6 +15,7 @@ struct ContentView: View {
     @StateObject private var firmwareCatalog = FirmwareCatalog()
     @State private var refreshID = UUID()
     @State private var selectedTab = 0
+    @State private var installersListID = UUID()
     var countersText: String = ""
 
     var body: some View {
@@ -80,6 +81,7 @@ struct ContentView: View {
                     InstallerView(product: installer)
                         .listRowSeparator(.hidden)
                 }
+                .id(installersListID)
                 .cornerRadius(8)
                 .padding(4)
                 .overlay(
@@ -91,19 +93,34 @@ struct ContentView: View {
                         }
                     }
                 )
-                .onChange(of: sucatalog.installers.count) {
-                    if let firstID = sucatalog.installers.first?.id {
-                        proxy.scrollTo(firstID, anchor: .top)
-                    }
-                }
                 .onChange(of: osNameID) {
-                    if let firstID = sucatalog.installers.first?.id {
-                        proxy.scrollTo(firstID, anchor: .top)
-                    }
+                    resetInstallersListPosition(with: proxy)
+                }
+                .onChange(of: seedProgram) {
+                    resetInstallersListPosition(with: proxy)
+                }
+                .onChange(of: installerIDs) {
+                    resetInstallersListPosition(with: proxy)
+                }
+                .onAppear {
+                    resetInstallersListPosition(with: proxy)
                 }
             }
 
             DownloadView()
+        }
+    }
+
+    private var installerIDs: [String] {
+        sucatalog.installers.map(\.id)
+    }
+
+    private func resetInstallersListPosition(with proxy: ScrollViewProxy) {
+        installersListID = UUID()
+        DispatchQueue.main.async {
+            if let firstID = sucatalog.installers.first?.id {
+                proxy.scrollTo(firstID, anchor: .top)
+            }
         }
     }
 

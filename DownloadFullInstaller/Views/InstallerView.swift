@@ -129,6 +129,7 @@ struct InstallerView: View {
                     .buttonStyle(.borderless)
                     .controlSize(.mini)
                     .foregroundColor(.blue)
+                    .opacity(multiDownloadManager.isDownloading(filename: installerFilename) ? 0.4 : 1.0)
 
                     Button(action: {
                         createInstallerApp()
@@ -146,6 +147,7 @@ struct InstallerView: View {
                     .buttonStyle(.borderless)
                     .controlSize(.mini)
                     .foregroundColor(.blue)
+                    .opacity(multiDownloadManager.isDownloading(filename: installerFilename) || isCreatingInstaller ? 0.4 : 1.0)
 
                     // Context menu: copy to clipboard the URL of the specified InstallAssistant.pkg
                 }
@@ -313,6 +315,7 @@ struct FirmwareView: View {
             .buttonStyle(.borderless)
             .controlSize(.mini)
             .foregroundColor(.blue)
+            .opacity(multiDownloadManager.isDownloading(filename: firmware.filename) ? 0.4 : 1.0)
 
             Button(action: {
                 if let url = URL(string: "https://support.apple.com/en-us/108900") {

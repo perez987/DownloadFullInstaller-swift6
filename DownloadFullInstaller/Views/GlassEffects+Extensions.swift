@@ -40,6 +40,28 @@ extension View {
         }
     }
 
+    /// Applies a soft colored background to a List row.
+    /// On macOS 26+ uses a glass tint; on earlier systems uses a semi-transparent color fill.
+    @ViewBuilder
+    func coloredRow(_ color: Color = .blue, opacity: Double = 0.08, cornerRadius: CGFloat = 8) -> some View {
+        if #available(macOS 26.0, *) {
+            self
+                .listRowBackground(Color.clear)
+                .glassEffect(.regular.tint(color.opacity(opacity)), in: RoundedRectangle(cornerRadius: cornerRadius))
+        } else {
+            padding(8)
+                .background(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(color.opacity(opacity))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: cornerRadius)
+                                .fill(.thinMaterial).opacity(0.7)
+                        )
+                )
+                .listRowBackground(Color.clear)
+        }
+    }
+
     /// Applies a subtle macOS 26+ glass effect.
     /// Falls back to a thin material background on earlier systems.
     @ViewBuilder

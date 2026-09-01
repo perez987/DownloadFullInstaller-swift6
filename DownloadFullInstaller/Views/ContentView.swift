@@ -15,7 +15,6 @@ struct ContentView: View {
     @StateObject private var firmwareCatalog = FirmwareCatalog()
     @State private var refreshID = UUID()
     @State private var selectedTab = 0
-    @State private var installersListID = UUID()
     var countersText: String = ""
 
     var body: some View {
@@ -77,11 +76,10 @@ struct ContentView: View {
     private var installersTab: some View {
         VStack(alignment: .center, spacing: 4) {
             ScrollViewReader { proxy in
-                List(sucatalog.installers, id: \.id) { installer in
+                List(filteredInstallers, id: \.id) { installer in
                     InstallerView(product: installer)
                         .listRowSeparator(.hidden)
                 }
-                .id(installersListID)
                 .cornerRadius(8)
                 .padding(4)
                 .overlay(
@@ -112,13 +110,26 @@ struct ContentView: View {
     }
 
     private var installerIDs: [String] {
-        sucatalog.installers.map(\.id)
+        filteredInstallers.map(\.id)
+    }
+
+    private var filteredInstallers: [Product] {
+        sucatalog.installers.filter { installer in
+            guard installer.hasLoaded else {
+                return false
+            }
+
+            if Prefs.osNameID.rawValue == OsNameID.osAll.rawValue {
+                return true
+            }
+
+            return installer.osName == Prefs.osNameID.rawValue
+        }
     }
 
     private func resetInstallersListPosition(with proxy: ScrollViewProxy) {
-        installersListID = UUID()
         DispatchQueue.main.async {
-            if let firstID = sucatalog.installers.first?.id {
+            if let firstID = filteredInstallers.first?.id {
                 proxy.scrollTo(firstID, anchor: .top)
             }
         }

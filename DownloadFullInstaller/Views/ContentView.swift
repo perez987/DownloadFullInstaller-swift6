@@ -75,31 +75,9 @@ struct ContentView: View {
 
     private var installersTab: some View {
         VStack(alignment: .center, spacing: 4) {
-            List(sucatalog.installers, id: \.id) { installer in
-                InstallerView(product: installer)
-                    .listRowSeparator(.hidden)
-            }
-            .cornerRadius(8)
-            .padding(4)
-            .overlay(
-                Group {
-                    if #unavailable(macOS 15.0) {
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(.tertiary, lineWidth: 1)
-                            .padding(5)
-                    }
-                }
-            )
-
-            DownloadView()
-        }
-    }
-
-    private var firmwareTab: some View {
-        VStack(alignment: .center, spacing: 4) {
-            ZStack {
-                List(firmwareCatalog.filteredFirmwares(for: osNameID), id: \.id) { firmware in
-                    FirmwareView(firmware: firmware)
+            ScrollViewReader { proxy in
+                List(sucatalog.installers, id: \.id) { installer in
+                    InstallerView(product: installer)
                         .listRowSeparator(.hidden)
                 }
                 .cornerRadius(8)
@@ -113,6 +91,47 @@ struct ContentView: View {
                         }
                     }
                 )
+                .onChange(of: sucatalog.installers.count) {
+                    if let firstID = sucatalog.installers.first?.id {
+                        proxy.scrollTo(firstID, anchor: .top)
+                    }
+                }
+                .onChange(of: osNameID) {
+                    if let firstID = sucatalog.installers.first?.id {
+                        proxy.scrollTo(firstID, anchor: .top)
+                    }
+                }
+            }
+
+            DownloadView()
+        }
+    }
+
+    private var firmwareTab: some View {
+        VStack(alignment: .center, spacing: 4) {
+            ZStack {
+                ScrollViewReader { proxy in
+                    List(firmwareCatalog.filteredFirmwares(for: osNameID), id: \.id) { firmware in
+                        FirmwareView(firmware: firmware)
+                            .listRowSeparator(.hidden)
+                    }
+                    .cornerRadius(8)
+                    .padding(4)
+                    .overlay(
+                        Group {
+                            if #unavailable(macOS 15.0) {
+                                RoundedRectangle(cornerRadius: 6)
+                                    .stroke(.tertiary, lineWidth: 1)
+                                    .padding(5)
+                            }
+                        }
+                    )
+                    .onChange(of: osNameID) {
+                        if let firstFirmware = firmwareCatalog.filteredFirmwares(for: osNameID).first {
+                            proxy.scrollTo(firstFirmware.id, anchor: .top)
+                        }
+                    }
+                }
 
 //                if firmwareCatalog.hasLoaded && firmwareCatalog.filteredFirmwares(for: osNameID).isEmpty && osNameID != "Legacy" {
                 if firmwareCatalog.filteredFirmwares(for: osNameID).isEmpty, osNameID != "Legacy" {

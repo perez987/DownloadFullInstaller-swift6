@@ -8,9 +8,11 @@
 
 **Download Full Installer** is a macOS application written in SwiftUI that downloads PKG installers or IPSW firmwares for the **Install macOS Big Sur** application and newer. Runs on macOS 15 Sequoia and later.
 
+**Note**: If you prefer the version built with Swift 5, that runs on macOS 13 or later, get the project code from the `main` branch of the repository or the version 4.x.x from the [releases](https://github.com/perez987/DownloadFullInstaller/releases) page.
+
 |     |
 | --- |
-| ![Installers](Images/Window1.png) |
+| ![Installers](Images/Installers-firmwares.png) |
 
 ### Preface
 
@@ -52,6 +54,10 @@ This repo exists to keep "Download Full Installer" alive and growing. Picking up
 
 A new item called Legacy has been added to the macOS systems dropdown list. Legacy opens a new window listing the five available legacy macOS versions, each with its own direct download link. You can download any of these legacy macOS versions from this window.
 
+|     |
+| --- |
+| ![Legacy](Images/Legacy.png) |
+
 ### Create Installer App Feature
 
 After downloading an `InstallAssistant.pkg` file, you can create the macOS installer application (e.g., "Install macOS Sequoia.app") directly from within Download Full Installer:
@@ -68,7 +74,7 @@ Download Full Installer -> Settings menu (⌘ ,) opens a window where you can se
 
 |     |
 | --- |
-| ![Languages](Images/Settings.png) |
+| ![Settings](Images/Settings.png) |
 
 ### Language selector window
 

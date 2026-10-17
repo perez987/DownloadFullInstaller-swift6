@@ -1,0 +1,93 @@
+/* General */
+"" = "";
+"\n\n" = "\n\n";
+" in catalog" = " 카탈로그:";
+"Download Full Installer" = "Download Full Installer";
+
+/* File Replace */
+"%@ already exists. Do you want to replace it?" = "%@이 이미 존재합니다. 바꾸시겠습니까?";
+"A file with the same name already exists in that location. Replacing it will overwrite its current contents." = "같은 이름의 파일이 이미 해당 위치에 있습니다. 파일을 교체하면 현재 내용이 덮어쓰여집니다.";
+"Cancel" = "취소";
+"Replace" = "교체";
+
+/* Installer list */
+"Copy %@ %@ (%@) %@ URL" = "%@ %@ (%@) %@ URL 복사";
+"Download %@ %@ (%@) Installer" = "%@ %@ (%@) 설치 프로그램 다운로드";
+
+/* Download */
+"Downloaded %@" = "%@ 다운로드됨";
+"Downloading %@" = "%@ 다운로드됨";
+"Retrying download of InstallAssistant.pkg..." = "InstallAssistant.pkg 다운로드를 다시 시도하는 중...";
+"Show in Finder" = "Finder에서 표시";
+"Cancel %@ download" = "%@ 다운로드 취소";
+"Show the installer in the Downloads folder" = "다운로드 폴더에 설치 프로그램 표시";
+
+/* Language Selection */
+"Language Selection" = "언어 선택";
+"Choose a language" = "언어 선택";
+"Select Language" = "언어 선택";
+"Continue" = "계속";
+
+/* Restart Required */
+"Restart Required" = "재시작 필요";
+"The app must be restarted for changes to take effect." = "변경 사항이 적용되려면 앱을 재시작해야 합니다.";
+"OK" = "확인";
+
+/* App Settings */
+"Yes" = "예";
+"Clear app settings?" = "설정을 삭제하시겠습니까?";
+"(App preferences will be cleared)" = "(앱 환경설정이 지워집니다)";
+"You will lose user settings and saved language." = "사용자 설정과 저장된 언어를 잃게 될 것입니다.";
+"Warning" = "경고";
+
+/* Installer Creation */
+"Create Installer App from %@ %@ (%@)" = "%@ %@ (%@)에서 설치 프로그램 만들기";
+"Error Creating Installer" = "macOS 설치 프로그램을 만드는 중 오류 발생";
+"The installer package %@ does not exist in the %@ folder. Please download it first." = "%@ 폴더에 설치 패키지 %@가 없습니다. 먼저 다운로드하십시오.";
+"Success" = "성공";
+"The installer app has been created successfully in /Applications" = "macOS 설치 앱이 /Applications 폴더에 성공적으로 생성되었습니다";
+"The installer package has been opened. Follow the on-screen instructions to complete the installation" = "설치 프로그램 패키지가 열렸습니다. 화면의 지시에 따라 설치를 완료하세요";
+"Failed to open the installer package. Please try opening it manually from the Downloads folder" = "설치 프로그램 패키지를 열지 못했습니다. 다운로드 폴더에서 수동으로 열어보세요";
+"Failed to create installer app. Error: %@" = "macOS 설치 앱을 만들지 못했습니다. 오류: %@";
+"No write permission to /Applications folder" = "/Applications 폴더에 쓰기 권한이 없습니다";
+"Failed to create AppleScript" = "AppleScript를 생성하는 데 실패했습니다";
+
+/* Multi-download support */
+"Maximum Downloads Reached" = "최대 다운로드 횟수 도달";
+"You can only download up to 3 installers at the same time. Please wait for a download to complete before starting a new one." = "동시에 최대 3개의 설치 프로그램만 다운로드할 수 있습니다. 새 설치 프로그램을 시작하기 전에 다운로드가 완료될 때까지 기다려 주세요.";
+"Dismiss" = "닫기";
+
+/* Visual indicator*/
+"This installer has been downloaded" = "이 설치 프로그램이 다운로드되었습니다";
+
+/* Settings window */
+"Settings" = "설정";
+"Close" = "닫기";
+"Download Location" = "다운로드 폴더";
+
+/* Download folder selection */
+"Select Download Folder" = "다운로드 폴더를 선택하세요";
+"Choose where to save downloaded installers" = "다운로드한 설치 프로그램을 저장할 위치 선택";
+
+/* Legacy macOS installers */
+"Legacy macOS Installers" = "레거시 macOS 설치 프로그램";
+"Download legacy macOS installers (10.7 - 10.12)" = "레거시 macOS 버전 다운로드 (10.7 - 10.12)";
+"Download macOS %@ %@" = "macOS %@ %@ 다운로드";
+
+/* Update Check */
+"Check for Updates..." = "업데이트 확인...";
+
+/* Firmware tab */
+"Installers" = "설치 프로그램";
+"Firmwares" = "펌웨어";
+"Download %@ %@ (%@) Firmware" = "%@ %@ (%@) 펌웨어 다운로드";
+"This firmware has been downloaded" = "이 펌웨어는 이미 다운로드되었습니다";
+
+/* Firmware empty state */
+"The firmware list cannot be loaded or there are no firmwares available for this version of macOS." = "펌웨어 목록을 불러올 수 없거나 이 macOS 버전에 사용할 수 있는 펌웨어가 없습니다.";
+"The installers list cannot be loaded or there are no installers available for this version of macOS." = "설치 프로그램 목록을 불러올 수 없거나 이 macOS 버전에 사용할 수 있는 설치 프로그램이 없습니다.";
+"Loading..." = "불러오는 중...";
+
+/* Apple Configurator Restore */
+"Restore with Apple Configurator" = "Apple Configurator로 복원";
+"Restore with Apple Configurator: How to" = "Apple Configurator로 복원:\nmacOS 펌웨어는 IPSW 파일이며 Apple Configurator를 사용해 Silicon Mac을 복원하는 데 사용할 수 있습니다.\n이 작업을 위해서는 다른 Mac과 전원 및 데이터 전송이 가능한 USB C 케이블이 필요합니다.\nSilicon Mac을 복원하면 드라이브의 모든 내용이 지워지며, 미리 백업하지 않은 모든 데이터를 잃게 됩니다.";

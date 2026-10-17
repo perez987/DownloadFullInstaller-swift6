@@ -1,0 +1,419 @@
+//
+//  DownloadManager.swift
+//
+//  Created by Armin Briegel on 2021-06-14
+//  Modified by Emilio P Egido on 2025-09-23
+//
+
+import AppKit
+
+// import DockProgress
+import Foundation
+
+@objc class DownloadManager: NSObject, ObservableObject, @unchecked Sendable {
+    @Published var downloadURL: URL?
+    @Published var localURL: URL?
+    @Published var isDownloading = false
+    @Published var progress: Double = 0.0
+    @Published var progressString: String = ""
+    @Published var isComplete = false
+    @Published var filename: String?
+    @Published var installerURLFiles: [URL]?
+    @Published var errorMessage: String?
+
+    lazy var urlSession = URLSession(configuration: URLSessionConfiguration.ephemeral, delegate: self, delegateQueue: nil)
+    var downloadTask: URLSessionDownloadTask?
+    var byteFormatter = ByteCountFormatter()
+
+    // Resume functionality properties
+    private var resumeData: Data?
+    private var retryCount = 0
+    private var maxRetries = 100
+    private var retryTimer: Timer?
+    @Published var isRetrying = false
+    private var lastProgressUpdate: Date = .distantPast
+
+    // Security-scoped resource tracking
+    private var destinationURL: URL?
+    private var isAccessingSecurityScope = false
+
+    static let shared = DownloadManager()
+
+    // Active download count tracking
+    // Thread-safe counter for active downloads, designed for future multi-download support
+    private nonisolated(unsafe) static var activeDownloadCount: Int = 0
+    private static let downloadCountLock = NSLock()
+
+    /// Returns the current number of active downloads
+    /// This function can be used with DockProgress badge style:
+    /// DockProgress.style = .badge(color: .blue, badgeValue: { getDownloadCount() })
+    static func getDownloadCount() -> Int {
+        downloadCountLock.lock()
+        defer { downloadCountLock.unlock() }
+        return activeDownloadCount
+    }
+
+    private static func incrementDownloadCount() {
+        downloadCountLock.lock()
+        defer { downloadCountLock.unlock() }
+        activeDownloadCount += 1
+    }
+
+    private static func decrementDownloadCount() {
+        downloadCountLock.lock()
+        defer { downloadCountLock.unlock() }
+        if activeDownloadCount > 0 {
+            activeDownloadCount -= 1
+        }
+    }
+
+    var fileExists: Bool {
+        let destination = Prefs.downloadURL
+        if filename != nil {
+            let file = destination.appendingPathComponent(filename!)
+
+            // Start accessing security-scoped resource for file check (only if needed)
+            let accessStarted = Prefs.startAccessingDownloadURL()
+            defer {
+                Prefs.stopAccessingDownloadURL(accessStarted)
+            }
+
+            return FileManager.default.fileExists(atPath: file.path)
+        } else {
+            return false
+        }
+    }
+
+    func download(url: URL?, replacing: Bool = false) throws {
+        // Store the URL for potential resume attempts
+        downloadURL = url
+        isComplete = false
+        byteFormatter.countStyle = .file
+
+        // Get destination URL and start accessing security-scoped resource for the entire download lifecycle (only if needed)
+        let destination = Prefs.downloadURL
+        destinationURL = destination
+        if !isAccessingSecurityScope {
+            isAccessingSecurityScope = Prefs.startAccessingDownloadURL()
+        }
+
+        if replacing {
+            let suggestedFilename = filename ?? "InstallerAssistant.pkg"
+            let file = destination.appendingPathComponent(suggestedFilename)
+
+            try FileManager.default.removeItem(at: file)
+            // Clear resume data if replacing file
+            resumeData = nil
+        }
+
+        // Increment active download count when starting a new download
+        DownloadManager.incrementDownloadCount()
+        startDownload()
+    }
+
+    private func startDownload() {
+        guard let url = downloadURL else { return }
+
+        isDownloading = true
+        // Only reset retryCount when starting a new download (not during retries)
+        if !isRetrying {
+            retryCount = 0
+        }
+        isRetrying = false
+
+        // Set dock progress style
+        Task { @MainActor in
+            DockProgress.style = .badge(color: .blue, badgeValue: { DownloadManager.getDownloadCount() })
+        }
+
+        // Try to resume from previous download if resume data exists
+        if let resumeData {
+            downloadTask = urlSession.downloadTask(withResumeData: resumeData)
+            print("Resuming download of \(filename ?? "InstallerAssistant.pkg")")
+        } else {
+            downloadTask = urlSession.downloadTask(with: url)
+            progress = 0.0
+            Task { @MainActor in
+                DockProgress.progress = 0.0
+            }
+            localURL = nil
+            print("Starting download of \(filename ?? "InstallerAssistant.pkg")")
+        }
+
+        downloadTask?.resume()
+    }
+
+    func cancel() {
+        if isDownloading, downloadTask != nil {
+            downloadTask?.cancel { [weak self] _ in
+                Task { @MainActor [weak self] in
+                    self?.resumeData = nil
+                }
+            }
+            isDownloading = false
+            isRetrying = false
+            localURL = nil
+            downloadURL = nil
+            progress = 0.0
+            Task { @MainActor in DockProgress.progress = 0.0 }
+            retryCount = 0
+            retryTimer?.invalidate()
+            retryTimer = nil
+            // Decrement active download count when cancelled
+            DownloadManager.decrementDownloadCount()
+            // Stop accessing security-scoped resource
+            stopAccessingSecurityScope()
+            // Clean up temporary files off the main thread to avoid UI stalls
+            DispatchQueue.global(qos: .utility).async { [weak self] in
+                self?.cleanupTempDirectory()
+            }
+        }
+        print("Cancelled download of \(filename ?? "InstallerAssistant.pkg")")
+    }
+
+    private func cleanupTempDirectory() {
+        DownloadManager.cleanupAppTempDirectory()
+    }
+
+    /// Removes all files from the app's sandboxed temporary directory
+    /// For sandboxed apps, this is ~/Library/Containers/perez987.DownloadFullInstaller/Data/tmp
+    static func cleanupAppTempDirectory() {
+        let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+
+        // Print temporary directory path
+//        let strTempDir = tempDir.absoluteString
+//        print("Temporary directory: \(strTempDir.dropFirst(7))")
+
+        do {
+            let tempFiles = try FileManager.default.contentsOfDirectory(at: tempDir, includingPropertiesForKeys: [.isRegularFileKey, .fileSizeKey])
+            var deletedCount = 0
+            var totalSize: Int64 = 0
+
+            for file in tempFiles {
+                do {
+                    // Only delete regular files (not directories)
+                    let resourceValues = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
+                    guard resourceValues.isRegularFile == true else { continue }
+
+                    // Get file size before deletion
+                    let fileSize = resourceValues.fileSize ?? 0
+
+                    try FileManager.default.removeItem(at: file)
+                    deletedCount += 1
+                    totalSize += Int64(fileSize)
+                } catch {
+                    // Continue with other files if one fails
+                    print("Failed to delete temp file \(file.lastPathComponent): \(error.localizedDescription)")
+                }
+            }
+
+            if deletedCount > 0 {
+                let sizeString = ByteCountFormatter.string(fromByteCount: totalSize, countStyle: .file)
+                print("Cleaned up temporary directory: deleted \(deletedCount) file(s), freed \(sizeString)")
+            }
+        } catch {
+            print("Failed to access temporary directory for cleanup: \(error.localizedDescription)")
+        }
+    }
+
+    private func stopAccessingSecurityScope() {
+        if isAccessingSecurityScope {
+            Prefs.stopAccessingDownloadURL(isAccessingSecurityScope)
+            isAccessingSecurityScope = false
+        }
+    }
+
+    private func retryDownload() {
+        guard retryCount < maxRetries else {
+            print("Max retry attempts reached. Download failed.")
+            Task { @MainActor [weak self] in
+                self?.isDownloading = false
+                self?.isRetrying = false
+                self?.resumeData = nil
+                DockProgress.progress = 0.0
+            }
+            // Decrement active download count when max retries reached
+            DownloadManager.decrementDownloadCount()
+            // Stop accessing security-scoped resource
+            stopAccessingSecurityScope()
+            return
+        }
+
+        retryCount += 1
+
+        let retryDelay: Double = 5
+
+        print("Connection lost. Retrying download in \(Int(retryDelay))\"... (Attempt \(retryCount)/\(maxRetries))")
+
+        Task { @MainActor [weak self] in
+            self?.isRetrying = true
+        }
+
+        retryTimer = Timer.scheduledTimer(withTimeInterval: retryDelay, repeats: false) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.startDownload()
+            }
+        }
+    }
+
+    func revealInFinder() {
+        if isComplete {
+            let destination = Prefs.downloadPath
+            NSWorkspace.shared.selectFile(localURL?.path, inFileViewerRootedAtPath: destination)
+        }
+    }
+}
+
+extension DownloadManager: URLSessionDownloadDelegate {
+    func urlSession(_: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        // Use the stored destination URL that already has security-scoped access
+        guard let destination = destinationURL else {
+            print("Error: No destination URL available")
+            DownloadManager.decrementDownloadCount()
+            stopAccessingSecurityScope()
+            return
+        }
+
+        // get the suggest file name or create a uuid string
+        let suggestedFilename = filename ?? downloadTask.response?.suggestedFilename ?? UUID().uuidString
+
+        do {
+            let file = destination.appendingPathComponent(suggestedFilename)
+            let fileExists = FileManager.default.fileExists(atPath: file.path)
+
+            let newURL: URL?
+            if fileExists {
+                // Remove existing file first
+                try FileManager.default.removeItem(at: file)
+            }
+
+            // Move the file from temp location to destination
+            // Using moveItem to avoid requiring double disk space
+            // moveItem handles cross-volume moves internally
+            try FileManager.default.moveItem(at: location, to: file)
+            newURL = file
+
+            print("Finished download of \(filename ?? "InstallerAssistant.pkg")")
+
+            // Decrement active download count on successful completion
+            DownloadManager.decrementDownloadCount()
+            // Stop accessing security-scoped resource after successful save
+            stopAccessingSecurityScope()
+
+            Task { @MainActor [weak self] in
+                self?.isDownloading = false
+                self?.isRetrying = false
+                self?.localURL = newURL
+                self?.isComplete = true
+                self?.resumeData = nil
+                self?.retryCount = 0
+                self?.retryTimer?.invalidate()
+                self?.retryTimer = nil
+                self?.errorMessage = nil
+                DockProgress.progress = 0.0
+            }
+        } catch {
+            print("Error saving file: \(error.localizedDescription)")
+
+            // Decrement download count on failure too
+            DownloadManager.decrementDownloadCount()
+            // Stop accessing security-scoped resource on failure
+            stopAccessingSecurityScope()
+
+            // Extract folder name from destination path for error message
+            let folderName = destination.lastPathComponent
+            let errorMsg = String(format: NSLocalizedString("The file '%@' could not be saved to the '%@' folder. Error: %@", comment: "Download save error"), suggestedFilename, folderName, error.localizedDescription)
+
+            Task { @MainActor [weak self] in
+                self?.isDownloading = false
+                self?.isRetrying = false
+                self?.isComplete = false
+                self?.errorMessage = errorMsg
+                self?.resumeData = nil
+                self?.retryCount = 0
+                self?.retryTimer?.invalidate()
+                self?.retryTimer = nil
+                DockProgress.progress = 0.0
+            }
+        }
+    }
+
+    func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didWriteData _: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        // Throttle UI updates to at most 20 per second to avoid flooding the main actor queue
+        let now = Date()
+        guard now.timeIntervalSince(lastProgressUpdate) >= 0.05 else { return }
+        lastProgressUpdate = now
+        let prog = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
+        let str = "\(byteFormatter.string(fromByteCount: totalBytesWritten))/\(byteFormatter.string(fromByteCount: totalBytesExpectedToWrite))"
+        DispatchQueue.main.async { [weak self] in
+            self?.progress = prog
+            self?.progressString = str
+            DockProgress.progress = prog
+        }
+    }
+
+    /// Handle download resumption
+    func urlSession(_: URLSession, downloadTask _: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
+        print("Download resumed at offset: \(fileOffset) bytes")
+        let prog = Double(fileOffset) / Double(expectedTotalBytes)
+        let str = "\(byteFormatter.string(fromByteCount: fileOffset))/\(byteFormatter.string(fromByteCount: expectedTotalBytes))"
+        DispatchQueue.main.async { [weak self] in
+            self?.progress = prog
+            self?.progressString = str
+            DockProgress.progress = prog
+        }
+    }
+}
+
+// MARK: - URLSessionTaskDelegate methods for error handling
+
+extension DownloadManager: URLSessionTaskDelegate {
+    func urlSession(_: URLSession, task _: URLSessionTask, didCompleteWithError error: Error?) {
+        guard let error else { return }
+
+        // Ignore cancellation errors — these are expected when the user cancels a download
+        let nsError = error as NSError
+        if nsError.domain == NSURLErrorDomain, nsError.code == NSURLErrorCancelled {
+            return
+        }
+
+        print("Download error: \(error.localizedDescription)")
+        //        print("Download error occurred: the Internet connection has been lost")
+
+        // Check if this is a network error that we can recover from
+        let isNetworkError = nsError.domain == NSURLErrorDomain &&
+            (nsError.code == NSURLErrorNotConnectedToInternet ||
+                nsError.code == NSURLErrorNetworkConnectionLost ||
+                nsError.code == NSURLErrorTimedOut ||
+                nsError.code == NSURLErrorCannotConnectToHost)
+
+        if isNetworkError {
+            // Try to get resume data if available
+            if let resumeDataFromError = (error as NSError).userInfo[NSURLSessionDownloadTaskResumeData] as? Data {
+                resumeData = resumeDataFromError
+                print("Resume data saved for future retry")
+            }
+
+            // Attempt to retry the download
+            Task { @MainActor [weak self] in
+                self?.retryDownload()
+            }
+        } else {
+            // Non-recoverable error
+            print("Non-recoverable error: \(error.localizedDescription)")
+            // Decrement active download count on non-recoverable error
+            DownloadManager.decrementDownloadCount()
+            // Stop accessing security-scoped resource on non-recoverable error
+            stopAccessingSecurityScope()
+            Task { @MainActor [weak self] in
+                self?.isDownloading = false
+                self?.isRetrying = false
+                self?.resumeData = nil
+                self?.retryCount = 0
+                self?.retryTimer?.invalidate()
+                self?.retryTimer = nil
+                DockProgress.progress = 0.0
+            }
+        }
+    }
+}

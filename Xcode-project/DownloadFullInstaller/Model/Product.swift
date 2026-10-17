@@ -1,0 +1,193 @@
+//
+//  Product.swift
+//
+//  Created by Armin Briegel on 2021-06-15
+//
+
+import Foundation
+
+@MainActor
+class Product: Codable, Identifiable, ObservableObject {
+    var thisComponent: String {
+        String(describing: self)
+    }
+
+    let serverMetadataURL: String?
+    let packages: [Package]
+    let postDate: Date
+    let distributions: [String: String]
+    let extendedMetaInfo: MetaInfo?
+
+    @Published var sucatalog: SUCatalog?
+    @Published var key: String?
+
+    @Published var osName: String?
+    @Published var title: String?
+    @Published var buildVersion: String?
+    private let _id = UUID().uuidString
+    nonisolated var id: String {
+        _id
+    }
+
+    @Published var productVersion: String?
+    @Published var installerVersion: String?
+
+    @Published var isLoading = false
+    @Published var hasLoaded = false
+
+    var distributionURL: String? {
+        if distributions.keys.contains("English") {
+            return distributions["English"]!
+        } else if distributions.keys.contains("en") {
+            return distributions["en"]!
+        }
+        return nil
+    }
+
+    var darwinVersion: String {
+        if buildVersion != nil {
+            String(buildVersion!.prefix(2))
+        } else {
+            "unknown"
+        }
+    }
+
+    var buildManifestURL: String? {
+        let buildManifest = packages.first { $0.url.hasSuffix("BuildManifest.plist") }
+        return buildManifest?.url
+    }
+
+    var installerASSPackage: Package? {
+        packages.first { $0.url.hasSuffix("InstallAssistant.pkg") }
+    }
+
+    var installerESDPackage: Package? {
+        packages.first { $0.url.hasSuffix("InstallESDDmg.pkg") }
+    }
+
+    var installAssistantURL: URL? {
+        if let installAssistant = installerASSPackage {
+//            print("\(thisComponent) : \(installAssistant)")
+            URL(string: installAssistant.url)
+        } else {
+            if let installAssistant = installerESDPackage {
+//                print("\(thisComponent) : \(installAssistant)")
+                URL(string: installAssistant.url)
+            } else {
+                nil
+            }
+        }
+    }
+
+    var installAssistantSize: Int {
+        if installerASSPackage != nil {
+            installerASSPackage?.size ?? 0
+        } else {
+            if installerESDPackage != nil {
+                installerESDPackage?.size ?? 0
+            } else {
+                0
+            }
+        }
+    }
+
+    func loadBuildManifest() {
+        guard let urlString = buildManifestURL else { return }
+        guard let url = URL(string: urlString) else { return }
+
+        let sessionConfig = URLSessionConfiguration.ephemeral
+        let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
+
+        let task = session.dataTask(with: url) { [weak self] data, response, error in
+            if error != nil {
+                return
+            }
+
+            let httpResponse = response as! HTTPURLResponse
+            if httpResponse.statusCode == 200 {
+                if let data {
+                    Task { @MainActor [weak self] in
+                        self?.decodeBuildManifest(data: data)
+                    }
+                }
+            }
+        }
+
+        isLoading = true
+        hasLoaded = false
+        osName = nil
+        title = nil
+        buildVersion = nil
+        productVersion = nil
+        installerVersion = nil
+        task.resume()
+    }
+
+    func decodeBuildManifest(data: Data) {
+        isLoading = false
+        hasLoaded = true
+
+        let decoder = PropertyListDecoder()
+        if let buildManifest = try? decoder.decode(BuildManifest.self, from: data) {
+            buildVersion = buildManifest.productBuildVersion
+            productVersion = buildManifest.productVersion
+//            print("\(thisComponent) :      Build Version: \(buildVersion ?? "<none>")")
+        }
+    }
+
+    func loadDistribution() {
+        guard let urlString = distributionURL else { return }
+        guard let url = URL(string: urlString) else { return }
+
+        let sessionConfig = URLSessionConfiguration.ephemeral
+        let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
+
+        let task = session.dataTask(with: url) { [weak self] data, response, error in
+            if error != nil {
+                return
+            }
+
+            let httpResponse = response as! HTTPURLResponse
+            if httpResponse.statusCode == 200 {
+                if let data {
+                    Task { @MainActor [weak self] in
+                        self?.parseDistXML(data: data)
+                    }
+                }
+            }
+        }
+
+        isLoading = true
+        hasLoaded = false
+
+        osName = nil
+        title = nil
+        buildVersion = nil
+        productVersion = nil
+        installerVersion = nil
+        task.resume()
+    }
+
+    func parseDistXML(data: Data) {
+        let parser = XMLParser(data: data)
+        let delegate = DistParserDelegate()
+        parser.delegate = delegate
+        parser.parse()
+
+        osName = delegate.osName
+        title = delegate.title
+        productVersion = delegate.productVersion
+        buildVersion = delegate.buildVersion
+        installerVersion = delegate.installerVersion
+        isLoading = false
+        hasLoaded = true
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case serverMetadataURL = "ServerMetadataURL"
+        case packages = "Packages"
+        case postDate = "PostDate"
+        case distributions = "Distributions"
+        case extendedMetaInfo = "ExtendedMetaInfo"
+    }
+}

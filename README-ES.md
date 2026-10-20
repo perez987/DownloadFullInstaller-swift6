@@ -1,8 +1,9 @@
-# Download Full Installer
+# Descargar el instalador completo
+
 
 ![Plataforma](https://img.shields.io/badge/macOS-15+-orange.svg)
 ![Swift](https://img.shields.io/badge/Swift-6-lavender.svg)
-![Xcode](https://img.shields.io/badge/Xcode-26-blue.svg)
+![Xcode](https://img.shields.io/badge/Xcode-26-green.svg)
 ![Downloads](https://img.shields.io/github/downloads/perez987/DownloadFullInstaller/total?style=flat&label=Downloads&labelColor=Downloads)
 
 **Download Full Installer** es una aplicación para macOS escrita en SwiftUI 6 que descarga instaladores PKG o firmwares IPSW para la aplicación **Instalar macOS Big Sur** y versiones posteriores. Funciona en macOS 15 Sequoia y versiones posteriores.
@@ -10,7 +11,7 @@
 **Versiones**:
 
 - Si prefieres la versión desarrollada con Swift 5, que funciona en macOS 13 o versiones posteriores, obtén el código del proyecto desde la rama `swift5` o la versión 4.x.x en la página de [versiones](https://github.com/perez987/DownloadFullInstaller/releases/tag/4.6.0)
-- Hay una versión 2.5.3, desarrollada con Swift 5, que funciona en macOS Big Sur o posterior, obtén el código fuente o la app notarizada en la página de [versiones](https://github.com/perez987/DownloadFullInstaller/releases/tag/2.5.3)
+- Hay una versión 2.5.5, desarrollada con Swift 5, que funciona en macOS Big Sur o posterior, obtén el código fuente o la app notarizada en la página de [versiones](https://github.com/perez987/DownloadFullInstaller/releases/tag/2.5.5)
 
 |     |
 | --- |

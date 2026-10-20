@@ -1,6 +1,6 @@
 # Preview warning
 
-> **Note**: This document describes a workaround that was applied when the project targeted macOS 13. Since the project now targets macOS 15 Sequoia (Swift 6), the `#Preview` macro with `@Previewable` is fully supported and this workaround is no longer needed.
+> **Note**: This document describes a workaround that was applied when the project targeted macOS 13. Since the project now targets macOS 26 (Swift 6), the `#Preview` macro with `@Previewable` is fully supported and this workaround is no longer needed.
 
 Replace #Preview macro with PreviewProvider for macOS 13 compatibility.
 

@@ -55,8 +55,7 @@ struct FetchInstallerPkgApp: App {
                     SettingsView()
                 }
         }
-
-        .defaultSize(width: 1080, height: 680)
+//        .defaultSize(width: 1000, height: 820)
         .windowResizability(.contentSize)
         .commands {
             CommandGroup(replacing: .appSettings) {

@@ -56,7 +56,7 @@ struct ContentView: View {
         }
         .id(localizationID)
         .background { GlassBackground() }
-        .frame(minWidth: 990, idealWidth: 990, maxWidth: 990, minHeight: 790, idealHeight: 790, maxHeight: 790)
+        .frame(minWidth: 990, idealWidth: 990, maxWidth: 990, minHeight: 724, idealHeight: 724, maxHeight: 724)
         .navigationTitle(NSLocalizedString("Download Full Installer", comment: "Main window title"))
         .onAppear {
             if !sucatalog.hasLoaded, !sucatalog.isLoading { sucatalog.load() }

@@ -222,29 +222,29 @@ struct FirmwareView: View {
     @ObservedObject var multiDownloadManager = MultiDownloadManager.shared
     @State private var activeAlert: AppAlertType?
     @State private var isDownloaded = false
-
+    
     private func checkIfDownloaded() {
         let destination = Prefs.downloadURL
         let file = destination.appendingPathComponent(firmware.filename)
-
+        
         let accessStarted = Prefs.startAccessingDownloadURL()
         defer {
             Prefs.stopAccessingDownloadURL(accessStarted)
         }
-
+        
         if FileManager.default.fileExists(atPath: file.path) {
             isDownloaded = true
             return
         }
-
+        
         isDownloaded = multiDownloadManager.completedDownloads.contains { $0.localURL == file }
     }
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 12) {
                 FirmwareIconView(firmware: firmware)
-
+                
                 VStack(alignment: .leading, spacing: 6) {
                     HStack(spacing: 8) {
                         Text("macOS \(firmware.osName)")
@@ -257,23 +257,23 @@ struct FirmwareView: View {
                             .font(.body)
                             .fixedSize()
                         Spacer(minLength: 4)
-
+                        
                         Button(action: {
                             if !multiDownloadManager.canStartNewDownload {
                                 activeAlert = .maxDownloads
                                 return
                             }
-
+                            
                             if multiDownloadManager.isDownloading(filename: firmware.filename) {
                                 return
                             }
-
+                            
                             let destination = Prefs.downloadURL
                             let file = destination.appendingPathComponent(firmware.filename)
                             let accessStarted = Prefs.startAccessingDownloadURL()
                             defer { Prefs.stopAccessingDownloadURL(accessStarted) }
                             let fileExists = FileManager.default.fileExists(atPath: file.path)
-
+                            
                             if fileExists {
                                 activeAlert = .replaceFile(filename: firmware.filename)
                             } else {
@@ -291,7 +291,7 @@ struct FirmwareView: View {
                         .buttonStyle(.borderedProminent)
                         .opacity(multiDownloadManager.isDownloading(filename: firmware.filename) ? 0.4 : 1.0)
                     }
-
+                    
                     HStack(spacing: 8) {
                         if isDownloaded {
                             Image(systemName: "checkmark.circle.fill")
@@ -341,10 +341,10 @@ struct FirmwareView: View {
             }
         }
     }
-
+    
     struct FirmwareIconView: View {
         let firmware: FirmwareProduct
-
+        
         private var iconName: String {
             let majorVersion = Int(firmware.productVersion.components(separatedBy: ".").first ?? "") ?? 0
             switch majorVersion {
@@ -366,18 +366,18 @@ struct FirmwareView: View {
                 return "macOS"
             }
         }
-
+        
         private var isBetaBuild: Bool {
             firmware.buildVersion.range(of: "[a-z]$", options: .regularExpression) != nil
         }
-
+        
         var body: some View {
             ZStack(alignment: .center) {
                 Image(iconName)
                     .resizable(resizingMode: .stretch)
                     .aspectRatio(contentMode: .fit)
                     .foregroundColor(Color.blue)
-
+                
                 if isBetaBuild {
                     Text(" beta ")
                         .font(.headline)
@@ -389,13 +389,14 @@ struct FirmwareView: View {
             .frame(width: 50.0, height: 50.0, alignment: .center)
         }
     }
-
-struct InstallerView_Previews: PreviewProvider {
-    static var previews: some View {
-        let catalog = SUCatalog()
-
-        if let preview_product = catalog.installers.first {
-            InstallerView(product: preview_product)
+    
+    struct InstallerView_Previews: PreviewProvider {
+        static var previews: some View {
+            let catalog = SUCatalog()
+            
+            if let preview_product = catalog.installers.first {
+                InstallerView(product: preview_product)
+            }
         }
     }
 }

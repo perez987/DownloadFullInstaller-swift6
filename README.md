@@ -13,11 +13,15 @@
 - If you prefer the version built with Swift 5, that runs on macOS 13 or later, get the source code from the `swift5` branch or the version 4.x.x from the [releases page](https://github.com/perez987/DownloadFullInstaller/releases/tag/4.6.0)
 - There is a version 2.5.5, built with Swift 5, that runs on macOS Big Sur or later, you can get the source code or the notarized app from the [releases page](https://github.com/perez987/DownloadFullInstaller/releases/tag/2.5.5).
 
-### New in 6.0.0
+### New in version 6.0.0
 
-The main window is now a wide, resizable two-pane library with soft gradients and translucent surfaces. Choose Installers or Firmwares and a software update catalog on the left, then select a macOS release to see its available versions, build numbers, dates, sizes, and download actions on the right. The detail pane starts empty until you select a release.
+The main window is now a wide, two-pane library with soft gradients and translucent surfaces. Choose Installers or Firmwares and a software update catalog on the left, then select a macOS release to see its available versions, build numbers, dates, sizes, and download actions on the right. The detail pane starts empty until you select a release.
 
 Legacy installers appear at the end of the installer list. All downloads share the queue at the bottom right, with up to three simultaneous transfers, individual Cancel buttons, and Show in Finder actions. Changing the selected release or content type does not hide or interrupt downloads. Firmware comes from a separate feed, so the catalog picker is disabled in firmware mode.
+
+|     |
+|:---:|
+| ![Main window](Images/Main-window.png) |
 
 ### Preface
 

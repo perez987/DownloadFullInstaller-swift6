@@ -56,9 +56,7 @@ struct FetchInstallerPkgApp: App {
                 }
         }
 
-        // set width of 580 pixels to the main window in macOS 13 Ventura or newer
-//            .defaultSize(width: 580, height: 640)
-        // window resizability derived from the window’s content in macOS 13 Ventura or newer
+        .defaultSize(width: 1080, height: 680)
         .windowResizability(.contentSize)
         .commands {
             CommandGroup(replacing: .appSettings) {

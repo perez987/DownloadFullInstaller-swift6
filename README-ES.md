@@ -13,10 +13,11 @@
 - Si prefieres la versión desarrollada con Swift 5, que funciona en macOS 13 o versiones posteriores, obtén el código del proyecto desde la rama `swift5` o la versión 4.x.x en la página de [versiones](https://github.com/perez987/DownloadFullInstaller/releases/tag/4.6.0)
 - Hay una versión 2.5.5, desarrollada con Swift 5, que funciona en macOS Big Sur o posterior, obtén el código fuente o la app notarizada en la página de [versiones](https://github.com/perez987/DownloadFullInstaller/releases/tag/2.5.5)
 
-|     |
-| --- |
-| ![Installers](Images/Installers-es.png) |
-| ![Firmwares](Images/Firmwares-es.png) |
+### Novedades de la versión 6.0.0
+
+La ventana principal es ahora una biblioteca ancha y redimensionable con dos paneles, gradientes suaves y superficies translúcidas. Selecciona Instaladores o Firmwares y un catálogo a la izquierda; después selecciona una versión de macOS para ver las descargas disponibles, compilaciones, fechas, tamaños y acciones a la derecha. El panel de detalles comienza vacío.
+
+Los instaladores antiguos aparecen al final de la lista. Todas las descargas comparten la cola de la parte inferior derecha, con hasta tres transferencias simultáneas, botones para cancelar y acciones para mostrar los archivos en Finder. Cambiar de versión o de tipo de contenido no oculta ni interrumpe las descargas. Los firmwares utilizan una fuente independiente, por lo que el selector de catálogo está desactivado en ese modo.
 
 ### Prefacio
 
@@ -31,11 +32,11 @@ Este repositorio existe para mantener viva y en evolución «Download Full Insta
    - Swift 6
    - Xcode 26
 - Interfaz principal
-   - Añade una pestaña de firmwares para Apple Silicon para descargar archivos IPSW y restaurar Mac con T2 o Apple Silicon
+   - Lista permanente de versiones y panel de detalles para instaladores y firmwares IPSW de Apple Silicon
    - Se ha actualizado la interfaz mediante efecto glass, colores suaves y gradientes
 - Preferencias
    - Las preferencias para elegir el catálogo ya no están en un cuadro de diálogo independiente, sino en la parte superior de la ventana principal
-   - Se puede mostrar una única versión de macOS o todas las versiones a la vez
+   - Se muestran todas las versiones disponibles; selecciona una para ver sus descargas
 - Reposo del sistema
    - Añade lógica para impedir que el sistema entre en reposo mientras la aplicación está en ejecución
 - Descargas
@@ -57,11 +58,7 @@ Este repositorio existe para mantener viva y en evolución «Download Full Insta
 
 ### Descarga de instaladores de macOS obsoletos
 
-Se ha añadido un nuevo elemento llamado Legacy a la lista desplegable de sistemas macOS. Legacy abre una nueva ventana que muestra las cinco versiones disponibles de macOS obsoletos de los que existe un enlace directo para descargarlos. Puedes descargar cualquiera de estas versiones de macOS desde esa ventana.
-
-|     |
-| --- |
-| ![Legacy](Images/Legacy.png) |
+Las cinco versiones antiguas disponibles aparecen debajo de las versiones actuales en la lista de instaladores de la izquierda. Selecciona una para descargar su imagen de disco mediante la cola compartida. Abre el DMG descargado en Finder y ejecuta su paquete para crear la aplicación del instalador. Estas descargas no dependen del catálogo seleccionado.
 
 ### Función para crear la aplicación del instalador
 

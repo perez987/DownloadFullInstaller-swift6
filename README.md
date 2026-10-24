@@ -74,17 +74,9 @@ After downloading an `InstallAssistant.pkg` file, you can create the macOS insta
 
 Download Full Installer -> Settings menu (⌘ ,) opens a window where you can select a different folder to download installers. Default is ~/Downloads. Visual indicators (green marks) of downloaded installers are updated to match those in the selected folder.
 
-|     |
-| --- |
-| ![Settings](Images/Settings.png) |
-
 ### Language selector window
 
 Language selector can be opened from the menubar (`Languages` > `Select Language`) or by keyboard shortcut (`⌘ + L`).
-
-|     |
-| --- |
-| ![Languages](Images/Languages.png) |
 
 ### Clean up incomplete downloads on app quit
 

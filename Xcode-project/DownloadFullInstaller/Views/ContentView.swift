@@ -56,7 +56,7 @@ struct ContentView: View {
         }
         .id(localizationID)
         .background { GlassBackground() }
-        .frame(minWidth: 990, idealWidth: 990, maxWidth: 990, minHeight: 760, idealHeight: 760, maxHeight: 760)
+        .frame(minWidth: 990, idealWidth: 990, maxWidth: 990, minHeight: 790, idealHeight: 790, maxHeight: 790)
         .navigationTitle(NSLocalizedString("Download Full Installer", comment: "Main window title"))
         .onAppear {
             if !sucatalog.hasLoaded, !sucatalog.isLoading { sucatalog.load() }
@@ -123,18 +123,20 @@ struct ContentView: View {
                 } else if releases.isEmpty {
                     Text(emptyCatalogMessage)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
                 }
                 HStack {
                     Button(action: reloadCatalog) {
                         Label(NSLocalizedString("Refresh", comment: "Reload catalog"), systemImage: "arrow.clockwise")
                     }
+                    .foregroundStyle(.primary)
                     .disabled(isLoading)
                     Spacer()
                     if !isInstaller {
                         Link(destination: URL(string: "https://support.apple.com/en-us/108900")!) {
                             Image(systemName: "questionmark.circle")
+                                .font(.system(size: 24))
                         }
+                        .foregroundStyle(.primary)
                         .help(NSLocalizedString("Restore with Apple Configurator: How to", comment: ""))
                         .accessibilityLabel(NSLocalizedString("Restore with Apple Configurator: How to", comment: ""))
                     }

@@ -6,7 +6,7 @@
 ![Xcode](https://img.shields.io/badge/Xcode-26-blue.svg)
 ![Descargas](https://img.shields.io/github/downloads/perez987/DownloadFullInstaller/total?style=flat&label=Descargas&labelColor=Downloads)
 
-**Download Full Installer** es una aplicación para macOS escrita en SwiftUI que descarga instaladores PKG o firmware IPSW para la aplicación **Instalar macOS Big Sur** y versiones posteriores. Funciona en macOS 15 Sequoia y posteriores.
+**Download Full Installer** es una aplicación para macOS escrita en SwiftUI que descarga instaladores PKG o firmwares IPSW para la aplicación **Instalar macOS Big Sur** y versiones posteriores. Funciona en macOS 15 Sequoia y siguientes.
 
 **Versiones**:
 
@@ -15,17 +15,17 @@
 
 ### Novedades de la versión 6.0.0
 
-La ventana principal ahora es una biblioteca amplia de dos paneles, con degradados suaves y superficies translúcidas. Elige Instaladores o Firmware y un catálogo de actualización de software a la izquierda; después, selecciona una versión de macOS para ver a la derecha las versiones disponibles, números de compilación, fechas, tamaños y opciones de descarga. El panel de detalles permanece vacío hasta que selecciones una versión.
+La ventana principal ahora es una ventana amplia de dos paneles, con degradados suaves y superficies translúcidas. Elige Instaladores o Firmwares y un catálogo de actualización de software a la izquierda; después, selecciona una versión de macOS para ver a la derecha las versiones disponibles, números de compilación, fechas, tamaños y opciones de descarga. El panel de detalles permanece vacío hasta que selecciones una versión.
 
 Los instaladores antiguos aparecen al final de la lista de instaladores. Todas las descargas comparten la cola de la parte inferior derecha, con hasta tres transferencias simultáneas, botones Cancelar individuales y opciones para mostrar los archivos en Finder. Cambiar la versión o el tipo de contenido seleccionado no oculta ni interrumpe las descargas. El firmware procede de una fuente independiente, por lo que el selector de catálogos está desactivado en el modo de firmware.
 
 |     |
 |:---:|
-| ![Ventana principal](Images/Main-window.png) |
+| ![Ventana principal](Images/Main-window-es.png) |
 
 ### Prefacio
 
-En junio de 2025, [DownloadFullInstaller](https://github.com/scriptingosx/DownloadFullInstaller) dejó de desarrollarse. Durante más de tres años, mi repositorio fue una bifurcación del original. Sin embargo, después de que el repositorio original se archivara, creé un nuevo repositorio independiente (<em>no bifurcado</em>).
+En junio de 2025, [DownloadFullInstaller](https://github.com/scriptingosx/DownloadFullInstaller) interrumpió su desarrollo. Durante más de tres años, mi repositorio fue una bifurcación del original. Sin embargo, después de que el repositorio original se archivara, creé un nuevo repositorio independiente (<em>no bifurcado</em>).
 
 Este repositorio existe para mantener vivo y en crecimiento «Download Full Installer». Continúa donde lo dejó el original, integra las contribuciones de la comunidad y añade nuevas funciones. Mantendré este proyecto activo y actualizado mientras siga siendo útil para otros usuarios. Todo el mérito de la idea y la arquitectura originales corresponde a <em>scriptingosx</em>.
 
@@ -36,18 +36,18 @@ Este repositorio existe para mantener vivo y en crecimiento «Download Full Inst
    - Swift 6
    - Xcode 26
 - Interfaz principal
-   - Lista persistente de versiones y panel de detalles para instaladores y firmware IPSW de Apple Silicon
-   - Degradados suaves, tarjetas translúcidas y ventanas de Ajustes e Idioma con un diseño coherente
+   - Lista persistente de versiones y panel de detalles para instaladores y firmwares IPSW de Apple Silicon
+   - Degradados suaves, tarjetas translúcidas y ventanas de Ajustes e Idioma con diseño coherente
 - Preferencias
-   - Las opciones para elegir el catálogo ya no están en un cuadro de diálogo independiente, sino en la parte superior de la ventana principal
+   - Las opciones para elegir el catálogo no están en un cuadro de diálogo independiente, sino en la parte superior de la ventana principal
    - Se muestran todas las versiones disponibles; selecciona una para ver todas sus descargas
 - Reposo del sistema
    - Se añade lógica para evitar que el sistema entre en reposo mientras la aplicación está en ejecución
 - Descargas
    - Se añade la posibilidad de reanudar descargas, gestionando automáticamente las interrupciones de red
-   - Se añade una barra de progreso superpuesta al icono de la aplicación en el Dock durante las descargas PKG
+   - Se añade una barra de progreso superpuesta al icono de la aplicación en el Dock durante las descargas
    - Se admite un máximo de 3 descargas simultáneas
-   - Se puede elegir una carpeta de descargas
+   - Se puede elegir una carpeta de descargas personalizada
    - Se limpian las descargas incompletas al cerrar la aplicación
 - Idiomas
   - Se añade un sistema para seleccionar el idioma
@@ -57,26 +57,26 @@ Este repositorio existe para mantener vivo y en crecimiento «Download Full Inst
 - Actualizador
   - Se añade el sistema de actualización Sparkle (Swift Package Manager) para comprobar si hay nuevas versiones
 - Seguridad
-   - La aplicación está aislada en un entorno seguro (sandbox)
+   - La aplicación está aislada en un entorno seguro (_sandbox_)
    - Apple ha notarizado la aplicación.
 
 ### Descarga de instaladores antiguos de macOS
 
-Las cinco versiones antiguas de macOS disponibles aparecen debajo de las versiones actuales en la lista de instaladores de la izquierda. Selecciona una para descargar su imagen de disco mediante la cola de descargas compartida. Abre el DMG descargado en Finder y ejecuta su paquete para crear la aplicación instaladora. Las descargas antiguas son independientes del catálogo de actualización de software seleccionado.
+Las cinco versiones antiguas de macOS disponibles aparecen debajo de las versiones actuales en la lista de instaladores de la izquierda. Selecciona una para descargar su imagen de disco mediante la cola de descargas compartida. Abre la DMG descargado en Finder y ejecuta su paquete para crear la aplicación instaladora. Las descargas antiguas son independientes del catálogo de actualización de software seleccionado.
 
 ### Función para crear la aplicación instaladora
 
 Después de descargar un archivo `InstallAssistant.pkg`, puedes crear la aplicación instaladora de macOS (por ejemplo, «Instalar macOS Sequoia.app») directamente desde Download Full Installer:
 
-1. Descarga el PKG con el botón de descarga (↓).
-2. Haz clic en el botón «Crear aplicación instaladora», junto al botón de descarga.
-3. El archivo PKG se abrirá con el instalador estándar de macOS.
-4. Sigue las instrucciones en pantalla para completar la instalación.
+1. Descarga el PKG con el botón de descarga
+2. Haz clic en el botón «Crear aplicación instaladora», junto al botón de descarga
+3. El archivo PKG se abrirá con el instalador estándar de macOS
+4. Sigue las instrucciones en pantalla para completar la instalación
 5. La aplicación instaladora de macOS se creará en la carpeta `/Applications`.
 
 ### Ajustes para seleccionar la carpeta de descargas
 
-Download Full Installer -> menú Ajustes (⌘ ,) abre una ventana donde puedes seleccionar otra carpeta para descargar los instaladores. La carpeta predeterminada es `~/Downloads`. Los indicadores visuales (marcas verdes) de los instaladores descargados se actualizan para reflejar los archivos de la carpeta seleccionada.
+Download Full Installer -> menú Ajustes (⌘ ,) abre una ventana donde puedes seleccionar otra carpeta para descargar los paquetes. La carpeta predeterminada es `~/Downloads`. Los indicadores visuales (marcas verdes) de los instaladores descargados se actualizan para reflejar los archivos de la carpeta seleccionada.
 
 ### Ventana para seleccionar el idioma
 
@@ -84,9 +84,9 @@ Puedes abrir el selector de idioma desde la barra de menús (`Languages` > `Sele
 
 ### Limpieza de descargas incompletas al cerrar la aplicación
 
-Las descargas incompletas pueden acumularse en el directorio temporal de la aplicación aislada<br>
+Las descargas incompletas pueden acumularse en el directorio temporal de la aplicación _sandboxed_<br>
 `~/Library/Containers/perez987.DownloadFullInstaller/Data/tmp`<br>
-y consumir espacio en disco indefinidamente. La limpieza elimina de forma segura los archivos normales (no los directorios) de `NSTemporaryDirectory()`, que corresponde a la ruta temporal de la aplicación aislada. Si no se puede eliminar un archivo concreto, la limpieza continúa con los demás.
+y consumir espacio en disco indefinidamente. La limpieza elimina de forma segura los archivos normales (no los directorios) de `NSTemporaryDirectory()`, que corresponde a la ruta temporal de la aplicación _sandboxed_. Si no se puede eliminar un archivo concreto, la limpieza continúa con los demás.
 
 <!--### La aplicación está dañada y no se puede abrir
 

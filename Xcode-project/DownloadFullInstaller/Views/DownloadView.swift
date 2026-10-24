@@ -81,7 +81,7 @@ struct DownloadView: View {
                     .font(.headline)
                 Spacer()
                 Text("\(manager.activeDownloadCount) / \(MultiDownloadManager.maxConcurrentDownloads)")
-                    .font(.caption.monospacedDigit())
+                    .font(.headline.monospacedDigit())
                     .foregroundStyle(.secondary)
                     .accessibilityLabel(NSLocalizedString("Active downloads", comment: "Active download count"))
             }

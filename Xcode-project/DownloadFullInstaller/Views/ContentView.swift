@@ -75,7 +75,7 @@ struct ContentView: View {
                 Text(NSLocalizedString("macOS Library", comment: "Release browser heading"))
                     .font(.title2.bold())
                 Text(NSLocalizedString("Choose a release to explore.", comment: "Release browser subtitle"))
-                    .font(.subheadline)
+                    .font(.body)
                     .foregroundStyle(.secondary)
             }
             .padding(.horizontal, 20)
@@ -92,6 +92,7 @@ struct ContentView: View {
                     }
                 } header: {
                     Text(NSLocalizedString("Available Releases", comment: "Catalog releases section"))
+                        .font(.body.weight(.semibold))
                 }
 
                 if isInstaller {
@@ -102,6 +103,7 @@ struct ContentView: View {
                         }
                     } header: {
                         Text(NSLocalizedString("Legacy macOS Installers", comment: "Legacy releases section"))
+                            .font(.body.weight(.semibold))
                     }
                 }
             }
@@ -225,7 +227,7 @@ struct ContentView: View {
             Spacer()
             if isInstaller, selectedLegacy == nil {
                 Text(seedProgram)
-                    .font(.caption.weight(.medium))
+                    .font(.body.weight(.medium))
                     .padding(.horizontal, 12)
                     .padding(.vertical, 7)
                     .glassSubtle()

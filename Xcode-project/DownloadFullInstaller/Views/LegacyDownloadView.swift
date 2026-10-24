@@ -22,9 +22,9 @@ struct LegacyVersionRow: View {
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 6) {
                 Text("macOS \(version.name)")
-                    .font(.headline)
+                    .font(.title3.weight(.semibold))
                 Text("\(version.version) · DMG")
-                    .font(.subheadline)
+                    .font(.body)
                     .foregroundStyle(.secondary)
             }
             Spacer()

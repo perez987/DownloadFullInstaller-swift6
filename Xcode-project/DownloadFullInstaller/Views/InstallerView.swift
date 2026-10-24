@@ -54,24 +54,23 @@ struct InstallerView: View {
             HStack(spacing: 12) {
                 IconView(product: product)
 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 6) {
                     HStack {
                         Text(product.title ?? "<no title>")
-                            .font(.headline)
+                            .font(.title3.weight(.semibold))
                         Spacer()
                         Text(product.productVersion ?? "<no version>")
+                            .font(.title3)
                             .frame(alignment: .trailing)
                     }
                     HStack {
                         Text(product.postDate, style: .date)
-                            .font(.footnote)
                         Text(Prefs.byteFormatter.string(fromByteCount: Int64(product.installAssistantSize)))
-                            .font(.footnote)
                         Spacer()
                         Text(product.buildVersion ?? "<no build>")
                             .frame(alignment: .trailing)
-                            .font(.footnote)
                     }
+                    .font(.body)
                 }
 
             }
@@ -255,24 +254,23 @@ struct FirmwareView: View {
             HStack(spacing: 12) {
                 FirmwareIconView(firmware: firmware)
 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 6) {
                     HStack {
                         Text("macOS \(firmware.osName)")
-                            .font(.headline)
+                            .font(.title3.weight(.semibold))
                         Spacer()
                         Text(firmware.productVersion)
+                            .font(.title3)
                             .frame(alignment: .trailing)
                     }
                     HStack {
                         Text(firmware.postDate, style: .date)
-                            .font(.footnote)
                         Text(Prefs.byteFormatter.string(fromByteCount: Int64(firmware.size)))
-                            .font(.footnote)
                         Spacer()
                         Text(firmware.buildVersion)
                             .frame(alignment: .trailing)
-                            .font(.footnote)
                     }
+                    .font(.body)
                 }
 
                 }

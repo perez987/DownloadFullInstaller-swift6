@@ -31,7 +31,7 @@ struct SettingsView: View {
     }
 
     var body: some View {
-        ZStack {
+        ZStack { 
             GlassBackground()
 
             VStack(spacing: 0) {

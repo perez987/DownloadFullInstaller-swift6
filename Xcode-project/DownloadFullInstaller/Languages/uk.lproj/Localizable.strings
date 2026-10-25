@@ -109,9 +109,9 @@
 "Active downloads" = "Активні завантаження";
 "No active downloads" = "Немає активних завантажень";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Можна виконувати не більше 3 завантажень одночасно. Дочекайтеся завершення одного із завантажень, перш ніж почати нове.";
-"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon.";
-"This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
-"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app.";
+"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Завантажте всі шість наведених нижче компонентів в одну папку. Ці інсталятори для Intel не можуть встановлювати macOS на комп’ютери Mac з Apple Silicon.";
+"This catalog does not provide all six required installer components. Try the Regular catalog." = "У цьому каталозі немає всіх шести необхідних компонентів інсталятора. Спробуйте стандартний каталог.";
+"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Після завантаження всіх шести компонентів відкрийте InstallESDDmg.pkg у папці, куди його завантажено, і дотримуйтеся вказівок, щоб створити програму інсталятора.";
 
 /* Apple Configurator Restore */
 "Restore with Apple Configurator" = "Відновити за допомогою Apple Configurator";

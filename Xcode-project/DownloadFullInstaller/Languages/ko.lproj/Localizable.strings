@@ -109,9 +109,9 @@
 "Active downloads" = "진행 중인 다운로드";
 "No active downloads" = "진행 중인 다운로드 없음";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "동시에 최대 3개까지 다운로드할 수 있습니다. 다운로드가 완료될 때까지 기다린 후 새 다운로드를 시작하세요.";
-"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon.";
-"This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
-"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app.";
+"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "아래의 여섯 구성 요소를 모두 같은 폴더에 다운로드하세요. 이 Intel 설치 프로그램으로는 Apple Silicon Mac에 macOS를 설치할 수 없습니다.";
+"This catalog does not provide all six required installer components. Try the Regular catalog." = "이 카탈로그에는 필요한 설치 프로그램 구성 요소 여섯 개가 모두 포함되어 있지 않습니다. 일반 카탈로그를 사용해 보세요.";
+"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "여섯 구성 요소를 모두 다운로드한 후 다운로드한 폴더에서 InstallESDDmg.pkg를 열고 안내에 따라 설치 앱을 만드세요.";
 
 /* Apple Configurator Restore */
 "Restore with Apple Configurator" = "Apple Configurator로 복원";

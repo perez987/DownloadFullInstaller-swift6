@@ -163,9 +163,9 @@
 "Active downloads" = "التنزيلات النشطة";
 "No active downloads" = "لا توجد تنزيلات نشطة";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "يمكنك تشغيل ما يصل إلى 3 تنزيلات في الوقت نفسه. انتظر حتى يكتمل أحد التنزيلات قبل بدء تنزيل جديد.";
-"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon.";
-"This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
-"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app.";
+"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "نزّل المكونات الستة أدناه إلى المجلد نفسه. لا يمكن لهذه أدوات التثبيت المخصصة لمعالجات Intel تثبيت macOS على أجهزة Mac المزودة بشريحة Apple Silicon.";
+"This catalog does not provide all six required installer components. Try the Regular catalog." = "لا يوفر هذا الكتالوج مكونات التثبيت الستة المطلوبة. جرّب الكتالوج العادي.";
+"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "بعد تنزيل المكونات الستة، افتح InstallESDDmg.pkg من المجلد الذي نُزّل إليه واتبع التعليمات لإنشاء تطبيق التثبيت.";
 
 /* Apple Configurator Restore */
 "Restore with Apple Configurator" = "الاستعادة باستخدام Apple Configurator";

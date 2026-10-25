@@ -8,7 +8,7 @@
 
 **Download Full Installer** is a macOS application written in SwiftUI that downloads PKG installers or IPSW firmwares for the **Install macOS Big Sur** application and newer. Runs on macOS 15 Sequoia and later.
 
-It also discovers multipart pre-Big Sur installers, including High Sierra and Mojave, when Apple includes them in the selected software update catalog. These require downloading six components and then opening `InstallESDDmg.pkg` to create the installer app; see [legacy installer instructions](DOCS/Legacy-macos.md).
+It also discovers multipart pre-Big Sur installers, including High Sierra, Mojave, and Catalina, when Apple includes them in the selected software update catalog. These require downloading six components and then opening `InstallESDDmg.pkg` to create the installer app; see [legacy installer instructions](DOCS/Legacy-macos.md).
 
 **Versions**:
 
@@ -64,7 +64,7 @@ This repo exists to keep "Download Full Installer" alive and growing. Picking up
 
 ### Legacy macOS installer download
 
-Catalog-based High Sierra/Mojave installers appear under **Available Releases** when available. Download all six files from their detail card (up to three at a time) into their product-specific subfolder of your download folder, then open `InstallESDDmg.pkg` from that folder and follow the instructions to create the installer app. This does not make Intel macOS releases installable on Apple Silicon.
+Catalog-based High Sierra/Mojave/Catalina installers appear under **Available Releases** when available. Download all six files from their detail card (up to three at a time) into their product-specific subfolder of your download folder, then open `InstallESDDmg.pkg` from that folder and follow the instructions to create the installer app. This does not make Intel macOS releases installable on Apple Silicon.
 
 The five available legacy macOS releases are grouped under **Legacy macOS Installers** below the current releases in the left-hand installer list. This section is collapsed on launch; use the chevron to the right of its header to expand it. Select a release to download its disk image using the shared download queue. Open the downloaded DMG in Finder and run its package to create the installer app. Legacy downloads are independent of the selected software update catalog.
 
@@ -123,7 +123,7 @@ Since the Big Sur macOS installer application contains a single file larger than
 
 #### Can this download older versions of the macOS installer application?
 
-Yes. This fork supports fixed Apple disk-image links for Lion through Sierra (excluding Mavericks), plus multipart installers such as High Sierra and Mojave when present in Apple's catalogs. Big Sur and later still use a single `InstallAssistant.pkg`. Apple can remove catalog entries at any time.
+Yes. This fork supports fixed Apple disk-image links for Lion through Sierra (excluding Mavericks), plus multipart installers such as High Sierra, Mojave and Catalina when present in Apple's catalogs. Big Sur and later still use a single `InstallAssistant.pkg`. Apple can remove catalog entries at any time.
 
 #### Will you update this so it can download older versions?
 

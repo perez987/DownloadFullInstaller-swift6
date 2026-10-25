@@ -71,7 +71,7 @@ class Product: Codable, Identifiable, ObservableObject {
     }
 
     var installerComponents: [Package] {
-        LegacyInstallerAssembler.componentNames.compactMap { name in
+        LegacyInstallerComponents.names.compactMap { name in
             packages.first { URL(string: $0.url)?.lastPathComponent == name }
         }
     }

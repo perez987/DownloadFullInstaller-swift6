@@ -69,6 +69,10 @@ class DownloadItem: NSObject, ObservableObject, Identifiable, @unchecked Sendabl
 
     func download(url: URL?, replacing: Bool = false) throws {
         guard let url else { throw URLError(.badURL) }
+        guard let filename, !filename.isEmpty, !filename.hasPrefix("/"), !filename.hasSuffix("/"),
+              !filename.split(separator: "/").contains(where: { $0 == ".." || $0 == "." }) else {
+            throw CocoaError(.fileWriteInvalidFileName)
+        }
         downloadURL = url
         isComplete = false
         byteFormatter.countStyle = .file
@@ -81,9 +85,19 @@ class DownloadItem: NSObject, ObservableObject, Identifiable, @unchecked Sendabl
                 && destination.startAccessingSecurityScopedResource()
         }
 
+        // Multipart installers keep Apple's original filenames in a product-specific folder.
+        do {
+            try FileManager.default.createDirectory(
+                at: destination.appendingPathComponent(filename).deletingLastPathComponent(),
+                withIntermediateDirectories: true
+            )
+        } catch {
+            stopAccessingSecurityScope()
+            throw error
+        }
+
         if replacing {
-            let suggestedFilename = filename ?? "InstallerAssistant.pkg"
-            let file = destination.appendingPathComponent(suggestedFilename)
+            let file = destination.appendingPathComponent(filename)
 
             do {
                 if FileManager.default.fileExists(atPath: file.path) {

@@ -5,8 +5,11 @@
 //
 
 import Foundation
+#if canImport(FoundationXML)
+import FoundationXML
+#endif
 
-@objc class DistParserDelegate: NSObject, XMLParserDelegate {
+class DistParserDelegate: NSObject, XMLParserDelegate {
     enum Elements: String {
         case pkgref = "pkg-ref"
         case auxinfo
@@ -35,9 +38,6 @@ import Foundation
                     osName = nameOS[String(installerVersion.prefix(2))] ?? "macOS"
                 }
             }
-            if attributeDict["id"] == "InstallESDDmg" {
-                print("AttribureDict: \(attributeDict)")
-            }
         }
 
         if elementName == Elements.auxinfo.rawValue {
@@ -65,9 +65,9 @@ import Foundation
         }
 
         if elementName == Elements.string.rawValue {
-            if currentKey == "BUILD" {
+            if currentKey == "BUILD" || currentKey == "macOSProductBuildVersion" {
                 buildVersion = currentString
-            } else if currentKey == "VERSION" {
+            } else if currentKey == "VERSION" || currentKey == "macOSProductVersion" {
                 productVersion = currentString
             }
         }

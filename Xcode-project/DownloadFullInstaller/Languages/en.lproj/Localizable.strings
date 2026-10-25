@@ -113,3 +113,8 @@
 
 "Restore with Apple Configurator" = "Restore with Apple Configurator.";
 "Restore with Apple Configurator: How to" = "Restore with Apple Configurator:\nmacOS firmwares are IPSW files that can be used to restore Silicon Macs using Apple Configurator.\nFor this task, you need another Mac and a USB C cable that can transmit power as well as data.\nRestoring a Silicon Mac erases everything on the drive and the user loses all data that has not been previously backed up.";
+"Installer component %@ is missing or incomplete. Download it again." = "Installer component %@ is missing or incomplete. Download it again.";
+"Download all six components below. Open BaseSystem.dmg, then choose Create Installer App and select the installer app on that mounted image. Assembly requires additional free space equal to the downloaded components. These Intel installers cannot install macOS on Apple Silicon." = "Download all six components below. Open BaseSystem.dmg, then choose Create Installer App and select the installer app on that mounted image. Assembly requires additional free space equal to the downloaded components. These Intel installers cannot install macOS on Apple Silicon.";
+"This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
+"Open BaseSystem Image" = "Open BaseSystem Image";
+"Select the Install macOS app on the BaseSystem image you opened for this download. Do not select an installer from Applications or another release." = "Select the Install macOS app on the BaseSystem image you opened for this download. Do not select an installer from Applications or another release.";

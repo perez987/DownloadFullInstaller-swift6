@@ -12,6 +12,8 @@ struct ContentView: View {
     @State private var selectedRelease: String?
     @State private var localizationID = UUID()
 
+    private let multipartInstallerNames: Set<String> = ["High Sierra", "Mojave", "Catalina"]
+
     private var isInstaller: Bool { selectedTab == 0 }
 
     private var releases: [String] {
@@ -30,7 +32,7 @@ struct ContentView: View {
 
     private var displayedInstallers: [Product] {
         let installers = sucatalog.installers.filter { $0.hasLoaded && $0.osName == selectedRelease }
-        guard let selectedRelease, ["High Sierra", "Mojave", "Catalina"].contains(selectedRelease),
+        guard let selectedRelease, multipartInstallerNames.contains(selectedRelease),
               let latestMultipart = installers.filter(\.isMultipartInstaller).max(by: { lhs, rhs in
                   let versionOrder = (lhs.productVersion ?? "").compare(rhs.productVersion ?? "", options: .numeric)
                   if versionOrder != .orderedSame { return versionOrder == .orderedAscending }
@@ -41,6 +43,14 @@ struct ContentView: View {
             return installers
         }
         return installers.filter { !$0.isMultipartInstaller || $0.id == latestMultipart.id }
+    }
+
+    private var standardReleases: [String] {
+        isInstaller ? releases.filter { !multipartInstallerNames.contains($0) } : releases
+    }
+
+    private var multipartReleases: [String] {
+        releases.filter { multipartInstallerNames.contains($0) }
     }
 
     private var isLoading: Bool {
@@ -101,13 +111,25 @@ struct ContentView: View {
 
             List(selection: $selectedRelease) {
                 Section {
-                    ForEach(releases, id: \.self) { name in
+                    ForEach(standardReleases, id: \.self) { name in
                         releaseLabel(name: name, version: nameOS[name] ?? "", legacy: false)
                             .tag(name)
                     }
                 } header: {
                     Text(NSLocalizedString("Available Releases", comment: "Catalog releases section"))
                         .font(.body.weight(.semibold))
+                }
+
+                if isInstaller, !multipartReleases.isEmpty {
+                    Section {
+                        ForEach(multipartReleases, id: \.self) { name in
+                            releaseLabel(name: name, version: nameOS[name] ?? "", legacy: false)
+                                .tag(name)
+                        }
+                    } header: {
+                        Text(NSLocalizedString("Multipart Legacy Installers", comment: "Multipart legacy releases section"))
+                            .font(.body.weight(.semibold))
+                    }
                 }
 
                 if isInstaller {

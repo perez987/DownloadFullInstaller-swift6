@@ -129,23 +129,28 @@ struct LegacyInstallerChecks {
         let remaining = try files.contentsOfDirectory(atPath: components.path)
         require(!remaining.contains { $0.hasPrefix(".assembling-") }, "Failed assembly left staging data")
 
-        for (buildKey, versionKey, build, version) in [
-            ("BUILD", "VERSION", "17G66", "10.13.6"),
-            ("macOSProductBuildVersion", "macOSProductVersion", "18G103", "10.14.6"),
-            ("BUILD", "VERSION", "24G90", "15.6"),
+        for (buildKey, versionKey, build, version, releaseName) in [
+            ("BUILD", "VERSION", "17G66", "10.13.6", "High Sierra"),
+            ("macOSProductBuildVersion", "macOSProductVersion", "18G103", "10.14.6", "Mojave"),
+            ("BUILD", "VERSION", "19H2026", "10.15.7", "Catalina"),
+            ("BUILD", "VERSION", "24G90", "15.6", "Sequoia"),
         ] {
-            let xml = """
-            <?xml version="1.0"?>
-            <installer-gui-script><title>Install macOS</title>
-            <auxinfo><dict><key>\(buildKey)</key><string>\(build)</string>
-            <key>\(versionKey)</key><string>\(version)</string></dict></auxinfo>
-            </installer-gui-script>
-            """
-            let parser = XMLParser(data: Data(xml.utf8))
-            let delegate = DistParserDelegate()
-            parser.delegate = delegate
-            require(parser.parse(), "Distribution XML did not parse")
-            require(delegate.buildVersion == build && delegate.productVersion == version, "Distribution metadata mismatch")
+            for title in ["Install macOS", "SU_TITLE"] {
+                let xml = """
+                <?xml version="1.0"?>
+                <installer-gui-script><title>\(title)</title>
+                <auxinfo><dict><key>\(buildKey)</key><string>\(build)</string>
+                <key>\(versionKey)</key><string>\(version)</string></dict></auxinfo>
+                </installer-gui-script>
+                """
+                let parser = XMLParser(data: Data(xml.utf8))
+                let delegate = DistParserDelegate()
+                parser.delegate = delegate
+                require(parser.parse(), "Distribution XML did not parse")
+                require(delegate.buildVersion == build && delegate.productVersion == version, "Distribution metadata mismatch")
+                let expectedTitle = title == "SU_TITLE" ? releaseName : title
+                require(delegate.title == expectedTitle, "Distribution title mismatch for \(build)")
+            }
         }
         require(nameOS["17"] == "High Sierra" && nameOS["18"] == "Mojave", "Legacy release mapping missing")
         print("Legacy installer fixture checks passed")

@@ -30,6 +30,13 @@ class DistParserDelegate: NSObject, XMLParserDelegate {
     private var currentString = String()
     private var keysParsed = 0
 
+    func parserDidEndDocument(_: XMLParser) {
+        // Legacy distributions use a localization key instead of a literal title.
+        if title == "SU_TITLE" {
+            title = nameOS[String(buildVersion.prefix(2))] ?? osName
+        }
+    }
+
     func parser(_: XMLParser, didStartElement elementName: String, namespaceURI _: String?, qualifiedName _: String?, attributes attributeDict: [String: String] = [:]) {
         if elementName == Elements.pkgref.rawValue {
             if attributeDict["id"] == "InstallAssistant" || attributeDict["id"] == "InstallESDDmg" {

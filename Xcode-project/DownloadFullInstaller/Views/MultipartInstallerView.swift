@@ -1,30 +1,11 @@
 import SwiftUI
-import UniformTypeIdentifiers
-
-@MainActor
-private final class MultipartAssemblyState: ObservableObject {
-    static let shared = MultipartAssemblyState()
-    @Published var activeFolders = Set<String>()
-}
 
 struct MultipartInstallerView: View {
     @ObservedObject var product: Product
     @ObservedObject private var manager = MultiDownloadManager.shared
-    @ObservedObject private var assemblyState = MultipartAssemblyState.shared
     @State private var activeAlert: AppAlertType?
     @State private var replacement: Package?
     @State private var downloaded = Set<String>()
-
-    private var isCreating: Bool {
-        assemblyState.activeFolders.contains(Prefs.downloadURL.appendingPathComponent(product.componentFolder).path)
-    }
-
-    private var sizes: [String: Int] {
-        Dictionary(uniqueKeysWithValues: product.installerComponents.compactMap { package in
-            guard let name = URL(string: package.url)?.lastPathComponent else { return nil }
-            return (name, package.size)
-        })
-    }
 
     private func filename(for package: Package) -> String {
         "\(product.componentFolder)/\(URL(string: package.url)?.lastPathComponent ?? "")"
@@ -42,7 +23,7 @@ struct MultipartInstallerView: View {
                         .foregroundStyle(.secondary)
                 }
             }
-            Text(NSLocalizedString("Download all six components below. Open BaseSystem.dmg, then choose Create Installer App and select the installer app on that mounted image. Assembly requires additional free space equal to the downloaded components. These Intel installers cannot install macOS on Apple Silicon.", comment: "Multipart installer instructions"))
+            Text(NSLocalizedString("Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon.", comment: "Multipart installer instructions"))
                 .font(.callout)
                 .foregroundStyle(.secondary)
             Text(product.componentFolder)
@@ -64,7 +45,7 @@ struct MultipartInstallerView: View {
                     Button(NSLocalizedString("Download", comment: "Download component")) {
                         download(package)
                     }
-                    .disabled(isCreating || manager.isDownloading(filename: filename(for: package)))
+                    .disabled(manager.isDownloading(filename: filename(for: package)))
                 }
                 .contextMenu {
                     Button(NSLocalizedString("Copy Download URL", comment: "")) {
@@ -74,23 +55,13 @@ struct MultipartInstallerView: View {
                 }
             }
 
-            if product.installerComponents.count != LegacyInstallerAssembler.componentNames.count {
+            if product.installerComponents.count != LegacyInstallerComponents.names.count {
                 Text(NSLocalizedString("This catalog does not provide all six required installer components. Try the Regular catalog.", comment: "Incomplete multipart catalog entry"))
                     .foregroundStyle(.secondary)
             }
-            HStack {
-                Button(NSLocalizedString("Open BaseSystem Image", comment: "Mount legacy base image")) {
-                    openBaseSystem()
-                }
-                .disabled(isCreating || !downloaded.contains("\(product.componentFolder)/BaseSystem.dmg"))
-                Button(NSLocalizedString("Create Installer App", comment: "")) {
-                    createInstaller()
-                }
-                .disabled(isCreating || downloaded.count != LegacyInstallerAssembler.componentNames.count)
-                if isCreating {
-                    ProgressView().controlSize(.small)
-                }
-            }
+            Text(NSLocalizedString("When all six components have been downloaded, open InstallESDDmg.pkg from the folder shown above and follow the instructions to create the installer app.", comment: "Multipart installer next step"))
+                .font(.callout.weight(.semibold))
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(16)
         .glassCard(cornerRadius: 16)
@@ -140,67 +111,5 @@ struct MultipartInstallerView: View {
         } catch {
             activeAlert = .downloadError(message: error.localizedDescription)
         }
-    }
-
-    private func openBaseSystem() {
-        let root = Prefs.downloadURL
-        let access = Prefs.startAccessingDownloadURL()
-        let image = root.appendingPathComponent(product.componentFolder).appendingPathComponent("BaseSystem.dmg")
-        NSWorkspace.shared.open(image, configuration: NSWorkspace.OpenConfiguration()) { _, error in
-            if access { root.stopAccessingSecurityScopedResource() }
-            Task { @MainActor in
-                if let error { showCreationError(error) }
-            }
-        }
-    }
-
-    private func createInstaller() {
-        let root = Prefs.downloadURL
-        let folder = root.appendingPathComponent(product.componentFolder)
-        let componentSizes = sizes
-        let access = Prefs.startAccessingDownloadURL()
-        let panel = NSOpenPanel()
-        panel.allowedContentTypes = [.applicationBundle]
-        panel.allowsMultipleSelection = false
-        panel.canChooseFiles = true
-        panel.canChooseDirectories = false
-        panel.treatsFilePackagesAsDirectories = false
-        panel.directoryURL = URL(fileURLWithPath: "/Volumes", isDirectory: true)
-        panel.message = NSLocalizedString("Select the Install macOS app on the BaseSystem image you opened for this download. Do not select an installer from Applications or another release.", comment: "Choose legacy installer source")
-        assemblyState.activeFolders.insert(folder.path)
-
-        panel.begin { response in
-            guard response == .OK, let source = panel.url else {
-                if access { root.stopAccessingSecurityScopedResource() }
-                assemblyState.activeFolders.remove(folder.path)
-                return
-            }
-            let sourceAccess = source.startAccessingSecurityScopedResource()
-            Task { @MainActor in
-                defer {
-                    if sourceAccess { source.stopAccessingSecurityScopedResource() }
-                    if access { root.stopAccessingSecurityScopedResource() }
-                    assemblyState.activeFolders.remove(folder.path)
-                    refreshDownloads()
-                }
-
-                do {
-                    let output = try await Task.detached(priority: .userInitiated) {
-                        try LegacyInstallerAssembler.assemble(sourceApp: source, folder: folder, sizes: componentSizes)
-                    }.value
-                    NSWorkspace.shared.activateFileViewerSelecting([output])
-                } catch {
-                    showCreationError(error)
-                }
-            }
-        }
-    }
-
-    private func showCreationError(_ error: Error) {
-        print("Legacy installer assembly: \(error.localizedDescription)")
-        activeAlert = .installerCreation(
-            title: NSLocalizedString("Error Creating Installer", comment: ""),
-            message: error.localizedDescription
-        )
     }
 }

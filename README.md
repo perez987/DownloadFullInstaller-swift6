@@ -8,7 +8,7 @@
 
 **Download Full Installer** is a macOS application written in SwiftUI that downloads PKG installers or IPSW firmwares for the **Install macOS Big Sur** application and newer. Runs on macOS 15 Sequoia and later.
 
-It also discovers multipart pre-Big Sur installers, including High Sierra and Mojave, when Apple includes them in the selected software update catalog. These require downloading six components and a separate, user-assisted assembly step; see [legacy installer instructions](DOCS/Legacy-macos.md).
+It also discovers multipart pre-Big Sur installers, including High Sierra and Mojave, when Apple includes them in the selected software update catalog. These require downloading six components and then opening `InstallESDDmg.pkg` to create the installer app; see [legacy installer instructions](DOCS/Legacy-macos.md).
 
 **Versions**:
 
@@ -64,7 +64,7 @@ This repo exists to keep "Download Full Installer" alive and growing. Picking up
 
 ### Legacy macOS installer download
 
-Catalog-based High Sierra/Mojave installers appear under **Available Releases** when available. Download all six files from their detail card (up to three at a time), open the BaseSystem image, then use **Create Installer App** to select the installer app on that image. The assembled app is saved alongside the components in a product-specific subfolder of your download folder, not in `/Applications`. This does not make Intel macOS releases installable on Apple Silicon.
+Catalog-based High Sierra/Mojave installers appear under **Available Releases** when available. Download all six files from their detail card (up to three at a time) into their product-specific subfolder of your download folder, then open `InstallESDDmg.pkg` from that folder and follow the instructions to create the installer app. This does not make Intel macOS releases installable on Apple Silicon.
 
 The five available legacy macOS releases appear below the current releases in the left-hand installer list. Select one to download its disk image using the shared download queue. Open the downloaded DMG in Finder and run its package to create the installer app. Legacy downloads are independent of the selected software update catalog.
 

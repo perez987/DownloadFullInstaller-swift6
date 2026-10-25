@@ -35,13 +35,13 @@ The five fixed disk-image links above remain independent of the catalog. Additio
 
 High Sierra and Mojave can therefore appear under **Available Releases** rather than the fixed-link legacy section. Catalina can also be discovered if Apple publishes a matching entry; no particular release or build is guaranteed. Try the **Regular** catalog if a seed catalog does not contain older installers. No App Store links or third-party installer mirrors are used.
 
-Unlike a modern `InstallAssistant.pkg`, `InstallESDDmg.pkg` alone is **not** a complete installer and must not be opened with Package Installer to create an app. A multipart card offers the six files needed for assembly:
+Unlike a modern `InstallAssistant.pkg`, `InstallESDDmg.pkg` needs the other five components in the same folder. A multipart card offers the six files:
 
 | File | Purpose |
 | --- | --- |
 | `BaseSystem.dmg` | Base system image containing the installer application |
 | `BaseSystem.chunklist` | Base system chunk metadata |
-| `InstallESDDmg.pkg` | Main installation image, renamed to `InstallESD.dmg` during assembly |
+| `InstallESDDmg.pkg` | Main installation image; open it to create the installer app |
 | `InstallInfo.plist` | Image references used by the installer |
 | `AppleDiagnostics.dmg` | Diagnostics image |
 | `AppleDiagnostics.chunklist` | Diagnostics chunk metadata |
@@ -50,34 +50,22 @@ Unlike a modern `InstallAssistant.pkg`, `InstallESDDmg.pkg` alone is **not** a c
 
 1. Select a catalog-based legacy release, then download **all six components** using their individual buttons. They share the existing three-transfer limit, cancellation, retry, replacement confirmation, and Finder actions. Start the remaining files as slots become available.
 2. Wait for all six green checkmarks. Files retain their original names under `macOS-<catalog-product-ID>` inside the configured download folder, preventing collisions between releases/builds.
-3. Click **Open BaseSystem Image** and wait for Finder to mount the image.
-4. Click **Create Installer App**. In the file chooser, select the `Install macOS ….app` on **that mounted image**, not an app in `/Applications` or another release's image. This explicit selection grants the sandbox read access.
-5. The app copies the selected bundle, adds the six components to `Contents/SharedSupport`, renames the ESD image, and rewrites its payload references in `InstallInfo.plist`, removing the obsolete payload chunklist references. Finder reveals the resulting `.app` beside the downloads. Eject the BaseSystem image when finished.
+3. Open `InstallESDDmg.pkg` from that folder and follow the instructions to create the installer app.
 
-Assembly follows the layout used by gibMacOS's `BuildmacOSInstallApp.py`, implemented natively in Swift. It does not run downloaded scripts, request administrator privileges, disable the sandbox, or install the old OS on the current Mac. The source files remain unchanged. Keep additional free disk space approximately equal to the component downloads plus the base installer app, and do not quit during assembly. Existing output apps are never overwritten; move an existing app first if you want to rebuild.
-
-The app checks the presence and catalog-reported byte sizes of all six components and validates the selected installer bundle and payload metadata before assembly. Size checks are not cryptographic verification, and the file chooser cannot verify that you selected the matching build: selecting the app from the correct BaseSystem image is essential. Failed assembly reports an error and cleans up its staging directory. Missing catalog components disable assembly rather than offering an incomplete installer.
-
-Assembly only reads and copies the selected app; it never launches the old installer or its `createinstallmedia` tool. Tool validation checks for a nonempty regular file with executable permission bits, not permission to execute it within the sandbox. The file chooser grants read-only access, so an execution-access check can incorrectly reject a valid BaseSystem app. A Gatekeeper warning when opening an old installer separately is not an assembly-format error; opening `InstallESDDmg.pkg` directly is not part of this workflow.
-
-These are **Intel** installers. Downloading or assembling them on macOS 15+ does not make them compatible with Apple Silicon or permit installation on unsupported hardware. No Mavericks download has been added.
+These are **Intel** installers. Downloading them on macOS 15+ does not make them compatible with Apple Silicon or permit installation on unsupported hardware. No Mavericks download has been added.
 
 #### Validation on macOS
 
-Build the application with Xcode 26, then check High Sierra and Mojave in the Regular catalog if available. Exercise all six downloads, the three-download limit, cancel/retry, replacement, switching releases, and a custom download folder. Mount each BaseSystem image and assemble the matching app. Check `Contents/Resources/createinstallmedia` and the SharedSupport layout, confirm Finder reveals the result, and verify that missing/truncated files, invalid source apps, insufficient space, and existing outputs produce errors without overwriting downloads. Also check a modern Big Sur-or-newer PKG and the five fixed legacy DMGs.
+Build the application with Xcode 26, then check High Sierra and Mojave in the Regular catalog if available. Exercise all six downloads, the three-download limit, cancel/retry, replacement, switching releases, and a custom download folder. Open `InstallESDDmg.pkg` from the product folder and confirm it creates the installer app. Also check a modern Big Sur-or-newer PKG and the five fixed legacy DMGs.
 
-The standalone fixture checks in `Xcode-project/Checks/LegacyInstallerChecks.swift` exercise the assembly and distribution parsing logic without downloading multi-gigabyte installers:
+The standalone fixture checks in `Xcode-project/Checks/LegacyInstallerChecks.swift` exercise the catalog metadata and distribution parsing logic without downloading multi-gigabyte installers:
 
 ```sh
 swiftc -swift-version 6 \
-  Xcode-project/DownloadFullInstaller/Model/LegacyInstallerAssembler.swift \
+  Xcode-project/DownloadFullInstaller/Model/LegacyInstallerComponents.swift \
   Xcode-project/DownloadFullInstaller/Model/DistParserDelegate.swift \
   Xcode-project/DownloadFullInstaller/Model/MetaInfo.swift \
   Xcode-project/DownloadFullInstaller/Model/OSNames.swift \
   Xcode-project/Checks/LegacyInstallerChecks.swift \
   -o /tmp/LegacyInstallerChecks && /tmp/LegacyInstallerChecks
 ```
-
-These fixtures do not replace runtime verification of Finder mounting, sandbox access, or real Apple installers.
-
-For the read-only-access regression, run the **sandboxed app** from Xcode, select the installer on a mounted BaseSystem image, and confirm assembly succeeds without launching the installer or requesting execution access. The fixture checks cover seed bundle identifiers, read-only executable modes, and rejection of missing, empty, non-executable, or directory-valued media tools, but do not reproduce macOS sandbox enforcement.

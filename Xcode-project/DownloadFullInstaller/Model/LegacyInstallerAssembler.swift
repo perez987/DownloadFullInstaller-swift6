@@ -32,10 +32,24 @@ enum LegacyInstallerAssembler {
         guard sourceApp.pathExtension == "app",
               let info = try PropertyListSerialization.propertyList(from: infoData, format: nil) as? [String: Any],
               let identifier = info["CFBundleIdentifier"] as? String,
-              (identifier == "com.apple.InstallAssistant" || identifier.hasPrefix("com.apple.InstallAssistant.")),
-              files.isExecutableFile(atPath: sourceApp.appendingPathComponent("Contents/Resources/createinstallmedia").path)
+              (identifier == "com.apple.InstallAssistant" || identifier.hasPrefix("com.apple.InstallAssistant."))
         else {
-            throw CocoaError(.fileReadCorruptFile)
+            throw CocoaError(.fileReadCorruptFile, userInfo: [
+                NSLocalizedDescriptionKey: NSLocalizedString("The selected app is not a macOS installer. Select the installer app on the mounted BaseSystem image.", comment: "Invalid legacy installer bundle"),
+            ])
+        }
+
+        let mediaTool = sourceApp.appendingPathComponent("Contents/Resources/createinstallmedia")
+        let attributes = try files.attributesOfItem(atPath: mediaTool.path)
+        // The file chooser grants read access, not execution. Inspect the stored
+        // mode instead of isExecutableFile, which tests execution permission.
+        guard attributes[.type] as? FileAttributeType == .typeRegular,
+              let size = attributes[.size] as? NSNumber, size.int64Value > 0,
+              let permissions = attributes[.posixPermissions] as? NSNumber,
+              permissions.intValue & 0o111 != 0 else {
+            throw CocoaError(.fileReadCorruptFile, userInfo: [
+                NSLocalizedDescriptionKey: NSLocalizedString("The selected installer has an invalid createinstallmedia tool. Select the installer app on the mounted BaseSystem image.", comment: "Invalid legacy installer media tool"),
+            ])
         }
 
         let installInfoData = try Data(contentsOf: folder.appendingPathComponent("InstallInfo.plist"))
@@ -46,7 +60,9 @@ enum LegacyInstallerAssembler {
               let payloadID = payload["id"] as? String,
               payloadID == "com.apple.pkg.InstallESDDmg"
         else {
-            throw CocoaError(.fileReadCorruptFile)
+            throw CocoaError(.fileReadCorruptFile, userInfo: [
+                NSLocalizedDescriptionKey: NSLocalizedString("InstallInfo.plist does not contain the expected installer payload metadata. Download this component again.", comment: "Invalid legacy installer payload"),
+            ])
         }
         payload["URL"] = "InstallESD.dmg"
         payload["id"] = "com.apple.dmg.InstallESD"

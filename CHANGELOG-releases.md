@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Validate legacy installer tools using file metadata rather than execution access, which the sandbox's read-only file selection does not grant. Report specific bundle, tool, and payload validation errors instead of a generic incorrect-format warning.
 - Discover multipart pre-Big Sur installers (including High Sierra and Mojave when available) through Apple's `OSInstall` catalog metadata.
 - Download the six required components into separate product folders using the shared download queue. Do not treat an ESD component as a standalone InstallAssistant package.
 - Assemble legacy installer apps natively after the user mounts BaseSystem and selects its installer app, preserving the sandbox and original downloads.

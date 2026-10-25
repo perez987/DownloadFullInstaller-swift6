@@ -97,6 +97,20 @@ struct LegacyInstallerChecks {
         require(files.fileExists(atPath: output.path), "Existing output was overwritten")
         try files.removeItem(at: output)
 
+        // BaseSystem seed apps and read-only executable modes are valid copy
+        // sources; assembly must not require permission to execute their tools.
+        try writePlist(["CFBundleIdentifier": "com.apple.InstallAssistant.Seed.macOS1013Seed1"],
+                       to: source.appendingPathComponent("Contents/Info.plist"))
+        try files.setAttributes([.posixPermissions: 0o555], ofItemAtPath: executable.path)
+        let seedOutput = try LegacyInstallerAssembler.assemble(sourceApp: source, folder: components, sizes: sizes)
+        let copiedAttributes = try files.attributesOfItem(
+            atPath: seedOutput.appendingPathComponent("Contents/Resources/createinstallmedia").path
+        )
+        require((copiedAttributes[.posixPermissions] as? NSNumber)?.intValue == 0o555,
+                "Read-only tool permissions changed")
+        try files.removeItem(at: seedOutput)
+        try files.setAttributes([.posixPermissions: 0o755], ofItemAtPath: executable.path)
+
         let esd = components.appendingPathComponent("InstallESDDmg.pkg")
         let originalESD = try Data(contentsOf: esd)
         try Data().write(to: esd)
@@ -108,6 +122,16 @@ struct LegacyInstallerChecks {
 
         try files.setAttributes([.posixPermissions: 0o644], ofItemAtPath: executable.path)
         expectFailure { _ = try LegacyInstallerAssembler.assemble(sourceApp: source, folder: components, sizes: sizes) }
+        try files.setAttributes([.posixPermissions: 0o755], ofItemAtPath: executable.path)
+        let originalTool = try Data(contentsOf: executable)
+        try Data().write(to: executable)
+        expectFailure { _ = try LegacyInstallerAssembler.assemble(sourceApp: source, folder: components, sizes: sizes) }
+        try files.removeItem(at: executable)
+        expectFailure { _ = try LegacyInstallerAssembler.assemble(sourceApp: source, folder: components, sizes: sizes) }
+        try files.createDirectory(at: executable, withIntermediateDirectories: false)
+        expectFailure { _ = try LegacyInstallerAssembler.assemble(sourceApp: source, folder: components, sizes: sizes) }
+        try files.removeItem(at: executable)
+        try originalTool.write(to: executable)
         try files.setAttributes([.posixPermissions: 0o755], ofItemAtPath: executable.path)
         try writePlist(["CFBundleIdentifier": "com.example.NotAnInstaller"],
                        to: source.appendingPathComponent("Contents/Info.plist"))

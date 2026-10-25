@@ -58,6 +58,8 @@ Assembly follows the layout used by gibMacOS's `BuildmacOSInstallApp.py`, implem
 
 The app checks the presence and catalog-reported byte sizes of all six components and validates the selected installer bundle and payload metadata before assembly. Size checks are not cryptographic verification, and the file chooser cannot verify that you selected the matching build: selecting the app from the correct BaseSystem image is essential. Failed assembly reports an error and cleans up its staging directory. Missing catalog components disable assembly rather than offering an incomplete installer.
 
+Assembly only reads and copies the selected app; it never launches the old installer or its `createinstallmedia` tool. Tool validation checks for a nonempty regular file with executable permission bits, not permission to execute it within the sandbox. The file chooser grants read-only access, so an execution-access check can incorrectly reject a valid BaseSystem app. A Gatekeeper warning when opening an old installer separately is not an assembly-format error; opening `InstallESDDmg.pkg` directly is not part of this workflow.
+
 These are **Intel** installers. Downloading or assembling them on macOS 15+ does not make them compatible with Apple Silicon or permit installation on unsupported hardware. No Mavericks download has been added.
 
 #### Validation on macOS
@@ -77,3 +79,5 @@ swiftc -swift-version 6 \
 ```
 
 These fixtures do not replace runtime verification of Finder mounting, sandbox access, or real Apple installers.
+
+For the read-only-access regression, run the **sandboxed app** from Xcode, select the installer on a mounted BaseSystem image, and confirm assembly succeeds without launching the installer or requesting execution access. The fixture checks cover seed bundle identifiers, read-only executable modes, and rejection of missing, empty, non-executable, or directory-valued media tools, but do not reproduce macOS sandbox enforcement.

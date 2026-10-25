@@ -109,9 +109,9 @@
 "Active downloads" = "Активные загрузки";
 "No active downloads" = "Нет активных загрузок";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Можно выполнять не более 3 загрузок одновременно. Дождитесь завершения одной из загрузок, прежде чем начать новую.";
-"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon.";
-"This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
-"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app.";
+"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Загрузите все шесть компонентов ниже в одну папку. Эти установщики для Intel не позволяют устанавливать macOS на компьютеры Mac с Apple Silicon.";
+"This catalog does not provide all six required installer components. Try the Regular catalog." = "В этом каталоге представлены не все шесть необходимых компонентов установщика. Попробуйте стандартный каталог.";
+"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "После загрузки всех шести компонентов откройте InstallESDDmg.pkg в папке, куда он был загружен, и следуйте инструкциям, чтобы создать приложение-установщик.";
 
 /* Apple Configurator Restore */
 "Restore with Apple Configurator" = "Восстановить с помощью Apple Configurator";

@@ -110,7 +110,7 @@
 "No active downloads" = "Aucun téléchargement actif";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Vous pouvez effectuer jusqu'à 3 téléchargements simultanés. Attendez la fin d'un téléchargement avant d'en lancer un autre.";
 "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Téléchargez les six composants ci-dessous dans le même dossier. Ces programmes d’installation Intel ne permettent pas d’installer macOS sur Apple Silicon.";
-"This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
+"This catalog does not provide all six required installer components. Try the Regular catalog." = "Ce catalogue ne fournit pas les six composants requis pour l’installation. Essayez le catalogue standard.";
 "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Une fois les six composants téléchargés, ouvrez InstallESDDmg.pkg depuis le dossier où il a été téléchargé et suivez les instructions pour créer l’app d’installation.";
 
 /* Apple Configurator Restore */

@@ -88,7 +88,6 @@
 "The installers list cannot be loaded or there are no installers available for this version of macOS." = "Seznama namestitvenih programov ni mogoče naložiti ali pa za to različico sistema macOS ni na voljo nobenih namestitvenih programov.";
 "Loading..." = "Nalaganje...";
 
-/* Apple Configurator Restore */
 /* Version 6 release browser */
 "Download Error" = "Napaka pri prenosu";
 "The file '%@' could not be saved to the '%@' folder. Error: %@" = "Datoteke '%@' ni bilo mogoče shraniti v mapo '%@'. Napaka: %@";
@@ -110,9 +109,10 @@
 "Active downloads" = "Aktivni prenosi";
 "No active downloads" = "Ni aktivnih prenosov";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Hkrati lahko izvajate največ 3 prenose. Pred začetkom novega počakajte, da se eden od prenosov konča.";
-
-"Restore with Apple Configurator" = "Obnovi z Apple Configurator";
-"Restore with Apple Configurator: How to" = "Obnovi z Apple Configurator:\nProgramska oprema macOS je v datotekah IPSW, ki jih lahko uporabite za obnovitev Macov s Silicon s pomočjo Apple Configuratorja.\nZa to opravilo potrebujete drug Mac in kabel USB C, ki lahko prenaša napajanje ter podatke.\nObnovitev Maca s Silicon izbriše vse na disku, uporabnik pa izgubi vse podatke, ki prej niso bili varnostno kopirani.";
 "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon.";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
 "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app.";
+
+/* Apple Configurator Restore */
+"Restore with Apple Configurator" = "Obnovi z Apple Configurator";
+"Restore with Apple Configurator: How to" = "Obnovi z Apple Configurator:\nProgramska oprema macOS je v datotekah IPSW, ki jih lahko uporabite za obnovitev Macov s Silicon s pomočjo Apple Configuratorja.\nZa to opravilo potrebujete drug Mac in kabel USB C, ki lahko prenaša napajanje ter podatke.\nObnovitev Maca s Silicon izbriše vse na disku, uporabnik pa izgubi vse podatke, ki prej niso bili varnostno kopirani.";

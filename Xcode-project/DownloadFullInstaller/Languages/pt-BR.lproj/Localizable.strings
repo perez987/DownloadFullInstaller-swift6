@@ -88,7 +88,6 @@
 "The installers list cannot be loaded or there are no installers available for this version of macOS." = "Não foi possível carregar a lista de instaladores ou não há instaladores disponíveis para esta versão do macOS.";
 "Loading..." = "Carregando...";
 
-/* Apple Configurator Restore */
 /* Version 6 release browser */
 "Download Error" = "Erro no download";
 "The file '%@' could not be saved to the '%@' folder. Error: %@" = "Não foi possível salvar o arquivo '%@' na pasta '%@'. Erro: %@";
@@ -110,9 +109,10 @@
 "Active downloads" = "Downloads ativos";
 "No active downloads" = "Nenhum download ativo";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Você pode executar até 3 downloads simultaneamente. Aguarde a conclusão de um download antes de iniciar outro.";
-
-"Restore with Apple Configurator" = "Restaurar com Apple Configurator";
-"Restore with Apple Configurator: How to" = "Restaurar com Apple Configurator:\nFirmwares do macOS são arquivos IPSW que podem ser usados para restaurar Macs Silicon usando o Apple Configurator.\nPara esta tarefa, você precisa de outro Mac e de um cabo USB C que possa transmitir energia e dados.\nRestaurar um Mac Silicon apaga todo o conteúdo da unidade e o usuário perde todos os dados que não foram previamente salvos em backup.";
 "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Baixe os seis componentes abaixo na mesma pasta. Estes instaladores Intel não permitem instalar o macOS em Apple Silicon.";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
 "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Depois que os seis componentes forem baixados, abra InstallESDDmg.pkg na pasta em que ele foi baixado e siga as instruções para criar o app instalador.";
+
+/* Apple Configurator Restore */
+"Restore with Apple Configurator" = "Restaurar com Apple Configurator";
+"Restore with Apple Configurator: How to" = "Restaurar com Apple Configurator:\nFirmwares do macOS são arquivos IPSW que podem ser usados para restaurar Macs Silicon usando o Apple Configurator.\nPara esta tarefa, você precisa de outro Mac e de um cabo USB C que possa transmitir energia e dados.\nRestaurar um Mac Silicon apaga todo o conteúdo da unidade e o usuário perde todos os dados que não foram previamente salvos em backup.";

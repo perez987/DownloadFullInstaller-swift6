@@ -142,7 +142,6 @@
 "The installers list cannot be loaded or there are no installers available for this version of macOS." = "لا يمكن تحميل قائمة المثبتات أو لا توجد مثبتات متاحة لهذا الإصدار من نظام macOS.";
 "Loading..." = "جارٍ التحميل...";
 
-/* Apple Configurator Restore */
 /* Version 6 release browser */
 "Download Error" = "خطأ في التنزيل";
 "The file '%@' could not be saved to the '%@' folder. Error: %@" = "تعذر حفظ الملف '%@' في المجلد '%@'. الخطأ: %@";
@@ -164,9 +163,10 @@
 "Active downloads" = "التنزيلات النشطة";
 "No active downloads" = "لا توجد تنزيلات نشطة";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "يمكنك تشغيل ما يصل إلى 3 تنزيلات في الوقت نفسه. انتظر حتى يكتمل أحد التنزيلات قبل بدء تنزيل جديد.";
-
-"Restore with Apple Configurator" = "الاستعادة باستخدام Apple Configurator";
-"Restore with Apple Configurator: How to" = "الاستعادة باستخدام Apple Configurator:\nبرامج macOS الثابتة هي ملفات IPSW يمكن استخدامها لاستعادة أجهزة Mac المزودة بـ Silicon باستخدام Apple Configurator.\nلهذه المهمة، تحتاج إلى جهاز Mac آخر وكابل USB C يمكنه نقل الطاقة والبيانات.\nاستعادة جهاز Mac المزود بـ Silicon تمسح كل شيء على القرص ويفقد المستخدم جميع البيانات التي لم يتم نسخها احتياطيًا مسبقًا.";
 "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon.";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
 "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app.";
+
+/* Apple Configurator Restore */
+"Restore with Apple Configurator" = "الاستعادة باستخدام Apple Configurator";
+"Restore with Apple Configurator: How to" = "الاستعادة باستخدام Apple Configurator:\nبرامج macOS الثابتة هي ملفات IPSW يمكن استخدامها لاستعادة أجهزة Mac المزودة بـ Silicon باستخدام Apple Configurator.\nلهذه المهمة، تحتاج إلى جهاز Mac آخر وكابل USB C يمكنه نقل الطاقة والبيانات.\nاستعادة جهاز Mac المزود بـ Silicon تمسح كل شيء على القرص ويفقد المستخدم جميع البيانات التي لم يتم نسخها احتياطيًا مسبقًا.";

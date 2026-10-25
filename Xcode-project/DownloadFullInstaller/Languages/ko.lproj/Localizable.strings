@@ -94,6 +94,7 @@
 "macOS Library" = "macOS 라이브러리";
 "Choose a release to explore." = "살펴볼 버전을 선택하세요.";
 "Available Releases" = "사용 가능한 버전";
+"Multipart Legacy Installers" = "여러 부분으로 구성된 레거시 macOS 설치 프로그램";
 "Refresh" = "새로 고침";
 "Select a macOS release" = "macOS 버전 선택";
 "Available versions and download options will appear here." = "사용 가능한 버전과 다운로드 옵션이 여기에 표시됩니다.";

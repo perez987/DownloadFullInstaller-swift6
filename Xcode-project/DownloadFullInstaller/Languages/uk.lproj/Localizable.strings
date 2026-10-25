@@ -94,6 +94,7 @@
 "macOS Library" = "Бібліотека macOS";
 "Choose a release to explore." = "Виберіть версію для перегляду.";
 "Available Releases" = "Доступні версії";
+"Multipart Legacy Installers" = "Застарілі багатокомпонентні інсталятори macOS";
 "Refresh" = "Оновити";
 "Select a macOS release" = "Виберіть версію macOS";
 "Available versions and download options will appear here." = "Тут з'являться доступні версії та варіанти завантаження.";

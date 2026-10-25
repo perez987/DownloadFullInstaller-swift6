@@ -29,8 +29,51 @@ Legacy downloads are managed similarly to modern downloads:
 - The download destination folder is the one configured in the app settings
 - The selected software update catalog does not affect these fixed Apple download links.
 
-### Only 5 versions?
+### Catalog-based installers: High Sierra and Mojave
 
-So far, I haven't found any direct links on Apple's servers to these macOS versions prior to Big Sur: Catalina 10.15, Mojave 10.14, High Sierra 10.13, and Mavericks 10.9.
+The five fixed disk-image links above remain independent of the catalog. Additional pre-Big Sur installers are discovered dynamically in Apple's software update catalogs, using the `OSInstall = com.apple.mpkg.OSInstall` metadata marker also recognized by [gibMacOS](https://github.com/corpnewt/gibMacOS). The previous catalog filter only recognized the newer `SharedSupport` marker.
 
-I'll try to find a way to add them to the app but, for now, the only macOS systems you can get are: macOS Sierra 10.12, OS X El Capitan 10.11, OS X Yosemite 10.10, OS X Mountain Lion 10.8, and Mac OS X Lion 10.7. 
+High Sierra and Mojave can therefore appear under **Available Releases** rather than the fixed-link legacy section. Catalina can also be discovered if Apple publishes a matching entry; no particular release or build is guaranteed. Try the **Regular** catalog if a seed catalog does not contain older installers. No App Store links or third-party installer mirrors are used.
+
+Unlike a modern `InstallAssistant.pkg`, `InstallESDDmg.pkg` alone is **not** a complete installer and must not be opened with Package Installer to create an app. A multipart card offers the six files needed for assembly:
+
+| File | Purpose |
+| --- | --- |
+| `BaseSystem.dmg` | Base system image containing the installer application |
+| `BaseSystem.chunklist` | Base system chunk metadata |
+| `InstallESDDmg.pkg` | Main installation image, renamed to `InstallESD.dmg` during assembly |
+| `InstallInfo.plist` | Image references used by the installer |
+| `AppleDiagnostics.dmg` | Diagnostics image |
+| `AppleDiagnostics.chunklist` | Diagnostics chunk metadata |
+
+#### Download and create the app
+
+1. Select a catalog-based legacy release, then download **all six components** using their individual buttons. They share the existing three-transfer limit, cancellation, retry, replacement confirmation, and Finder actions. Start the remaining files as slots become available.
+2. Wait for all six green checkmarks. Files retain their original names under `macOS-<catalog-product-ID>` inside the configured download folder, preventing collisions between releases/builds.
+3. Click **Open BaseSystem Image** and wait for Finder to mount the image.
+4. Click **Create Installer App**. In the file chooser, select the `Install macOS ….app` on **that mounted image**, not an app in `/Applications` or another release's image. This explicit selection grants the sandbox read access.
+5. The app copies the selected bundle, adds the six components to `Contents/SharedSupport`, renames the ESD image, and rewrites its payload references in `InstallInfo.plist`, removing the obsolete payload chunklist references. Finder reveals the resulting `.app` beside the downloads. Eject the BaseSystem image when finished.
+
+Assembly follows the layout used by gibMacOS's `BuildmacOSInstallApp.py`, implemented natively in Swift. It does not run downloaded scripts, request administrator privileges, disable the sandbox, or install the old OS on the current Mac. The source files remain unchanged. Keep additional free disk space approximately equal to the component downloads plus the base installer app, and do not quit during assembly. Existing output apps are never overwritten; move an existing app first if you want to rebuild.
+
+The app checks the presence and catalog-reported byte sizes of all six components and validates the selected installer bundle and payload metadata before assembly. Size checks are not cryptographic verification, and the file chooser cannot verify that you selected the matching build: selecting the app from the correct BaseSystem image is essential. Failed assembly reports an error and cleans up its staging directory. Missing catalog components disable assembly rather than offering an incomplete installer.
+
+These are **Intel** installers. Downloading or assembling them on macOS 15+ does not make them compatible with Apple Silicon or permit installation on unsupported hardware. No Mavericks download has been added.
+
+#### Validation on macOS
+
+Build the application with Xcode 26, then check High Sierra and Mojave in the Regular catalog if available. Exercise all six downloads, the three-download limit, cancel/retry, replacement, switching releases, and a custom download folder. Mount each BaseSystem image and assemble the matching app. Check `Contents/Resources/createinstallmedia` and the SharedSupport layout, confirm Finder reveals the result, and verify that missing/truncated files, invalid source apps, insufficient space, and existing outputs produce errors without overwriting downloads. Also check a modern Big Sur-or-newer PKG and the five fixed legacy DMGs.
+
+The standalone fixture checks in `Xcode-project/Checks/LegacyInstallerChecks.swift` exercise the assembly and distribution parsing logic without downloading multi-gigabyte installers:
+
+```sh
+swiftc -swift-version 6 \
+  Xcode-project/DownloadFullInstaller/Model/LegacyInstallerAssembler.swift \
+  Xcode-project/DownloadFullInstaller/Model/DistParserDelegate.swift \
+  Xcode-project/DownloadFullInstaller/Model/MetaInfo.swift \
+  Xcode-project/DownloadFullInstaller/Model/OSNames.swift \
+  Xcode-project/Checks/LegacyInstallerChecks.swift \
+  -o /tmp/LegacyInstallerChecks && /tmp/LegacyInstallerChecks
+```
+
+These fixtures do not replace runtime verification of Finder mounting, sandbox access, or real Apple installers.

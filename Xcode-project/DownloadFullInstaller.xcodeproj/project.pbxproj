@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB1000010000000000000001 /* LegacyInstallerAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1000020000000000000001 /* LegacyInstallerAssembler.swift */; };
+		AB1000010000000000000002 /* MultipartInstallerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1000020000000000000002 /* MultipartInstallerView.swift */; };
 		C0000001A000000100000001 /* MultiDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000001A000000200000001 /* MultiDownloadManager.swift */; };
 		C0000002A000000100000001 /* Alert+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000002A000000200000001 /* Alert+Extensions.swift */; };
 		C0000002B000000100000001 /* GlassEffects+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000002B000000200000001 /* GlassEffects+Extensions.swift */; };
@@ -60,6 +62,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB1000020000000000000001 /* LegacyInstallerAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyInstallerAssembler.swift; sourceTree = "<group>"; };
+		AB1000020000000000000002 /* MultipartInstallerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartInstallerView.swift; sourceTree = "<group>"; };
 		C0000001A000000200000001 /* MultiDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiDownloadManager.swift; sourceTree = "<group>"; };
 		C0000002A000000200000001 /* Alert+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Extensions.swift"; sourceTree = "<group>"; };
 		C0000002B000000200000001 /* GlassEffects+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlassEffects+Extensions.swift"; sourceTree = "<group>"; };
@@ -237,6 +241,7 @@
 				D9E20C8B2E8B2D3B0086992F /* MetaInfo.swift */,
 				D9E20C8A2E8B2D3B0086992F /* OSNames.swift */,
 				D9AAA0001E8B2D3B0086992F /* LegacyMacOSVersion.swift */,
+				AB1000020000000000000001 /* LegacyInstallerAssembler.swift */,
 				D9E20C902E8B2D3B0086992F /* Package.swift */,
 				D9E20C912E8B2D3B0086992F /* Product.swift */,
 				D9E20C922E8B2D3B0086992F /* SeedCatalogs.plist */,
@@ -257,6 +262,7 @@
 				D9E20CA12E8B2D490086992F /* InstallerView.swift */,
 				D9E20CA02E8B2D490086992F /* LanguageSelectionView.swift */,
 				D9AAA0003E8B2D490086992F /* LegacyDownloadView.swift */,
+				AB1000020000000000000002 /* MultipartInstallerView.swift */,
 				D9E20C9F2E8B2D490086992F /* PreferencesView.swift */,
 				D5C3B4E13958C3E2E27EE685 /* SettingsView.swift */,
 			);
@@ -373,6 +379,8 @@
 				D9E20CAE2E8B2D5E0086992F /* LanguageManager.swift in Sources */,
 				D9E20CA72E8B2D490086992F /* InstallerView.swift in Sources */,
 				D9AAA0004E8B2D490086992F /* LegacyDownloadView.swift in Sources */,
+				AB1000010000000000000001 /* LegacyInstallerAssembler.swift in Sources */,
+				AB1000010000000000000002 /* MultipartInstallerView.swift in Sources */,
 				D9E20C992E8B2D3B0086992F /* BuildManifest.swift in Sources */,
 				D9E20C9B2E8B2D3B0086992F /* Package.swift in Sources */,
 				D9E20C9E2E8B2D3B0086992F /* SUCatalog.swift in Sources */,

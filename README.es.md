@@ -8,6 +8,8 @@
 
 **Download Full Installer** es una aplicación para macOS escrita en SwiftUI que descarga instaladores PKG o firmwares IPSW para la aplicación **Instalar macOS Big Sur** y versiones posteriores. Funciona en macOS 15 Sequoia y siguientes.
 
+También detecta instaladores anteriores a Big Sur, como High Sierra y Mojave, cuando Apple los incluye en el catálogo seleccionado. Requieren seis componentes y un paso de montaje asistido por el usuario; consulta las [instrucciones](DOCS/Legacy-macos.md).
+
 **Versiones**:
 
 - Si prefieres la versión creada con Swift 5, compatible con macOS 13 o posterior, obtén el código fuente de la rama `swift5` o la versión 4.x.x desde la [página de versiones](https://github.com/perez987/DownloadFullInstaller/releases/tag/4.6.0).
@@ -61,6 +63,8 @@ Este repositorio existe para mantener vivo y en crecimiento «Download Full Inst
    - Apple ha notarizado la aplicación.
 
 ### Descarga de instaladores antiguos de macOS
+
+Los instaladores de High Sierra y Mojave procedentes del catálogo aparecen entre las versiones disponibles. Descarga sus seis componentes (hasta tres simultáneamente), abre la imagen BaseSystem y pulsa «Crear aplicación instaladora» para seleccionar la aplicación de esa imagen montada. La aplicación completa se guarda junto a los componentes en una subcarpeta propia de la carpeta de descargas, no en `/Applications`. Estos instaladores Intel no permiten instalar macOS en equipos Apple Silicon.
 
 Las cinco versiones antiguas de macOS disponibles aparecen debajo de las versiones actuales en la lista de instaladores de la izquierda. Selecciona una para descargar su imagen de disco mediante la cola de descargas compartida. Abre la DMG descargado en Finder y ejecuta su paquete para crear la aplicación instaladora. Las descargas antiguas son independientes del catálogo de actualización de software seleccionado.
 
@@ -119,11 +123,11 @@ Como la aplicación instaladora de macOS Big Sur contiene un único archivo de m
 
 #### ¿Puede descargar versiones antiguas de la aplicación instaladora de macOS?
 
-No. Apple solo proporciona paquetes instaladores para Big Sur y versiones posteriores. Las versiones anteriores del instalador de Big Sur se eliminan periódicamente.
+Sí. Esta versión admite las imágenes de disco de Lion a Sierra (excepto Mavericks) y los instaladores de varios componentes, como High Sierra y Mojave, cuando están disponibles en los catálogos de Apple. Big Sur y posteriores siguen utilizando un único archivo `InstallAssistant.pkg`.
 
 #### ¿Actualizarás esto para que pueda descargar versiones más antiguas?
 
-No.
+Se incluye la compatibilidad con instaladores de varios componentes; su disponibilidad depende de Apple.
 
 #### ¿En qué se diferencia de otras herramientas de línea de comandos?
 

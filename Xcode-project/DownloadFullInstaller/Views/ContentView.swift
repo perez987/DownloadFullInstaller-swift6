@@ -178,7 +178,11 @@ struct ContentView: View {
                                 .padding(8)
                         } else if isInstaller {
                             ForEach(sucatalog.installers.filter { $0.hasLoaded && $0.osName == selectedRelease }) { product in
-                                InstallerView(product: product)
+                                if product.isMultipartInstaller {
+                                    MultipartInstallerView(product: product)
+                                } else {
+                                    InstallerView(product: product)
+                                }
                             }
                         } else {
                             ForEach(firmwareCatalog.firmwares.filter { $0.osName == selectedRelease }) { firmware in

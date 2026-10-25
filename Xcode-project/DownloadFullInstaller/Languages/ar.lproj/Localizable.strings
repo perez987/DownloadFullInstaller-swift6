@@ -167,3 +167,8 @@
 
 "Restore with Apple Configurator" = "الاستعادة باستخدام Apple Configurator";
 "Restore with Apple Configurator: How to" = "الاستعادة باستخدام Apple Configurator:\nبرامج macOS الثابتة هي ملفات IPSW يمكن استخدامها لاستعادة أجهزة Mac المزودة بـ Silicon باستخدام Apple Configurator.\nلهذه المهمة، تحتاج إلى جهاز Mac آخر وكابل USB C يمكنه نقل الطاقة والبيانات.\nاستعادة جهاز Mac المزود بـ Silicon تمسح كل شيء على القرص ويفقد المستخدم جميع البيانات التي لم يتم نسخها احتياطيًا مسبقًا.";
+"Installer component %@ is missing or incomplete. Download it again." = "Installer component %@ is missing or incomplete. Download it again.";
+"Download all six components below. Open BaseSystem.dmg, then choose Create Installer App and select the installer app on that mounted image. Assembly requires additional free space equal to the downloaded components. These Intel installers cannot install macOS on Apple Silicon." = "Download all six components below. Open BaseSystem.dmg, then choose Create Installer App and select the installer app on that mounted image. Assembly requires additional free space equal to the downloaded components. These Intel installers cannot install macOS on Apple Silicon.";
+"This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
+"Open BaseSystem Image" = "Open BaseSystem Image";
+"Select the Install macOS app on the BaseSystem image you opened for this download. Do not select an installer from Applications or another release." = "Select the Install macOS app on the BaseSystem image you opened for this download. Do not select an installer from Applications or another release.";

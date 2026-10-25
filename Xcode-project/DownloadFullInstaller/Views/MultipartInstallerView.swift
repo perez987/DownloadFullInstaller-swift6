@@ -59,7 +59,7 @@ struct MultipartInstallerView: View {
                 Text(NSLocalizedString("This catalog does not provide all six required installer components. Try the Regular catalog.", comment: "Incomplete multipart catalog entry"))
                     .foregroundStyle(.secondary)
             }
-            Text(NSLocalizedString("When all six components have been downloaded, open InstallESDDmg.pkg from the folder shown above and follow the instructions to create the installer app.", comment: "Multipart installer next step"))
+            Text(NSLocalizedString("Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app.", comment: "Multipart installer next step"))
                 .font(.callout.weight(.semibold))
                 .fixedSize(horizontal: false, vertical: true)
         }

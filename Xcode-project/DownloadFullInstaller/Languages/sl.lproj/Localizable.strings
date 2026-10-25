@@ -109,9 +109,9 @@
 "Active downloads" = "Aktivni prenosi";
 "No active downloads" = "Ni aktivnih prenosov";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Hkrati lahko izvajate največ 3 prenose. Pred začetkom novega počakajte, da se eden od prenosov konča.";
-"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon.";
-"This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
-"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app.";
+"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Prenesite vseh šest spodnjih komponent v isto mapo. Ti namestitveni programi za sisteme Intel ne omogočajo namestitve sistema macOS na računalnike s čipi Apple Silicon.";
+"This catalog does not provide all six required installer components. Try the Regular catalog." = "Ta katalog ne vsebuje vseh šestih zahtevanih komponent namestitvenega programa. Poskusite z običajnim katalogom.";
+"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Ko je vseh šest komponent prenesenih, odprite datoteko InstallESDDmg.pkg iz mape, v katero je bila prenesena, in sledite navodilom za ustvarjanje namestitvene aplikacije.";
 
 /* Apple Configurator Restore */
 "Restore with Apple Configurator" = "Obnovi z Apple Configurator";

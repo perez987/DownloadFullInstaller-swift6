@@ -66,7 +66,7 @@ Este repositorio existe para mantener vivo y en crecimiento «Download Full Inst
 
 Los instaladores de High Sierra y Mojave procedentes del catálogo aparecen entre las versiones disponibles. Descarga sus seis componentes (hasta tres simultáneamente) en su subcarpeta propia de la carpeta de descargas; después abre `InstallESDDmg.pkg` desde esa carpeta y sigue las instrucciones para crear la aplicación instaladora. Estos instaladores Intel no permiten instalar macOS en equipos Apple Silicon.
 
-Las cinco versiones antiguas de macOS disponibles aparecen debajo de las versiones actuales en la lista de instaladores de la izquierda. Selecciona una para descargar su imagen de disco mediante la cola de descargas compartida. Abre la DMG descargado en Finder y ejecuta su paquete para crear la aplicación instaladora. Las descargas antiguas son independientes del catálogo de actualización de software seleccionado.
+Las cinco versiones antiguas de macOS disponibles se agrupan en la sección de instaladores antiguos debajo de las versiones actuales en la lista de la izquierda. Esta sección está contraída al iniciar la aplicación; usa la flecha a la derecha de su encabezado para expandirla. Selecciona una versión para descargar su imagen de disco mediante la cola de descargas compartida. Abre la DMG descargado en Finder y ejecuta su paquete para crear la aplicación instaladora. Las descargas antiguas son independientes del catálogo de actualización de software seleccionado.
 
 ### Función para crear la aplicación instaladora
 

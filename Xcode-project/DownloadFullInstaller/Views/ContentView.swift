@@ -10,6 +10,7 @@ struct ContentView: View {
     @StateObject private var firmwareCatalog = FirmwareCatalog()
     @State private var selectedTab = 0
     @State private var selectedRelease: String?
+    @State private var isLegacyExpanded = false
     @State private var localizationID = UUID()
 
     private let multipartInstallerNames: Set<String> = ["High Sierra", "Mojave", "Catalina"]
@@ -133,7 +134,7 @@ struct ContentView: View {
                 }
 
                 if isInstaller {
-                    Section {
+                    Section(isExpanded: $isLegacyExpanded) {
                         ForEach(LegacyMacOSVersion.allVersions) { version in
                             releaseLabel(name: version.name, version: version.version, legacy: true)
                                 .tag("legacy:\(version.name)")

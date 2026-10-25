@@ -66,7 +66,7 @@ This repo exists to keep "Download Full Installer" alive and growing. Picking up
 
 Catalog-based High Sierra/Mojave installers appear under **Available Releases** when available. Download all six files from their detail card (up to three at a time) into their product-specific subfolder of your download folder, then open `InstallESDDmg.pkg` from that folder and follow the instructions to create the installer app. This does not make Intel macOS releases installable on Apple Silicon.
 
-The five available legacy macOS releases appear below the current releases in the left-hand installer list. Select one to download its disk image using the shared download queue. Open the downloaded DMG in Finder and run its package to create the installer app. Legacy downloads are independent of the selected software update catalog.
+The five available legacy macOS releases are grouped under **Legacy macOS Installers** below the current releases in the left-hand installer list. This section is collapsed on launch; use the chevron to the right of its header to expand it. Select a release to download its disk image using the shared download queue. Open the downloaded DMG in Finder and run its package to create the installer app. Legacy downloads are independent of the selected software update catalog.
 
 ### Create Installer App Feature
 

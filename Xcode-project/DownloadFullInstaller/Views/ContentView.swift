@@ -28,6 +28,21 @@ struct ContentView: View {
         return LegacyMacOSVersion.allVersions.first { selectedRelease == "legacy:\($0.name)" }
     }
 
+    private var displayedInstallers: [Product] {
+        let installers = sucatalog.installers.filter { $0.hasLoaded && $0.osName == selectedRelease }
+        guard let selectedRelease, ["High Sierra", "Mojave", "Catalina"].contains(selectedRelease),
+              let latestMultipart = installers.filter(\.isMultipartInstaller).max(by: { lhs, rhs in
+                  let versionOrder = (lhs.productVersion ?? "").compare(rhs.productVersion ?? "", options: .numeric)
+                  if versionOrder != .orderedSame { return versionOrder == .orderedAscending }
+                  let buildOrder = (lhs.buildVersion ?? "").compare(rhs.buildVersion ?? "", options: .numeric)
+                  if buildOrder != .orderedSame { return buildOrder == .orderedAscending }
+                  return lhs.postDate < rhs.postDate
+              }) else {
+            return installers
+        }
+        return installers.filter { !$0.isMultipartInstaller || $0.id == latestMultipart.id }
+    }
+
     private var isLoading: Bool {
         isInstaller ? sucatalog.isLoading : firmwareCatalog.isLoading
     }
@@ -177,7 +192,7 @@ struct ContentView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(8)
                         } else if isInstaller {
-                            ForEach(sucatalog.installers.filter { $0.hasLoaded && $0.osName == selectedRelease }) { product in
+                            ForEach(displayedInstallers) { product in
                                 if product.isMultipartInstaller {
                                     MultipartInstallerView(product: product)
                                 } else {

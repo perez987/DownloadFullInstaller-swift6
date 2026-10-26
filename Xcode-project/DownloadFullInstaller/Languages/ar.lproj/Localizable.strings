@@ -122,7 +122,7 @@
 
 /* Legacy macOS installers */
 "Legacy macOS Installers" =
-"مثبتات macOS القديمة↓ ";
+"مثبتات macOS القديمة (ملف واحد) ↓";
 "Download legacy macOS installers (10.7 - 10.12)" =
 "تنزيل إصدارات macOS القديمة (10.7 - 10.12)";
 "Download macOS %@ %@" =
@@ -148,7 +148,7 @@
 "macOS Library" = "مكتبة macOS";
 "Choose a release to explore." = "اختر إصدارًا لاستكشافه.";
 "Available Releases" = "الإصدارات المتاحة";
-"Multipart Legacy Installers" = "مثبّتات macOS القديمة متعددة الأجزاء";
+"Multipart Legacy Installers" = "مثبّتات macOS القديمة (6 ملفات)";
 "Refresh" = "تحديث";
 "Select a macOS release" = "اختر إصدار macOS";
 "Available versions and download options will appear here." = "ستظهر هنا الإصدارات المتاحة وخيارات التنزيل.";

@@ -70,7 +70,7 @@
 "Choose where to save downloaded installers" = "选择保存下载的安装程序的位置";
 
 /* Legacy macOS installers */
-"Legacy macOS Installers" = "↓ 旧版 macOS 安装程序";
+"Legacy macOS Installers" = "↓ 旧版 macOS 安装程序（单个文件）";
 "Download legacy macOS installers (10.7 - 10.12)" = "下载旧版 macOS 安装程序 (10.7 - 10.12)";
 "Download macOS %@ %@" = "下载 macOS %@ %@";
 
@@ -94,7 +94,7 @@
 "macOS Library" = "macOS 资源库";
 "Choose a release to explore." = "选择一个版本以查看详情。";
 "Available Releases" = "可用版本";
-"Multipart Legacy Installers" = "多部分旧版 macOS 安装程序";
+"Multipart Legacy Installers" = "旧版 macOS 安装程序（6 个文件）";
 "Refresh" = "刷新";
 "Select a macOS release" = "选择 macOS 版本";
 "Available versions and download options will appear here." = "可用版本和下载选项将显示在此处。";

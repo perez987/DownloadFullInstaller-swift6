@@ -70,7 +70,7 @@
 "Choose where to save downloaded installers" = "Choisissez où enregistrer les installateurs téléchargés";
 
 /* Legacy macOS installers */
-"Legacy macOS Installers" = "↓ Anciens programmes d'installation macOS";
+"Legacy macOS Installers" = "↓ Anciens installateurs macOS (fichier unique)";
 "Download legacy macOS installers (10.7 - 10.12)" = "Télécharger les anciennes versions de macOS (10.7 - 10.12)";
 "Download macOS %@ %@" = "Télécharger macOS %@ %@";
 
@@ -94,7 +94,7 @@
 "macOS Library" = "Bibliothèque macOS";
 "Choose a release to explore." = "Choisissez une version à explorer.";
 "Available Releases" = "Versions disponibles";
-"Multipart Legacy Installers" = "Installateurs macOS hérités en plusieurs parties";
+"Multipart Legacy Installers" = "Anciens installateurs macOS (6 fichiers)";
 "Refresh" = "Actualiser";
 "Select a macOS release" = "Sélectionnez une version de macOS";
 "Available versions and download options will appear here." = "Les versions disponibles et les options de téléchargement apparaîtront ici.";

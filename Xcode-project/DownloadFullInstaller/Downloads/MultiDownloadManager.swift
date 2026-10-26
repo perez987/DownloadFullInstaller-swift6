@@ -389,6 +389,13 @@ class MultiDownloadManager: ObservableObject {
 
     /// Start a new download if slots are available
     func startDownload(url: URL?, filename: String, replacing: Bool = false) throws -> DownloadItem? {
+        guard !LegacyInstallerBuildManager.shared.isUsing(Prefs.downloadURL.appendingPathComponent(filename)) else {
+            throw NSError(
+                domain: "DownloadFullInstaller",
+                code: 2,
+                userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("These components are being used to create an installer app. Wait for creation to finish before downloading them again.", comment: "Installer inputs are in use")]
+            )
+        }
         guard canStartNewDownload else {
             throw NSError(
                 domain: "DownloadFullInstaller",

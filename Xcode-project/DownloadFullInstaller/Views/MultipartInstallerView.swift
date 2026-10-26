@@ -3,6 +3,7 @@ import SwiftUI
 struct MultipartInstallerView: View {
     @ObservedObject var product: Product
     @ObservedObject private var manager = MultiDownloadManager.shared
+    @ObservedObject private var builder = LegacyInstallerBuildManager.shared
     @State private var activeAlert: AppAlertType?
     @State private var replacement: Package?
     @State private var downloaded = Set<String>()
@@ -45,7 +46,7 @@ struct MultipartInstallerView: View {
                     Button(NSLocalizedString("Download", comment: "Download component")) {
                         download(package)
                     }
-                    .disabled(manager.isDownloading(filename: filename(for: package)))
+                    .disabled(manager.isDownloading(filename: filename(for: package)) || builder.isBuilding)
                 }
                 .contextMenu {
                     Button(NSLocalizedString("Copy Download URL", comment: "")) {
@@ -59,12 +60,17 @@ struct MultipartInstallerView: View {
                 Text(NSLocalizedString("This catalog does not provide all six required installer components. Try the Regular catalog.", comment: "Incomplete multipart catalog entry"))
                     .foregroundStyle(.secondary)
             }
-            Text(NSLocalizedString("Do not open InstallESDDmg.pkg; it is not a standalone installer. After all six downloads finish, run gibMacOS's BuildmacOSInstallApp.command on macOS and select this folder to assemble the installer app. Download Full Installer does not assemble it automatically.", comment: "Multipart installer external assembly instructions"))
+            Text(NSLocalizedString("Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required.", comment: "Multipart installer assembly instructions"))
                 .font(.callout.weight(.semibold))
                 .fixedSize(horizontal: false, vertical: true)
-            Link(destination: URL(string: "https://github.com/corpnewt/gibMacOS")!) {
-                Text(NSLocalizedString("Get gibMacOS (external assembly tool)", comment: "Link to the external legacy installer builder"))
+            Button {
+                Task { await builder.createInstaller(for: product) }
+            } label: {
+                Label(NSLocalizedString("Create Installer App", comment: "Create installer action"), systemImage: "square.and.arrow.down.on.square")
             }
+            .buttonStyle(.bordered)
+            .disabled(builder.isBuilding || product.installerComponents.count != LegacyInstallerComponents.names.count
+                      || downloaded.count != LegacyInstallerComponents.names.count)
         }
         .padding(16)
         .glassCard(cornerRadius: 16)

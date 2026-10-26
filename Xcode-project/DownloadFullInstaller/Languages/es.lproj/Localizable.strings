@@ -113,9 +113,30 @@
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Solo puedes realizar hasta 3 descargas simultáneas. Espera a que termine una descarga antes de iniciar otra.";
 "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Descarga los seis componentes en la misma carpeta. Estos instaladores Intel no permiten instalar macOS en Apple Silicon.";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "Este catálogo no incluye los seis componentes necesarios. Prueba con el catálogo Regular.";
-"Do not open InstallESDDmg.pkg; it is not a standalone installer. After all six downloads finish, run gibMacOS's BuildmacOSInstallApp.command on macOS and select this folder to assemble the installer app. Download Full Installer does not assemble it automatically." = "No abras InstallESDDmg.pkg; no es un instalador independiente. Cuando terminen las seis descargas, ejecuta BuildmacOSInstallApp.command de gibMacOS en macOS y selecciona esta carpeta para crear la aplicación instaladora. Download Full Installer no la crea automáticamente.";
-"Get gibMacOS (external assembly tool)" = "Obtener gibMacOS (herramienta externa de creación)";
 
 /* Apple Configurator Restore */
 "Restore with Apple Configurator" = "Restaurar con Apple Configurator";
 "Restore with Apple Configurator: How to" = "Restaurar con Apple Configurator:\nLos firmwares de macOS son archivos IPSW que pueden usarse para restaurar un Mac Silicon usando Apple Configurator.\nPara esta tarea, necesitas otro Mac y un cable USB C que pueda transmitir energía y datos.\nRestaurar un Mac Silicon borra todo el contenido del disco y el usuario pierde cualquier dato que no se haya respaldado previamente.";
+
+/* In-app multipart installer assembly */
+"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\nNo se pudo eliminar la creación incompleta en %@. Elimínala en el Finder. Error: %@";
+"An item already exists at %@. Move it or rename it before creating another installer app." = "Ya existe un elemento en %@. Muévelo o cambia su nombre antes de crear otra aplicación instaladora.";
+"Assembling installer app. Copying large files may take several minutes..." = "Creando la aplicación instaladora. Copiar archivos grandes puede tardar varios minutos...";
+"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "Es posible que BaseSystem.dmg siga montada. Expulsa la imagen Base System en el Finder al terminar.";
+"Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required." = "No abras InstallESDDmg.pkg. Cuando terminen las seis descargas, elige Crear aplicación instaladora. macOS abre BaseSystem.dmg; selecciona su volumen Base System montado cuando se te solicite. La aplicación crea el instalador en esta carpeta de descargas. No necesitas Python ni gibMacOS.";
+"Download all six installer components before creating the app." = "Descarga los seis componentes del instalador antes de crear la aplicación.";
+"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist tiene un formato de contenido no compatible. No se ha creado la aplicación instaladora.";
+"Installer creation canceled" = "Creación del instalador cancelada";
+"Installer creation in progress" = "Creación del instalador en curso";
+"Opening BaseSystem.dmg..." = "Abriendo BaseSystem.dmg...";
+"Select" = "Seleccionar";
+"Select Base System Volume" = "Seleccionar el volumen Base System";
+"Select the mounted Base System volume containing the Apple installer app for this download." = "Selecciona el volumen Base System montado que contiene la aplicación instaladora de Apple correspondiente a esta descarga.";
+"Select the mounted Base System volume..." = "Selecciona el volumen Base System montado...";
+"The component %@ is missing, incomplete, or not a regular file. Download it again." = "El componente %@ falta, está incompleto o no es un archivo normal. Descárgalo de nuevo.";
+"The installer app was created at %@." = "La aplicación instaladora se ha creado en %@.";
+"The installer image could not be ejected. Eject it in Finder. Error: %@" = "No se pudo expulsar la imagen del instalador. Expúlsala en el Finder. Error: %@";
+"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "Estos componentes se están usando para crear una aplicación instaladora. Espera a que termine antes de descargarlos de nuevo.";
+"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "Este instalador es para Intel. Crear la aplicación no lo hace compatible con Apple Silicon ni con equipos Mac no compatibles.";
+"Wait for BaseSystem.dmg to mount, then select its Base System volume under Locations. Select the volume itself, not the installer app inside it. This grants Download Full Installer access to copy the app. Cancel if the image did not mount." = "Espera a que se monte BaseSystem.dmg y selecciona su volumen Base System en Ubicaciones. Selecciona el volumen, no la aplicación instaladora que contiene. Así autorizas a Download Full Installer a copiar la aplicación. Cancela si la imagen no se ha montado.";
+"Wait for installer creation to finish before quitting. You can cancel in the volume selection dialog before copying begins." = "Espera a que termine la creación del instalador antes de salir. Puedes cancelar en el diálogo de selección del volumen antes de que empiece la copia.";

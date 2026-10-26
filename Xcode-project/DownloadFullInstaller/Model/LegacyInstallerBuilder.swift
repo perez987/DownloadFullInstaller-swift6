@@ -173,8 +173,11 @@ enum LegacyInstallerBuilder {
         }
         let executableURL = app.appendingPathComponent("Contents/MacOS/\(executable)")
         let executableValues = try executableURL.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+        let executableAttributes = try FileManager.default.attributesOfItem(atPath: executableURL.path)
+        // Sandbox execution policy is irrelevant when copying a readable installer bundle.
         guard executableValues.isRegularFile == true, executableValues.isSymbolicLink != true,
-              FileManager.default.isExecutableFile(atPath: executableURL.path) else {
+              let permissions = executableAttributes[.posixPermissions] as? NSNumber,
+              permissions.intValue & 0o111 != 0 else {
             throw BuildError.invalidInstaller
         }
     }

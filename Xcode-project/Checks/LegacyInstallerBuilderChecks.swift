@@ -34,9 +34,9 @@ struct LegacyInstallerBuilderChecks {
         try files.createDirectory(at: source.appendingPathComponent("Contents/MacOS"), withIntermediateDirectories: true)
         try plist([
             "CFBundleIdentifier": "com.apple.InstallAssistant.HighSierra",
-            "CFBundleExecutable": "InstallAssistant",
+            "CFBundleExecutable": "InstallAssistant_springboard",
         ]).write(to: source.appendingPathComponent("Contents/Info.plist"))
-        let executable = source.appendingPathComponent("Contents/MacOS/InstallAssistant")
+        let executable = source.appendingPathComponent("Contents/MacOS/InstallAssistant_springboard")
         try Data("fixture executable".utf8).write(to: executable)
         try files.setAttributes([.posixPermissions: 0o755], ofItemAtPath: executable.path)
         let payload: [String: Any] = [
@@ -56,6 +56,12 @@ struct LegacyInstallerBuilderChecks {
             originals[name] = data
         }
         require(try LegacyInstallerBuilder.installerApp(in: volume).path == source.path, "Installer discovery failed")
+        for permissions in [0o744, 0o654, 0o645] {
+            try files.setAttributes([.posixPermissions: permissions], ofItemAtPath: executable.path)
+            require(try LegacyInstallerBuilder.installerApp(in: volume).path == source.path,
+                    "Executable mode bits rejected")
+        }
+        try files.setAttributes([.posixPermissions: 0o755], ofItemAtPath: executable.path)
         let patched = try LegacyInstallerBuilder.patchedInstallInfo(originals["InstallInfo.plist"]!)
         let info = try PropertyListSerialization.propertyList(from: patched, format: nil) as! [String: Any]
         let image = info["Payload Image Info"] as! [String: Any]
@@ -82,7 +88,7 @@ struct LegacyInstallerBuilderChecks {
         let output = try LegacyInstallerBuilder.build(from: source, components: components, expectedSizes: sizes)
         require(output.path == components.appendingPathComponent(source.lastPathComponent).path, "Unexpected output location")
         try LegacyInstallerBuilder.validateOutput(output, expectedSizes: sizes)
-        let outputExecutable = output.appendingPathComponent("Contents/MacOS/InstallAssistant")
+        let outputExecutable = output.appendingPathComponent("Contents/MacOS/InstallAssistant_springboard")
         require(try files.attributesOfItem(atPath: outputExecutable.path)[.posixPermissions] as? Int == 0o755,
                 "Executable permissions changed")
         require(try Data(contentsOf: outside.appendingPathComponent("sentinel")) == Data("untouched".utf8), "Source link target changed")

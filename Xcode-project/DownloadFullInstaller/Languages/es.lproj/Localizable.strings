@@ -134,7 +134,7 @@
 "Select the mounted Base System volume containing the Apple installer app for this download." = "Selecciona el volumen Base System montado que contiene la aplicación instaladora de Apple correspondiente a esta descarga.";
 "Select the mounted Base System volume..." = "Selecciona el volumen Base System montado...";
 "The component %@ is missing, incomplete, or not a regular file. Download it again." = "El componente %@ falta, está incompleto o no es un archivo normal. Descárgalo de nuevo.";
-"The installer app was created at %@." = "La aplicación instaladora se ha creado en %@.";
+"The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "La aplicación instaladora se ha creado junto a los componentes descargados de %@, con el nombre \"%@\".";
 "The installer image could not be ejected. Eject it in Finder. Error: %@" = "No se pudo expulsar la imagen del instalador. Expúlsala en el Finder. Error: %@";
 "These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "Estos componentes se están usando para crear una aplicación instaladora. Espera a que termine antes de descargarlos de nuevo.";
 "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "Este instalador es para Intel. Crear la aplicación no lo hace compatible con Apple Silicon ni con equipos Mac no compatibles.";

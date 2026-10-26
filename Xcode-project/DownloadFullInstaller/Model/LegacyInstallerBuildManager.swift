@@ -93,7 +93,9 @@ final class LegacyInstallerBuildManager: ObservableObject {
         }
         if let result {
             NSWorkspace.shared.activateFileViewerSelecting([result])
-            var message = String(format: NSLocalizedString("The installer app was created at %@.", comment: "Installer output location"), result.path)
+            let appName = result.lastPathComponent
+            let osName = result.deletingPathExtension().lastPathComponent.replacingOccurrences(of: "Install ", with: "")
+            var message = String(format: NSLocalizedString("The installer app has been created alongside the downloaded %@ components, under the name \"%@\".", comment: "Installer output location: OS name, app file name"), osName, appName)
             message += "\n\n" + NSLocalizedString("This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs.", comment: "Installer compatibility warning")
             if let ejectWarning { message += "\n\n" + ejectWarning }
             activeAlert = .installerCreation(title: NSLocalizedString("Success", comment: ""), message: message)

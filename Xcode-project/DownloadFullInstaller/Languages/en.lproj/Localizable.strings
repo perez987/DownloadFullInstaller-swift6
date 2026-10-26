@@ -133,7 +133,7 @@
 "Select the mounted Base System volume containing the Apple installer app for this download." = "Select the mounted Base System volume containing the Apple installer app for this download.";
 "Select the mounted Base System volume..." = "Select the mounted Base System volume...";
 "The component %@ is missing, incomplete, or not a regular file. Download it again." = "The component %@ is missing, incomplete, or not a regular file. Download it again.";
-"The installer app was created at %@." = "The installer app was created at %@.";
+"The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "The installer app has been created alongside the downloaded %@ components, under the name \"%@\".";
 "The installer image could not be ejected. Eject it in Finder. Error: %@" = "The installer image could not be ejected. Eject it in Finder. Error: %@";
 "These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "These components are being used to create an installer app. Wait for creation to finish before downloading them again.";
 "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs.";

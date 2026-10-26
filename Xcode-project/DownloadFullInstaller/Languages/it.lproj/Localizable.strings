@@ -112,9 +112,30 @@
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Puoi eseguire fino a 3 download contemporaneamente. Attendi il completamento di un download prima di avviarne un altro.";
 "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Scarica i sei componenti qui sotto nella stessa cartella. Questi installer Intel non consentono di installare macOS su Apple Silicon.";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
-"Do not open InstallESDDmg.pkg; it is not a standalone installer. After all six downloads finish, run gibMacOS's BuildmacOSInstallApp.command on macOS and select this folder to assemble the installer app. Download Full Installer does not assemble it automatically." = "Non aprire InstallESDDmg.pkg: non è un installer autonomo. Al termine dei sei download, esegui BuildmacOSInstallApp.command di gibMacOS su macOS e seleziona questa cartella per creare l’app di installazione. Download Full Installer non la crea automaticamente.";
-"Get gibMacOS (external assembly tool)" = "Ottieni gibMacOS (strumento esterno di assemblaggio)";
 
 /* Apple Configurator Restore */
 "Restore with Apple Configurator" = "Ripristina con Apple Configurator";
 "Restore with Apple Configurator: How to" = "Ripristina con Apple Configurator:\nI firmware macOS sono file IPSW che possono essere usati per ripristinare i Mac Silicon usando Apple Configurator.\nPer questa operazione, hai bisogno di un altro Mac e di un cavo USB C che possa trasmettere alimentazione e dati.\nIl ripristino di un Mac Silicon cancella tutto il contenuto del disco e l'utente perde tutti i dati che non sono stati precedentemente sottoposti a backup.";
+
+/* In-app multipart installer assembly */
+"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@";
+"An item already exists at %@. Move it or rename it before creating another installer app." = "An item already exists at %@. Move it or rename it before creating another installer app.";
+"Assembling installer app. Copying large files may take several minutes..." = "Assembling installer app. Copying large files may take several minutes...";
+"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished.";
+"Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required." = "Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required.";
+"Download all six installer components before creating the app." = "Download all six installer components before creating the app.";
+"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist has an unsupported payload format. The installer app was not created.";
+"Installer creation canceled" = "Installer creation canceled";
+"Installer creation in progress" = "Installer creation in progress";
+"Opening BaseSystem.dmg..." = "Opening BaseSystem.dmg...";
+"Select" = "Select";
+"Select Base System Volume" = "Select Base System Volume";
+"Select the mounted Base System volume containing the Apple installer app for this download." = "Select the mounted Base System volume containing the Apple installer app for this download.";
+"Select the mounted Base System volume..." = "Select the mounted Base System volume...";
+"The component %@ is missing, incomplete, or not a regular file. Download it again." = "The component %@ is missing, incomplete, or not a regular file. Download it again.";
+"The installer app was created at %@." = "The installer app was created at %@.";
+"The installer image could not be ejected. Eject it in Finder. Error: %@" = "The installer image could not be ejected. Eject it in Finder. Error: %@";
+"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "These components are being used to create an installer app. Wait for creation to finish before downloading them again.";
+"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs.";
+"Wait for BaseSystem.dmg to mount, then select its Base System volume under Locations. Select the volume itself, not the installer app inside it. This grants Download Full Installer access to copy the app. Cancel if the image did not mount." = "Wait for BaseSystem.dmg to mount, then select its Base System volume under Locations. Select the volume itself, not the installer app inside it. This grants Download Full Installer access to copy the app. Cancel if the image did not mount.";
+"Wait for installer creation to finish before quitting. You can cancel in the volume selection dialog before copying begins." = "Wait for installer creation to finish before quitting. You can cancel in the volume selection dialog before copying begins.";

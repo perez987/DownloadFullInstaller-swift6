@@ -8,6 +8,7 @@ struct ContentView: View {
     @EnvironmentObject var sucatalog: SUCatalog
     @AppStorage(Prefs.key(.seedProgram)) private var seedProgram = SeedProgram.noSeed.rawValue
     @StateObject private var firmwareCatalog = FirmwareCatalog()
+    @ObservedObject private var installerBuilder = LegacyInstallerBuildManager.shared
     @State private var selectedTab = 0
     @State private var selectedRelease: String?
     @State private var isLegacyExpanded = false
@@ -74,6 +75,10 @@ struct ContentView: View {
                 detailPane
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 Divider()
+                if installerBuilder.isBuilding {
+                    ProgressView(installerBuilder.status)
+                        .padding(.top, 12)
+                }
                 DownloadView()
                     .padding(16)
                     .background(.thinMaterial)
@@ -84,6 +89,7 @@ struct ContentView: View {
         .background { GlassBackground() }
         .frame(minWidth: 990, idealWidth: 990, maxWidth: 990, minHeight: 724, idealHeight: 724, maxHeight: 724)
         .navigationTitle(NSLocalizedString("Download Full Installer", comment: "Main window title"))
+        .appAlert(item: $installerBuilder.activeAlert)
         .onAppear {
             if !sucatalog.hasLoaded, !sucatalog.isLoading { sucatalog.load() }
             if !firmwareCatalog.hasLoaded, !firmwareCatalog.isLoading { firmwareCatalog.load() }

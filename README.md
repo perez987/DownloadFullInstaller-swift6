@@ -8,7 +8,7 @@
 
 **Download Full Installer** is a macOS application written in SwiftUI that downloads PKG installers or IPSW firmwares for the **Install macOS Big Sur** application and newer. Runs on macOS 15 Sequoia and later.
 
-It also discovers multipart pre-Big Sur installers, including High Sierra, Mojave, and Catalina, when Apple includes them in the selected software update catalog. These require downloading six components and assembling the installer app with an external tool such as gibMacOS's `BuildmacOSInstallApp.command`; see [legacy installer instructions](DOCS/Legacy-macos.md). Do not open `InstallESDDmg.pkg` as a standalone installer.
+It also discovers multipart pre-Big Sur installers, including High Sierra, Mojave, and Catalina, when Apple includes them in the selected software update catalog. Download their six components and use **Create Installer App** to assemble the app without Python or gibMacOS; see [legacy installer instructions](DOCS/Legacy-macos.md). Do not open `InstallESDDmg.pkg` as a standalone installer. This new assembly workflow still requires verification on macOS.
 
 **Versions**:
 
@@ -64,7 +64,7 @@ This repo exists to keep "Download Full Installer" alive and growing. Picking up
 
 ### Legacy macOS installer download
 
-Catalog-based High Sierra/Mojave/Catalina installers appear under **Available Releases** when available. Download all six files from their detail card (up to three at a time) into their product-specific subfolder of your download folder. Then use gibMacOS's `BuildmacOSInstallApp.command` on macOS and select that folder to assemble the installer app; follow the [assembly instructions](DOCS/Legacy-macos.md#download-and-create-the-app). Download Full Installer does not perform this assembly automatically. Opening `InstallESDDmg.pkg` directly fails even with all catalog files present. This does not make Intel macOS releases installable on Apple Silicon.
+Catalog-based High Sierra/Mojave/Catalina installers appear under **Legacy macOS Installers (6 files)** when available. Download all six files from their detail card (up to three at a time) into their product-specific subfolder of your download folder, then choose **Create Installer App**. macOS opens `BaseSystem.dmg`; authorize its mounted Base System volume in the app's folder picker. Download Full Installer copies the installer app, populates `SharedSupport`, patches its metadata, and saves it inside the component folder. Follow the [assembly instructions](DOCS/Legacy-macos.md#download-and-create-the-app). Opening `InstallESDDmg.pkg` directly fails even with all catalog files present. This does not make Intel macOS releases installable on Apple Silicon.
 
 The five available legacy macOS releases are grouped under **Legacy macOS Installers** below the current releases in the left-hand installer list. This section is collapsed on launch; use the chevron to the right of its header to expand it. Select a release to download its disk image using the shared download queue. Open the downloaded DMG in Finder and run its package to create the installer app. Legacy downloads are independent of the selected software update catalog.
 

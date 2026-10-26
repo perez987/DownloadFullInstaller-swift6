@@ -35,13 +35,15 @@ The five fixed disk-image links above remain independent of the catalog. Additio
 
 High Sierra and Mojave can therefore appear under **Available Releases** rather than the fixed-link legacy section. Catalina can also be discovered if Apple publishes a matching entry; no particular release or build is guaranteed. Try the **Regular** catalog if a seed catalog does not contain older installers. No App Store links or third-party installer mirrors are used.
 
-Unlike a modern `InstallAssistant.pkg`, `InstallESDDmg.pkg` needs the other five components in the same folder. A multipart card offers the six files:
+Unlike a modern `InstallAssistant.pkg`, `InstallESDDmg.pkg` is **not a standalone installer**. Opening it in Installer produces the "requires additional components" error, even if all catalog packages are beside it. Merely putting files in the same folder does not assemble an installer application.
+
+The multipart card intentionally offers the six inputs used by gibMacOS's separate `BuildmacOSInstallApp.command` tool:
 
 | File | Purpose |
 | --- | --- |
 | `BaseSystem.dmg` | Base system image containing the installer application |
 | `BaseSystem.chunklist` | Base system chunk metadata |
-| `InstallESDDmg.pkg` | Main installation image; open it to create the installer app |
+| `InstallESDDmg.pkg` | Main installation image; the builder copies it as `InstallESD.dmg`, rather than running it |
 | `InstallInfo.plist` | Image references used by the installer |
 | `AppleDiagnostics.dmg` | Diagnostics image |
 | `AppleDiagnostics.chunklist` | Diagnostics chunk metadata |
@@ -50,13 +52,25 @@ Unlike a modern `InstallAssistant.pkg`, `InstallESDDmg.pkg` needs the other five
 
 1. Select a catalog-based legacy release, then download **all six components** using their individual buttons. They share the existing three-transfer limit, cancellation, retry, replacement confirmation, and Finder actions. Start the remaining files as slots become available.
 2. Wait for all six green checkmarks. Files retain their original names under `macOS-<catalog-product-ID>` inside the configured download folder, preventing collisions between releases/builds.
-3. Open `InstallESDDmg.pkg` from that folder and follow the instructions to create the installer app.
+3. Download the **whole gibMacOS project** from [gibMacOS](https://github.com/corpnewt/gibMacOS) (Code → Download ZIP, then extract it, or clone the repository). `BuildmacOSInstallApp.command` launches `BuildmacOSInstallApp.py`; both files and the accompanying `Scripts` folder are required.
+4. On macOS, run `BuildmacOSInstallApp.command` from that project. It requires Python; its launcher can offer to install Python if missing. At its folder prompt, drag the `macOS-<catalog-product-ID>` folder containing the six completed downloads into Terminal, then press Return. Use this builder, not the `gibMacOS.command` downloader, to reuse your existing downloads.
+5. The builder creates `Install macOS <release>.app` **inside that component folder**, not in `/Applications`. Keep the original downloads until the resulting app has been checked.
+
+Download Full Installer currently downloads the components only; it does **not** assemble the app automatically. The builder is an external tool, not bundled with or run by this sandboxed app.
+
+#### Why gibMacOS downloads eleven files
+
+In its normal installer-download mode, gibMacOS downloads every package listed for the catalog product. For the High Sierra product reported here, the five additional files are `InstallAssistantAuto.pkg`, `InstallESDDmg.chunklist`, `MajorOSInfo.pkg`, `OSInstall.mpkg`, and `RecoveryHDMetaDmg.pkg`. Its separate app builder does not use those five files. Downloading them therefore does not make `InstallESDDmg.pkg` independently installable, and they are not needed for that builder's six-file workflow.
+
+The [upstream builder source](https://github.com/corpnewt/gibMacOS/blob/bf8f2abdadd56694519f1f04ff9c4b0cd89c6063/BuildmacOSInstallApp.py) defines the same six required filenames as this app. It mounts `BaseSystem.dmg`, copies the installer application from that image, and populates its `Contents/SharedSupport` directory with the six components. In that copy, it renames `InstallESDDmg.pkg` to `InstallESD.dmg` and updates `InstallInfo.plist`'s payload URL and identifier, removing the old payload chunklist references. Simply opening the PKG, or renaming it alone, does not perform these assembly steps. The [downloader source](https://github.com/corpnewt/gibMacOS/blob/bf8f2abdadd56694519f1f04ff9c4b0cd89c6063/gibMacOS.py) explains the larger download set.
 
 These are **Intel** installers. Downloading them on macOS 15+ does not make them compatible with Apple Silicon or permit installation on unsupported hardware. No Mavericks download has been added.
 
+The reported standalone-package failure is not evidence that Tahoe needs five more files. The incorrect instruction to run a component package explains why the same action fails with either download set. The external builder's behavior has been checked in its source, but successful assembly and use on Tahoe have not been verified here.
+
 #### Validation on macOS
 
-Build the application with Xcode 26, then check High Sierra and Mojave in the Regular catalog if available. Exercise all six downloads, the three-download limit, cancel/retry, replacement, switching releases, and a custom download folder. Open `InstallESDDmg.pkg` from the product folder and confirm it creates the installer app. Also check a modern Big Sur-or-newer PKG and the five fixed legacy DMGs.
+Build the application with Xcode 26, then check High Sierra and Mojave in the Regular catalog if available. Exercise all six downloads, the three-download limit, cancel/retry, replacement, switching releases, and a custom download folder. Confirm the card warns against opening `InstallESDDmg.pkg` and its gibMacOS link opens correctly. Run the external builder against a completed product folder and verify the resulting app contains `Contents/SharedSupport/InstallESD.dmg` and the updated `InstallInfo.plist`. Check installer/bootable-media use separately on compatible Intel hardware; assembly is not proof of host compatibility. Also check a modern Big Sur-or-newer PKG and the five fixed legacy DMGs.
 
 The standalone fixture checks in `Xcode-project/Checks/LegacyInstallerChecks.swift` exercise the catalog metadata and distribution parsing logic without downloading multi-gigabyte installers:
 

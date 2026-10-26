@@ -70,7 +70,7 @@
 "Choose where to save downloaded installers" = "Izberite, kam želite shraniti prenesene namestitvene datoteke";
 
 /* Legacy macOS installers */
-"Legacy macOS Installers" = "Starejše namestitvene datoteke macOS";
+"Legacy macOS Installers" = "↓ Starejše namestitvene datoteke macOS";
 "Download legacy macOS installers (10.7 - 10.12)" = "Prenesi starejše različice macOS (10.7 - 10.12)";
 "Download macOS %@ %@" = "Prenesi macOS %@ %@";
 

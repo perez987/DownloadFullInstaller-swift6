@@ -59,9 +59,12 @@ struct MultipartInstallerView: View {
                 Text(NSLocalizedString("This catalog does not provide all six required installer components. Try the Regular catalog.", comment: "Incomplete multipart catalog entry"))
                     .foregroundStyle(.secondary)
             }
-            Text(NSLocalizedString("Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app.", comment: "Multipart installer next step"))
+            Text(NSLocalizedString("Do not open InstallESDDmg.pkg; it is not a standalone installer. After all six downloads finish, run gibMacOS's BuildmacOSInstallApp.command on macOS and select this folder to assemble the installer app. Download Full Installer does not assemble it automatically.", comment: "Multipart installer external assembly instructions"))
                 .font(.callout.weight(.semibold))
                 .fixedSize(horizontal: false, vertical: true)
+            Link(destination: URL(string: "https://github.com/corpnewt/gibMacOS")!) {
+                Text(NSLocalizedString("Get gibMacOS (external assembly tool)", comment: "Link to the external legacy installer builder"))
+            }
         }
         .padding(16)
         .glassCard(cornerRadius: 16)

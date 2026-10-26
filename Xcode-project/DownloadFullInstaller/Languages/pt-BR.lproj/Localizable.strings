@@ -112,7 +112,8 @@
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Você pode executar até 3 downloads simultaneamente. Aguarde a conclusão de um download antes de iniciar outro.";
 "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Baixe os seis componentes abaixo na mesma pasta. Estes instaladores Intel não permitem instalar o macOS em Apple Silicon.";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
-"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Depois que os seis componentes forem baixados, abra InstallESDDmg.pkg na pasta em que ele foi baixado e siga as instruções para criar o app instalador.";
+"Do not open InstallESDDmg.pkg; it is not a standalone installer. After all six downloads finish, run gibMacOS's BuildmacOSInstallApp.command on macOS and select this folder to assemble the installer app. Download Full Installer does not assemble it automatically." = "Não abra InstallESDDmg.pkg; ele não é um instalador independente. Quando os seis downloads terminarem, execute BuildmacOSInstallApp.command do gibMacOS no macOS e selecione esta pasta para criar o app instalador. Download Full Installer não o cria automaticamente.";
+"Get gibMacOS (external assembly tool)" = "Obter gibMacOS (ferramenta externa de montagem)";
 
 /* Apple Configurator Restore */
 "Restore with Apple Configurator" = "Restaurar com Apple Configurator";

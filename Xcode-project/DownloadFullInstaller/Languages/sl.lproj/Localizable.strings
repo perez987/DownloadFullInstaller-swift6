@@ -112,7 +112,8 @@
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Hkrati lahko izvajate največ 3 prenose. Pred začetkom novega počakajte, da se eden od prenosov konča.";
 "Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Prenesite vseh šest spodnjih komponent v isto mapo. Ti namestitveni programi za sisteme Intel ne omogočajo namestitve sistema macOS na računalnike s čipi Apple Silicon.";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "Ta katalog ne vsebuje vseh šestih zahtevanih komponent namestitvenega programa. Poskusite z običajnim katalogom.";
-"Once the six components have been downloaded, open InstallESDDmg.pkg from the folder where it was downloaded and follow the instructions to create the installer app." = "Ko je vseh šest komponent prenesenih, odprite datoteko InstallESDDmg.pkg iz mape, v katero je bila prenesena, in sledite navodilom za ustvarjanje namestitvene aplikacije.";
+"Do not open InstallESDDmg.pkg; it is not a standalone installer. After all six downloads finish, run gibMacOS's BuildmacOSInstallApp.command on macOS and select this folder to assemble the installer app. Download Full Installer does not assemble it automatically." = "Ne odpirajte InstallESDDmg.pkg; to ni samostojen namestitveni program. Ko je vseh šest prenosov končanih, v sistemu macOS zaženite BuildmacOSInstallApp.command iz gibMacOS in izberite to mapo, da sestavite namestitveno aplikacijo. Download Full Installer je ne sestavi samodejno.";
+"Get gibMacOS (external assembly tool)" = "Prenesi gibMacOS (zunanje orodje za sestavljanje)";
 
 /* Apple Configurator Restore */
 "Restore with Apple Configurator" = "Obnovi z Apple Configurator";

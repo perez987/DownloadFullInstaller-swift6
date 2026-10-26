@@ -65,7 +65,7 @@ struct ContentView: View {
     var body: some View {
         HStack(spacing: 0) {
             navigationPane
-                .frame(width: 290)
+                .frame(width: 300)
                 .background(.thinMaterial)
 
             Divider()

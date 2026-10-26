@@ -70,7 +70,7 @@
 "Choose where to save downloaded installers" = "Izberite, kam želite shraniti prenesene namestitvene datoteke";
 
 /* Legacy macOS installers */
-"Legacy macOS Installers" = "↓ Starejše namestitvene datoteke macOS (ena datoteka)";
+"Legacy macOS Installers" = "↓ Starejše različice (ena datoteka)";
 "Download legacy macOS installers (10.7 - 10.12)" = "Prenesi starejše različice macOS (10.7 - 10.12)";
 "Download macOS %@ %@" = "Prenesi macOS %@ %@";
 
@@ -78,8 +78,8 @@
 "Check for Updates..." = "Preveri posodobitve...";
 
 /* Firmware tab */
-"Installers" = "Namestitveni programi";
-"Firmwares" = "Vdelana programska oprema";
+"Installers" = "Monterji";
+"Firmwares" = "Firmwares";
 "Download %@ %@ (%@) Firmware" = "Prenesi vdelano programsko opremo %@ %@ (%@)";
 "This firmware has been downloaded" = "Ta vdelana programska oprema je že prenesena";
 
@@ -94,7 +94,7 @@
 "macOS Library" = "Knjižnica macOS";
 "Choose a release to explore." = "Izberite različico za ogled.";
 "Available Releases" = "Razpoložljive različice";
-"Multipart Legacy Installers" = "Starejši namestitveni programi macOS (6 datotek)";
+"Multipart Legacy Installers" = "Starejše različice (6 datotek)";
 "Refresh" = "Osveži";
 "Select a macOS release" = "Izberite različico macOS";
 "Available versions and download options will appear here." = "Tukaj bodo prikazane razpoložljive različice in možnosti prenosa.";

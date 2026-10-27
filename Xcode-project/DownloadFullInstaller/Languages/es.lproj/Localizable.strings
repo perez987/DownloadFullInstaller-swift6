@@ -138,5 +138,8 @@
 "The installer image could not be ejected. Eject it in Finder. Error: %@" = "No se pudo expulsar la imagen del instalador. Expúlsala en el Finder. Error: %@";
 "These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "Estos componentes se están usando para crear una aplicación instaladora. Espera a que termine antes de descargarlos de nuevo.";
 "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "Este instalador es para Intel. Crear la aplicación no lo hace compatible con Apple Silicon ni con equipos Mac no compatibles.";
-"Wait for BaseSystem.dmg to mount, then select its Base System volume under Locations. Select the volume itself, not the installer app inside it. This grants Download Full Installer access to copy the app. Cancel if the image did not mount." = "Espera a que se monte BaseSystem.dmg y selecciona su volumen Base System en Ubicaciones. Selecciona el volumen, no la aplicación instaladora que contiene. Así autorizas a Download Full Installer a copiar la aplicación. Cancela si la imagen no se ha montado.";
+"Wait for BaseSystem.dmg to mount, then select its Base System volume under Locations. Select the volume itself, not the installer app inside it. This grants Download Full Installer access to copy the app. Cancel if the image did not mount." = "Espera a que se monte BaseSystem.dmg y selecciona su volumen Base System.
+Selecciona el volumen, no la aplicación instaladora que contiene.
+Así autorizas a Download Full Installer a copiar la aplicación.
+Cancela si la imagen no se ha montado.";
 "Wait for installer creation to finish before quitting. You can cancel in the volume selection dialog before copying begins." = "Espera a que termine la creación del instalador antes de salir. Puedes cancelar en el diálogo de selección del volumen antes de que empiece la copia.";

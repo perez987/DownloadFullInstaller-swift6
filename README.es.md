@@ -8,7 +8,7 @@
 
 **Download Full Installer** es una aplicación para macOS escrita en SwiftUI que descarga instaladores PKG o firmwares IPSW para la aplicación **Instalar macOS Big Sur** y versiones posteriores. Funciona en macOS 15 Sequoia y siguientes.
 
-También detecta instaladores anteriores a Big Sur, como High Sierra, Mojave y Catalina, cuando Apple los incluye en el catálogo seleccionado. Descarga sus seis componentes y usa **Crear aplicación instaladora** para ensamblar la aplicación sin Python ni gibMacOS; consulta las [instrucciones](DOCS/Legacy-macos.md). No abras `InstallESDDmg.pkg` como instalador independiente. Este nuevo proceso aún requiere verificación en macOS.
+También detecta instaladores anteriores a Big Sur, como High Sierra, Mojave y Catalina, cuando Apple los incluye en el catálogo seleccionado. Descarga sus seis componentes y usa **Crear aplicación instaladora** para ensamblar la aplicación sin Python ni gibMacOS; consulta las [instrucciones](DOCS/Legacy-macos.md). No abras `InstallESDDmg.pkg` como instalador independiente.
 
 **Versiones**:
 

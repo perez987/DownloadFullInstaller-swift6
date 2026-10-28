@@ -59,7 +59,7 @@ Este repositorio existe para mantener vivo y en crecimiento «Download Full Inst
 - Actualizador
   - Se añade el sistema de actualización Sparkle (Swift Package Manager) para comprobar si hay nuevas versiones
 - Seguridad
-   - La aplicación está aislada en un entorno seguro (_sandbox_)
+   - La aplicación no usa _sandbox_
    - Apple ha notarizado la aplicación.
 
 ### Descarga de instaladores antiguos de macOS
@@ -86,11 +86,9 @@ Download Full Installer -> menú Ajustes (⌘ ,) abre una ventana donde puedes s
 
 Puedes abrir el selector de idioma desde la barra de menús (`Languages` > `Select Language`) o con el atajo de teclado (`⌘ + L`).
 
-### Limpieza de descargas incompletas al cerrar la aplicación
+### Descargas incompletas
 
-Las descargas incompletas pueden acumularse en el directorio temporal de la aplicación _sandboxed_<br>
-`~/Library/Containers/perez987.DownloadFullInstaller/Data/tmp`<br>
-y consumir espacio en disco indefinidamente. La limpieza elimina de forma segura los archivos normales (no los directorios) de `NSTemporaryDirectory()`, que corresponde a la ruta temporal de la aplicación _sandboxed_. Si no se puede eliminar un archivo concreto, la limpieza continúa con los demás.
+La aplicación no usa _sandbox_, por lo que su directorio temporal es el del sistema para el usuario (`/var/folders/.../T`), compartido con otras apps. Se eliminó la limpieza al cerrar porque podía borrar archivos temporales de otras apps. macOS limpia las descargas incompletas que queden allí.
 
 <!--### La aplicación está dañada y no se puede abrir
 

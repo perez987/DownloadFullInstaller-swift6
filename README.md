@@ -59,7 +59,7 @@ This repo exists to keep "Download Full Installer" alive and growing. Picking up
 - Updater
   - Add Sparkle updater system (Swift Package Manager) to check for new releases
 - Security
-   - App is sandboxed
+   - App is not sandboxed
    - App is notarized by Apple.
 
 ### Legacy macOS installer download
@@ -86,11 +86,9 @@ Download Full Installer -> Settings menu (⌘ ,) opens a window where you can se
 
 Language selector can be opened from the menubar (`Languages` > `Select Language`) or by keyboard shortcut (`⌘ + L`).
 
-### Clean up incomplete downloads on app quit
+### Incomplete downloads
 
-Incomplete downloads may accumulate in the sandboxed temp directory<br>
-`~/Library/Containers/perez987.DownloadFullInstaller/Data/tmp`<br>
-consuming disk space indefinitely. The cleanup safely removes regular files (not directories) from `NSTemporaryDirectory()`, which resolves to the sandboxed temp path. Individual file deletion failures don't halt the overall cleanup process.
+The app is not sandboxed, so its temporary directory is the per-user system one (`/var/folders/.../T`), shared with other apps. The former cleanup on quit was removed because it could delete other apps' temporary files. Incomplete downloads left there are cleaned up by macOS.
 
 <!--### App is damaged and can't be opened
 

@@ -131,7 +131,7 @@ enum LegacyInstallerBuilder {
         return destination
     }
 
-    // Sandboxed apps tag every file they create; the assembled installer is a local build, so clear the flag.
+    // Downloaded/copied files may carry quarantine; the assembled installer is a local build, so clear the flag.
     // Symlinks are skipped on purpose: the attribute of the link itself is cleared with XATTR_NOFOLLOW only.
     private static func removeQuarantine(from root: URL) {
         clearQuarantine(at: root)
@@ -151,7 +151,7 @@ enum LegacyInstallerBuilder {
         values.quarantineProperties = nil
         try? target.setResourceValues(values)
         if getxattr(url.path, name, nil, 0, 0, XATTR_NOFOLLOW) >= 0 {
-            // Still tagged (e.g. the sandbox denied removal); build must not fail because of it.
+            // Still tagged (e.g. removal denied); build must not fail because of it.
             NSLog("Could not remove quarantine from %@", url.path)
         }
     }

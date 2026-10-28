@@ -110,6 +110,7 @@ enum LegacyInstallerBuilder {
                 }
             }
             try validateOutput(app, expectedSizes: expectedSizes)
+            removeQuarantine(from: app)
             try files.moveItem(at: app, to: destination)
         } catch {
             do {
@@ -128,6 +129,16 @@ enum LegacyInstallerBuilder {
             )
         }
         return destination
+    }
+
+    // Sandboxed apps tag every file they create; the assembled installer is a local build, so clear the flag.
+    private static func removeQuarantine(from root: URL) {
+        let name = "com.apple.quarantine"
+        _ = removexattr(root.path, name, XATTR_NOFOLLOW)
+        guard let enumerator = FileManager.default.enumerator(atPath: root.path) else { return }
+        for case let relative as String in enumerator {
+            _ = removexattr(root.appendingPathComponent(relative).path, name, XATTR_NOFOLLOW)
+        }
     }
 
     static func validateOutput(_ app: URL, expectedSizes: [String: Int]) throws {

@@ -21,7 +21,7 @@ There is **one application target** in this repository:
 - **Build tool**: Xcode 26+
 - **Auto-updater**: [Sparkle](https://sparkle-project.org/) via Swift Package Manager (`Updater/UpdateController.swift`)
 - **Dock progress**: `DockProgress-5.1.0` (local copy, not a package dependency)
-- **Sandbox**: the target runs in the macOS App Sandbox (see `.entitlements` file)
+- **Sandbox**: the target is NOT sandboxed (no `.entitlements` file); preferences live in `~/Library/Preferences/perez987.DownloadFullInstaller.plist`
 
 ## Project Structure
 
@@ -87,7 +87,7 @@ Rules:
 
 ## Incomplete downloads
 
-Incomplete downloads are cleaned up on app quit (see `AppDelegate.swift`).
+No app-side cleanup: the non-sandboxed temp directory is shared with other apps, so deleting from it is unsafe.
 
 ## Dependencies
 

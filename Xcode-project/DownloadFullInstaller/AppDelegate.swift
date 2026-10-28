@@ -47,7 +47,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Enable sleep mode when app exits
 //        print("Calling enableSystemSleep()...")
         enableSystemSleep()
-        // Clean up temporary directory to remove incomplete downloads
-        DownloadManager.cleanupAppTempDirectory()
     }
 }

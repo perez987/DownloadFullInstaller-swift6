@@ -143,4 +143,4 @@ Cancel if the image did not mount.";
 
 /* Multipart components */
 "Download the components again?" = "구성 요소를 다시 다운로드하시겠습니까?";
-"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "%@의 구성 요소가 이미 다운로드되었습니다. 다시 다운로드하고 기존 파일을 교체하시겠습니까?";
+"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "%@의 구성 요소 전체 또는 일부가 이미 다운로드되었습니다. 다시 다운로드하고 기존 파일을 교체하시겠습니까?";

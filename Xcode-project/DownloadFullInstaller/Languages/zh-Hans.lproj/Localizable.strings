@@ -143,4 +143,4 @@ Cancel if the image did not mount.";
 
 /* Multipart components */
 "Download the components again?" = "要重新下载组件吗？";
-"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "%@ 的组件已下载。要重新下载并替换现有文件吗？";
+"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "%@ 的全部或部分组件已下载。要重新下载并替换现有文件吗？";

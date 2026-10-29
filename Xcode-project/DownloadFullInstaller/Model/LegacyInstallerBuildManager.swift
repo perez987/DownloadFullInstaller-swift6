@@ -111,30 +111,31 @@ final class LegacyInstallerBuildManager: ObservableObject {
         }
     }
 
+    // Mounts with -nobrowse so Finder does not open a window for the volume.
     private func openBaseSystem(_ image: URL) async throws {
-        guard let mounter = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.DiskImageMounter") else {
-            throw CocoaError(.fileNoSuchFile)
-        }
-        let configuration = NSWorkspace.OpenConfiguration()
-        configuration.activates = false
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            NSWorkspace.shared.open([image], withApplicationAt: mounter, configuration: configuration) { _, error in
-                if let error { continuation.resume(throwing: error) }
-                else { continuation.resume() }
-            }
-        }
+        try await Task.detached(priority: .userInitiated) {
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: "/usr/bin/hdiutil")
+            process.arguments = ["attach", "-nobrowse", "-readonly", "-noautoopen", image.path]
+            process.standardOutput = FileHandle.nullDevice
+            process.standardError = FileHandle.nullDevice
+            try process.run()
+            process.waitUntilExit()
+            guard process.terminationStatus == 0 else { throw CocoaError(.fileReadUnknown) }
+        }.value
     }
 
     private func selectBaseSystemVolume() async -> URL? {
         let panel = NSOpenPanel()
         panel.title = NSLocalizedString("Select Base System Volume", comment: "Installer image authorization")
-        panel.message = NSLocalizedString("Wait for BaseSystem.dmg to mount, then select its Base System volume under Locations. Select the volume itself, not the installer app inside it. This grants Download Full Installer access to copy the app. Cancel if the image did not mount.", comment: "Sandbox source authorization")
+        panel.message = NSLocalizedString("Wait for BaseSystem.dmg to mount, then select its Base System volume in the /Volumes folder. Select the volume itself, not the installer app inside it. This grants Download Full Installer access to copy the app. Cancel if the image did not mount.", comment: "Sandbox source authorization")
         panel.prompt = NSLocalizedString("Select", comment: "Authorize installer volume")
         panel.directoryURL = URL(fileURLWithPath: "/Volumes", isDirectory: true)
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false
         panel.canCreateDirectories = false
+        NSApp.activate(ignoringOtherApps: true)
         return await withCheckedContinuation { continuation in
             panel.begin { response in
                 Task { @MainActor in

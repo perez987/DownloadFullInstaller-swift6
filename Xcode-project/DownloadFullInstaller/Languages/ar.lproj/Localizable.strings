@@ -194,3 +194,7 @@ Select the volume itself, not the installer app inside it.
 This grants Download Full Installer access to copy the app.
 Cancel if the image did not mount.";
 "Wait for installer creation to finish before quitting. You can cancel in the volume selection dialog before copying begins." = "Wait for installer creation to finish before quitting. You can cancel in the volume selection dialog before copying begins.";
+
+/* Multipart components */
+"Download the components again?" = "هل تريد تنزيل المكونات مرة أخرى؟";
+"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "تم تنزيل مكونات %@ بالفعل. هل تريد تنزيلها مرة أخرى واستبدال الملفات الموجودة؟";

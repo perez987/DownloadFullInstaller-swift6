@@ -152,6 +152,14 @@ struct DownloadView: View {
         !singleActive.isEmpty || !singleCompleted.isEmpty || !coordinator.groups.isEmpty
     }
 
+    private var listHeight: CGFloat {
+        let activeGroups: Int = coordinator.groups.filter { !$0.isComplete }.count
+        let completedGroups: Int = coordinator.groups.filter { $0.isComplete }.count
+        let activeRows: Int = (singleActive.count + activeGroups) * 104
+        let completedRows: Int = (singleCompleted.count + completedGroups) * 56
+        return min(CGFloat(activeRows + completedRows + 4), 220)
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
@@ -178,7 +186,7 @@ struct DownloadView: View {
                     }
                     .padding(2)
                 }
-                .frame(height: min(CGFloat((singleActive.count + coordinator.groups.filter { !$0.isComplete }.count) * 104 + (singleCompleted.count + coordinator.groups.filter(\.isComplete).count) * 56 + 4), 220))
+                .frame(height: listHeight)
             } else {
                 Text(NSLocalizedString("No active downloads", comment: "Empty download queue"))
                     .font(.callout)

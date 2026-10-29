@@ -197,4 +197,4 @@ Cancel if the image did not mount.";
 
 /* Multipart components */
 "Download the components again?" = "هل تريد تنزيل المكونات مرة أخرى؟";
-"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "تم تنزيل مكونات %@ بالفعل. هل تريد تنزيلها مرة أخرى واستبدال الملفات الموجودة؟";
+"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "تم تنزيل كل مكونات %@ أو بعضها بالفعل. هل تريد تنزيلها مرة أخرى واستبدال الملفات الموجودة؟";

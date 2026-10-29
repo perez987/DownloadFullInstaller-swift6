@@ -143,4 +143,4 @@ Cancel if the image did not mount.";
 
 /* Multipart components */
 "Download the components again?" = "Scaricare di nuovo i componenti?";
-"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "I componenti di %@ sono già stati scaricati. Vuoi scaricarli di nuovo e sostituire i file esistenti?";
+"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "Tutti o alcuni componenti di %@ sono già stati scaricati. Vuoi scaricarli di nuovo e sostituire i file esistenti?";

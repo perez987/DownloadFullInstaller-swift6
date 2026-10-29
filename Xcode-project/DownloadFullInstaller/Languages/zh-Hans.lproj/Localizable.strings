@@ -110,7 +110,6 @@
 "Active downloads" = "正在进行的下载";
 "No active downloads" = "没有正在进行的下载";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "最多只能同时进行 3 个下载。请等待一个下载完成后再开始新的下载。";
-"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "将下面的六个组件全部下载到同一文件夹中。这些 Intel 安装器无法在 Apple 芯片 Mac 上安装 macOS。";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "此目录未提供全部六个必需的安装器组件。请尝试使用常规目录。";
 
 /* Apple Configurator Restore */
@@ -122,7 +121,6 @@
 "An item already exists at %@. Move it or rename it before creating another installer app." = "An item already exists at %@. Move it or rename it before creating another installer app.";
 "Assembling installer app. Copying large files may take several minutes..." = "Assembling installer app. Copying large files may take several minutes...";
 "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished.";
-"Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required." = "Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required.";
 "Download all six installer components before creating the app." = "Download all six installer components before creating the app.";
 "InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist has an unsupported payload format. The installer app was not created.";
 "Installer creation canceled" = "Installer creation canceled";

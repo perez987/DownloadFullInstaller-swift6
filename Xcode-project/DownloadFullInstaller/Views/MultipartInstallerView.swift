@@ -89,9 +89,7 @@ struct MultipartInstallerView: View {
                 NSPasteboard.general.setString(components.map(\.url).joined(separator: "\n"), forType: .string)
             }
         }
-        .appAlert(item: $activeAlert) { alert in
-            if case .replaceComponents = alert { startDownload(replacing: true) }
-        }
+        .appAlert(item: $activeAlert)
         .onAppear(perform: refreshDownloads)
         .onChange(of: manager.activeDownloadCount) { refreshDownloads() }
         .onChange(of: manager.completedDownloads) { refreshDownloads() }
@@ -115,9 +113,23 @@ struct MultipartInstallerView: View {
         let access = Prefs.startAccessingDownloadURL()
         defer { Prefs.stopAccessingDownloadURL(access) }
         if components.contains(where: { FileManager.default.fileExists(atPath: root.appendingPathComponent(filename(for: $0)).path) }) {
-            activeAlert = .replaceComponents(name: "\(groupTitle) \(product.productVersion ?? "")")
+            confirmReplace()
         } else {
             startDownload(replacing: false)
+        }
+    }
+
+    // A modal NSAlert is used because the SwiftUI alert was not presented reliably for this card.
+    private func confirmReplace() {
+        let alertType = AppAlertType.replaceComponents(name: "\(groupTitle) \(product.productVersion ?? "")")
+        let alert = NSAlert()
+        alert.messageText = alertType.title
+        alert.informativeText = alertType.message
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: alertType.primaryButtonText)
+        alert.addButton(withTitle: alertType.dismissButtonText)
+        if alert.runModal() == .alertFirstButtonReturn {
+            startDownload(replacing: true)
         }
     }
 

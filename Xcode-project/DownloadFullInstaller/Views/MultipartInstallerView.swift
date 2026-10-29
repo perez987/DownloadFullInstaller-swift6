@@ -90,7 +90,7 @@ struct MultipartInstallerView: View {
             }
         }
         .appAlert(item: $activeAlert) { alert in
-            if case .replaceFile = alert { startDownload(replacing: true) }
+            if case .replaceComponents = alert { startDownload(replacing: true) }
         }
         .onAppear(perform: refreshDownloads)
         .onChange(of: manager.activeDownloadCount) { refreshDownloads() }
@@ -115,7 +115,7 @@ struct MultipartInstallerView: View {
         let access = Prefs.startAccessingDownloadURL()
         defer { Prefs.stopAccessingDownloadURL(access) }
         if components.contains(where: { FileManager.default.fileExists(atPath: root.appendingPathComponent(filename(for: $0)).path) }) {
-            activeAlert = .replaceFile(filename: product.componentFolder)
+            activeAlert = .replaceComponents(name: "\(groupTitle) \(product.productVersion ?? "")")
         } else {
             startDownload(replacing: false)
         }

@@ -141,3 +141,7 @@ Selecciona el volumen, no la aplicación instaladora que contiene.
 Así autorizas a Download Full Installer a copiar la aplicación.
 Cancela si la imagen no se ha montado.";
 "Wait for installer creation to finish before quitting. You can cancel in the volume selection dialog before copying begins." = "Espera a que termine la creación del instalador antes de salir. Puedes cancelar en el diálogo de selección del volumen antes de que empiece la copia.";
+
+/* Multipart components */
+"Download the components again?" = "¿Descargar los componentes de nuevo?";
+"The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "Los componentes de %@ ya se han descargado. ¿Quieres descargarlos de nuevo y reemplazar los archivos existentes?";

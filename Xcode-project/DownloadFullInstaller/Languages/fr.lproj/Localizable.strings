@@ -110,7 +110,6 @@
 "Active downloads" = "Téléchargements actifs";
 "No active downloads" = "Aucun téléchargement actif";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "Vous pouvez effectuer jusqu'à 3 téléchargements simultanés. Attendez la fin d'un téléchargement avant d'en lancer un autre.";
-"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "Téléchargez les six composants ci-dessous dans le même dossier. Ces programmes d’installation Intel ne permettent pas d’installer macOS sur Apple Silicon.";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "Ce catalogue ne fournit pas les six composants requis pour l’installation. Essayez le catalogue standard.";
 
 /* Apple Configurator Restore */
@@ -122,7 +121,6 @@
 "An item already exists at %@. Move it or rename it before creating another installer app." = "An item already exists at %@. Move it or rename it before creating another installer app.";
 "Assembling installer app. Copying large files may take several minutes..." = "Assembling installer app. Copying large files may take several minutes...";
 "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished.";
-"Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required." = "Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required.";
 "Download all six installer components before creating the app." = "Download all six installer components before creating the app.";
 "InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist has an unsupported payload format. The installer app was not created.";
 "Installer creation canceled" = "Installer creation canceled";

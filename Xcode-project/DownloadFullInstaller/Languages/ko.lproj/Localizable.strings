@@ -110,7 +110,6 @@
 "Active downloads" = "진행 중인 다운로드";
 "No active downloads" = "진행 중인 다운로드 없음";
 "You can only run up to 3 downloads at the same time. Please wait for a download to complete before starting a new one." = "동시에 최대 3개까지 다운로드할 수 있습니다. 다운로드가 완료될 때까지 기다린 후 새 다운로드를 시작하세요.";
-"Download all six components below into the same folder. These Intel installers cannot install macOS on Apple Silicon." = "아래의 여섯 구성 요소를 모두 같은 폴더에 다운로드하세요. 이 Intel 설치 프로그램으로는 Apple Silicon Mac에 macOS를 설치할 수 없습니다.";
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "이 카탈로그에는 필요한 설치 프로그램 구성 요소 여섯 개가 모두 포함되어 있지 않습니다. 일반 카탈로그를 사용해 보세요.";
 
 /* Apple Configurator Restore */
@@ -122,7 +121,6 @@
 "An item already exists at %@. Move it or rename it before creating another installer app." = "An item already exists at %@. Move it or rename it before creating another installer app.";
 "Assembling installer app. Copying large files may take several minutes..." = "Assembling installer app. Copying large files may take several minutes...";
 "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished.";
-"Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required." = "Do not open InstallESDDmg.pkg. After all six downloads finish, choose Create Installer App. macOS opens BaseSystem.dmg; select its mounted Base System volume when prompted. The app assembles the installer in this download folder. No Python or gibMacOS is required.";
 "Download all six installer components before creating the app." = "Download all six installer components before creating the app.";
 "InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist has an unsupported payload format. The installer app was not created.";
 "Installer creation canceled" = "Installer creation canceled";

@@ -5,8 +5,9 @@
 //
 
 import Foundation
+
 #if canImport(FoundationXML)
-import FoundationXML
+    import FoundationXML
 #endif
 
 class DistParserDelegate: NSObject, XMLParserDelegate {
@@ -37,12 +38,21 @@ class DistParserDelegate: NSObject, XMLParserDelegate {
         }
     }
 
-    func parser(_: XMLParser, didStartElement elementName: String, namespaceURI _: String?, qualifiedName _: String?, attributes attributeDict: [String: String] = [:]) {
+    func parser(
+        _: XMLParser,
+        didStartElement elementName: String,
+        namespaceURI _: String?,
+        qualifiedName _: String?,
+        attributes attributeDict: [String: String] = [:]
+    ) {
         if elementName == Elements.pkgref.rawValue {
-            if attributeDict["id"] == "InstallAssistant" || attributeDict["id"] == "InstallESDDmg" {
+            if attributeDict["id"] == "InstallAssistant"
+                || attributeDict["id"] == "InstallESDDmg"
+            {
                 if let version = attributeDict["version"] {
                     installerVersion = version
-                    osName = nameOS[String(installerVersion.prefix(2))] ?? "macOS"
+                    osName =
+                        nameOS[String(installerVersion.prefix(2))] ?? "macOS"
                 }
             }
         }
@@ -62,7 +72,12 @@ class DistParserDelegate: NSObject, XMLParserDelegate {
         self.elementName = elementName
     }
 
-    func parser(_: XMLParser, didEndElement elementName: String, namespaceURI _: String?, qualifiedName _: String?) {
+    func parser(
+        _: XMLParser,
+        didEndElement elementName: String,
+        namespaceURI _: String?,
+        qualifiedName _: String?
+    ) {
         if elementName == Elements.auxinfo.rawValue {
             parsingAuxinfo = false
         }
@@ -72,16 +87,21 @@ class DistParserDelegate: NSObject, XMLParserDelegate {
         }
 
         if elementName == Elements.string.rawValue {
-            if currentKey == "BUILD" || currentKey == "macOSProductBuildVersion" {
+            if currentKey == "BUILD" || currentKey == "macOSProductBuildVersion"
+            {
                 buildVersion = currentString
-            } else if currentKey == "VERSION" || currentKey == "macOSProductVersion" {
+            } else if currentKey == "VERSION"
+                || currentKey == "macOSProductVersion"
+            {
                 productVersion = currentString
             }
         }
     }
 
     func parser(_: XMLParser, foundCharacters string: String) {
-        let data = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let data = string.trimmingCharacters(
+            in: CharacterSet.whitespacesAndNewlines
+        )
 
         if !data.isEmpty {
             if elementName == Elements.title.rawValue {

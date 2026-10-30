@@ -102,20 +102,20 @@
 "Restore with Apple Configurator: How to" = "Відновити за допомогою Apple Configurator:\nПрошивки macOS — це файли IPSW, які можна використовувати для відновлення Mac із Silicon за допомогою Apple Configurator.\nДля цього вам потрібен інший Mac і кабель USB C, що може передавати живлення та дані.\nВідновлення Mac із Silicon стирає все на диску, і користувач втрачає всі дані, які не були заздалегідь збережені в резервній копії.";
 
 /* In-app multipart installer assembly */
-"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@";
-"An item already exists at %@. Move it or rename it before creating another installer app." = "An item already exists at %@. Move it or rename it before creating another installer app.";
-"Assembling installer app. Copying large files may take several minutes..." = "Assembling installer app. Copying large files may take several minutes...";
-"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished.";
-"Download all six installer components before creating the app." = "Download all six installer components before creating the app.";
-"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist has an unsupported payload format. The installer app was not created.";
-"Installer creation in progress" = "Installer creation in progress";
-"Opening BaseSystem.dmg..." = "Opening BaseSystem.dmg...";
-"Select the mounted Base System volume containing the Apple installer app for this download." = "Select the mounted Base System volume containing the Apple installer app for this download.";
-"The component %@ is missing, incomplete, or not a regular file. Download it again." = "The component %@ is missing, incomplete, or not a regular file. Download it again.";
-"The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "The installer app has been created alongside the downloaded %@ components, under the name \"%@\".";
-"The installer image could not be ejected. Eject it in Finder. Error: %@" = "The installer image could not be ejected. Eject it in Finder. Error: %@";
-"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "These components are being used to create an installer app. Wait for creation to finish before downloading them again.";
-"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs.";
+"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\nНе вдалося видалити незавершену збірку в %@. Видаліть її у Finder. Помилка: %@";
+"An item already exists at %@. Move it or rename it before creating another installer app." = "Елемент уже існує в %@. Перемістіть або перейменуйте його, перш ніж створювати інший інсталяційний застосунок.";
+"Assembling installer app. Copying large files may take several minutes..." = "Збирання інсталяційного застосунку. Копіювання великих файлів може тривати кілька хвилин...";
+"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "Імовірно, BaseSystem.dmg досі змонтовано. Після завершення витягніть образ Base System у Finder.";
+"Download all six installer components before creating the app." = "Завантажте всі шість компонентів інсталятора, перш ніж створювати застосунок.";
+"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist має непідтримуваний формат даних. Інсталяційний застосунок не створено.";
+"Installer creation in progress" = "Триває створення інсталятора";
+"Opening BaseSystem.dmg..." = "Відкриття BaseSystem.dmg...";
+"Select the mounted Base System volume containing the Apple installer app for this download." = "Виберіть змонтований том Base System, що містить інсталяційний застосунок Apple для цього завантаження.";
+"The component %@ is missing, incomplete, or not a regular file. Download it again." = "Компонент %@ відсутній, неповний або не є звичайним файлом. Завантажте його знову.";
+"The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "Інсталяційний застосунок створено поруч із завантаженими компонентами %@ під назвою \"%@\".";
+"The installer image could not be ejected. Eject it in Finder. Error: %@" = "Не вдалося витягти образ інсталятора. Витягніть його у Finder. Помилка: %@";
+"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "Ці компоненти використовуються для створення інсталяційного застосунку. Зачекайте завершення створення, перш ніж завантажувати їх знову.";
+"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "Це інсталятор для Intel. Створення застосунку не робить його сумісним з Apple Silicon або непідтримуваними Mac.";
 
 /* Multipart components */
 "Download the components again?" = "Завантажити компоненти знову?";

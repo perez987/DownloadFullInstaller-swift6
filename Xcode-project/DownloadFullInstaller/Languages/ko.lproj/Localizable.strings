@@ -102,20 +102,20 @@
 "Restore with Apple Configurator: How to" = "Apple Configurator로 복원:\nmacOS 펌웨어는 IPSW 파일이며 Apple Configurator를 사용해 Silicon Mac을 복원하는 데 사용할 수 있습니다.\n이 작업을 위해서는 다른 Mac과 전원 및 데이터 전송이 가능한 USB C 케이블이 필요합니다.\nSilicon Mac을 복원하면 드라이브의 모든 내용이 지워지며, 미리 백업하지 않은 모든 데이터를 잃게 됩니다.";
 
 /* In-app multipart installer assembly */
-"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@";
-"An item already exists at %@. Move it or rename it before creating another installer app." = "An item already exists at %@. Move it or rename it before creating another installer app.";
-"Assembling installer app. Copying large files may take several minutes..." = "Assembling installer app. Copying large files may take several minutes...";
-"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished.";
-"Download all six installer components before creating the app." = "Download all six installer components before creating the app.";
-"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist has an unsupported payload format. The installer app was not created.";
-"Installer creation in progress" = "Installer creation in progress";
-"Opening BaseSystem.dmg..." = "Opening BaseSystem.dmg...";
-"Select the mounted Base System volume containing the Apple installer app for this download." = "Select the mounted Base System volume containing the Apple installer app for this download.";
-"The component %@ is missing, incomplete, or not a regular file. Download it again." = "The component %@ is missing, incomplete, or not a regular file. Download it again.";
-"The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "The installer app has been created alongside the downloaded %@ components, under the name \"%@\".";
-"The installer image could not be ejected. Eject it in Finder. Error: %@" = "The installer image could not be ejected. Eject it in Finder. Error: %@";
-"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "These components are being used to create an installer app. Wait for creation to finish before downloading them again.";
-"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs.";
+"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\n%@의 불완전한 빌드를 제거할 수 없습니다. Finder에서 제거하세요. 오류: %@";
+"An item already exists at %@. Move it or rename it before creating another installer app." = "%@에 이미 항목이 있습니다. 다른 설치 앱을 만들기 전에 해당 항목을 이동하거나 이름을 변경하세요.";
+"Assembling installer app. Copying large files may take several minutes..." = "설치 앱을 조립하는 중입니다. 큰 파일을 복사하는 데 몇 분이 걸릴 수 있습니다...";
+"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg가 아직 마운트되어 있을 수 있습니다. 완료한 후 Finder에서 Base System 이미지를 추출하세요.";
+"Download all six installer components before creating the app." = "앱을 만들기 전에 여섯 개의 설치 프로그램 구성 요소를 모두 다운로드하세요.";
+"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist의 페이로드 형식이 지원되지 않습니다. 설치 앱이 생성되지 않았습니다.";
+"Installer creation in progress" = "설치 프로그램 생성 진행 중";
+"Opening BaseSystem.dmg..." = "BaseSystem.dmg를 여는 중...";
+"Select the mounted Base System volume containing the Apple installer app for this download." = "이 다운로드에 해당하는 Apple 설치 앱이 들어 있는 마운트된 Base System 볼륨을 선택하세요.";
+"The component %@ is missing, incomplete, or not a regular file. Download it again." = "%@ 구성 요소가 없거나, 불완전하거나, 일반 파일이 아닙니다. 다시 다운로드하세요.";
+"The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "설치 앱이 다운로드한 %@ 구성 요소와 같은 위치에 \"%@\"(이)라는 이름으로 생성되었습니다.";
+"The installer image could not be ejected. Eject it in Finder. Error: %@" = "설치 프로그램 이미지를 추출할 수 없습니다. Finder에서 추출하세요. 오류: %@";
+"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "이 구성 요소들은 설치 앱을 만드는 데 사용 중입니다. 생성이 끝날 때까지 기다린 후 다시 다운로드하세요.";
+"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "Intel용 설치 프로그램입니다. 앱을 만든다고 해서 Apple Silicon 또는 지원되지 않는 Mac과 호환되지는 않습니다.";
 
 /* Multipart components */
 "Download the components again?" = "구성 요소를 다시 다운로드하시겠습니까?";

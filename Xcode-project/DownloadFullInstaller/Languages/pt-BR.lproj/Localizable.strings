@@ -102,20 +102,20 @@
 "Restore with Apple Configurator: How to" = "Restaurar com Apple Configurator:\nFirmwares do macOS são arquivos IPSW que podem ser usados para restaurar Macs Silicon usando o Apple Configurator.\nPara esta tarefa, você precisa de outro Mac e de um cabo USB C que possa transmitir energia e dados.\nRestaurar um Mac Silicon apaga todo o conteúdo da unidade e o usuário perde todos os dados que não foram previamente salvos em backup.";
 
 /* In-app multipart installer assembly */
-"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@";
-"An item already exists at %@. Move it or rename it before creating another installer app." = "An item already exists at %@. Move it or rename it before creating another installer app.";
-"Assembling installer app. Copying large files may take several minutes..." = "Assembling installer app. Copying large files may take several minutes...";
-"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished.";
-"Download all six installer components before creating the app." = "Download all six installer components before creating the app.";
-"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist has an unsupported payload format. The installer app was not created.";
-"Installer creation in progress" = "Installer creation in progress";
-"Opening BaseSystem.dmg..." = "Opening BaseSystem.dmg...";
-"Select the mounted Base System volume containing the Apple installer app for this download." = "Select the mounted Base System volume containing the Apple installer app for this download.";
-"The component %@ is missing, incomplete, or not a regular file. Download it again." = "The component %@ is missing, incomplete, or not a regular file. Download it again.";
+"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\nNão foi possível remover a versão incompleta em %@. Remova-a no Finder. Erro: %@";
+"An item already exists at %@. Move it or rename it before creating another installer app." = "Já existe um item em %@. Mova-o ou renomeie-o antes de criar outro app instalador.";
+"Assembling installer app. Copying large files may take several minutes..." = "Montando o app instalador. Copiar arquivos grandes pode levar vários minutos...";
+"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "O BaseSystem.dmg ainda pode estar montado. Ejete a imagem Base System no Finder ao terminar.";
+"Download all six installer components before creating the app." = "Baixe os seis componentes do instalador antes de criar o app.";
+"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "O InstallInfo.plist tem um formato de conteúdo não compatível. O app instalador não foi criado.";
+"Installer creation in progress" = "Criação do instalador em andamento";
+"Opening BaseSystem.dmg..." = "Abrindo BaseSystem.dmg...";
+"Select the mounted Base System volume containing the Apple installer app for this download." = "Selecione o volume Base System montado que contém o app instalador da Apple correspondente a este download.";
+"The component %@ is missing, incomplete, or not a regular file. Download it again." = "O componente %@ está ausente, incompleto ou não é um arquivo regular. Baixe-o novamente.";
 "The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "O aplicativo instalador foi criado junto com os componentes baixados do %@, com o nome \"%@\".";
-"The installer image could not be ejected. Eject it in Finder. Error: %@" = "The installer image could not be ejected. Eject it in Finder. Error: %@";
-"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "These components are being used to create an installer app. Wait for creation to finish before downloading them again.";
-"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs.";
+"The installer image could not be ejected. Eject it in Finder. Error: %@" = "Não foi possível ejetar a imagem do instalador. Ejete-a no Finder. Erro: %@";
+"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "Estes componentes estão sendo usados para criar um app instalador. Aguarde a conclusão antes de baixá-los novamente.";
+"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "Este é um instalador Intel. Criar o app não o torna compatível com Apple Silicon nem com Macs não compatíveis.";
 
 /* Multipart components */
 "Download the components again?" = "Baixar os componentes novamente?";

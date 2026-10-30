@@ -116,10 +116,6 @@
 "The installer image could not be ejected. Eject it in Finder. Error: %@" = "The installer image could not be ejected. Eject it in Finder. Error: %@";
 "These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "These components are being used to create an installer app. Wait for creation to finish before downloading them again.";
 "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs.";
-Select the volume itself, not the installer app inside it.
-This grants Download Full Installer access to copy the app.
-Cancel if the image did not mount.";
-"Wait for installer creation to finish before quitting. You can cancel in the volume selection dialog before copying begins." = "Wait for installer creation to finish before quitting. You can cancel in the volume selection dialog before copying begins.";
 
 /* Multipart components */
 "Download the components again?" = "구성 요소를 다시 다운로드하시겠습니까?";

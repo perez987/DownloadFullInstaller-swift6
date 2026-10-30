@@ -42,11 +42,8 @@ final class LegacyInstallerBuildManager: ObservableObject {
         }
 
         var volumeToEject: URL?
-        var volumeAccess: URL?
-        defer { volumeAccess?.stopAccessingSecurityScopedResource() }
         var result: URL?
         var failure: String?
-        var canceled = false
         var imageOpened = false
         do {
             guard
@@ -77,19 +74,12 @@ final class LegacyInstallerBuildManager: ObservableObject {
                 "Opening BaseSystem.dmg...",
                 comment: "Installer assembly status"
             )
-            try await openBaseSystem(
+            let mountedVolume = try await openBaseSystem(
                 folder.appendingPathComponent("BaseSystem.dmg")
             )
             imageOpened = true
 
-            status = NSLocalizedString(
-                "Select the mounted Base System volume...",
-                comment: "Installer assembly status"
-            )
-            if let volume = await selectBaseSystemVolume() {
-                if volume.startAccessingSecurityScopedResource() {
-                    volumeAccess = volume
-                }
+            if let volume = mountedVolume {
                 let values = try volume.resourceValues(forKeys: [
                     .volumeURLKey, .volumeIsReadOnlyKey,
                 ])
@@ -127,7 +117,7 @@ final class LegacyInstallerBuildManager: ObservableObject {
                     )
                 }.value
             } else {
-                canceled = true
+                throw LegacyInstallerBuilder.BuildError.invalidInstaller
             }
         } catch {
             failure = error.localizedDescription
@@ -188,63 +178,36 @@ final class LegacyInstallerBuildManager: ObservableObject {
                 ),
                 message: message
             )
-        } else if canceled {
-            activeAlert = .installerCreation(
-                title: NSLocalizedString(
-                    "Installer creation canceled",
-                    comment: "Installer canceled"
-                ),
-                message: ejectWarning ?? ""
-            )
         }
     }
 
-    // Mounts with -nobrowse so Finder does not open a window for the volume.
-    private func openBaseSystem(_ image: URL) async throws {
+    // Mounts with -nobrowse so Finder does not open a window, and returns the volume's mount point.
+    private func openBaseSystem(_ image: URL) async throws -> URL? {
         try await Task.detached(priority: .userInitiated) {
             let process = Process()
+            let output = Pipe()
             process.executableURL = URL(fileURLWithPath: "/usr/bin/hdiutil")
             process.arguments = [
-                "attach", "-nobrowse", "-readonly", "-noautoopen", image.path,
+                "attach", "-nobrowse", "-readonly", "-noautoopen", "-plist",
+                image.path,
             ]
-            process.standardOutput = FileHandle.nullDevice
+            process.standardOutput = output
             process.standardError = FileHandle.nullDevice
             try process.run()
+            let data = output.fileHandleForReading.readDataToEndOfFile()
             process.waitUntilExit()
             guard process.terminationStatus == 0 else {
                 throw CocoaError(.fileReadUnknown)
             }
+            let plist =
+                try PropertyListSerialization.propertyList(
+                    from: data,
+                    format: nil
+                ) as? [String: Any]
+            let entities = plist?["system-entities"] as? [[String: Any]] ?? []
+            return entities.compactMap { $0["mount-point"] as? String }
+                .first { $0.hasPrefix("/Volumes/") }
+                .map { URL(fileURLWithPath: $0, isDirectory: true) }
         }.value
-    }
-
-    private func selectBaseSystemVolume() async -> URL? {
-        let panel = NSOpenPanel()
-        panel.title = NSLocalizedString(
-            "Select Base System Volume",
-            comment: "Installer image authorization"
-        )
-        panel.message = NSLocalizedString(
-            "Wait for BaseSystem.dmg to mount, then select its Base System volume in the /Volumes folder. Select the volume itself, not the installer app inside it. This grants Download Full Installer access to copy the app. Cancel if the image did not mount.",
-            comment: "Sandbox source authorization"
-        )
-        panel.prompt = NSLocalizedString(
-            "Select",
-            comment: "Authorize installer volume"
-        )
-        panel.directoryURL = URL(fileURLWithPath: "/Volumes", isDirectory: true)
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.allowsMultipleSelection = false
-        panel.canCreateDirectories = false
-        NSApp.activate(ignoringOtherApps: true)
-        return await withCheckedContinuation { continuation in
-            panel.begin { response in
-                Task { @MainActor in
-                    continuation.resume(
-                        returning: response == .OK ? panel.url : nil
-                    )
-                }
-            }
-        }
     }
 }

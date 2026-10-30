@@ -1,7 +1,6 @@
 /* General */
 "" = "";
 "\n\n" = "\n\n";
-" in catalog" = " no catálogo";
 "Download Full Installer" = "Download Full Installer";
 
 /* File Replace */
@@ -16,15 +15,11 @@
 
 /* Download */
 "Downloaded %@" = "Baixado %@";
-"Downloading %@" = "Baixando %@";
-"Retrying download of InstallAssistant.pkg..." = "Tentando novamente baixar InstallAssistant.pkg...";
 "Show in Finder" = "Mostrar no Finder";
 "Cancel %@ download" = "Cancelar download de %@";
-"Show the installer in the Downloads folder" = "Mostrar o instalador na pasta de downloads";
 
 /* Language Selection */
 "Language Selection" = "Seleção de idioma";
-"Choose a language" = "Escolha um idioma";
 "Select Language" = "Selecionar idioma";
 "Continue" = "Continuar";
 
@@ -36,7 +31,6 @@
 /* App Settings */
 "Yes" = "Sim";
 "Clear app settings?" = "Limpar configurações?";
-"(App preferences will be cleared)" = "(As preferências do aplicativo serão apagadas)";
 "You will lose user settings and saved language." = "Você perderá as configurações do usuário e o idioma salvo.";
 "Warning" = "Aviso";
 
@@ -45,16 +39,10 @@
 "Error Creating Installer" = "Erro ao criar o instalador do macOS";
 "The installer package %@ does not exist in the %@ folder. Please download it first." = "O pacote de instalação %@ não existe na pasta %@. Por favor, baixe-o primeiro.";
 "Success" = "Sucesso";
-"The installer app has been created successfully in /Applications" = "O aplicativo de instalação do macOS foi criado com sucesso em /Applications";
-"The installer package has been opened. Follow the on-screen instructions to complete the installation" = "O pacote de instalação foi aberto. Siga as instruções na tela para concluir a instalação";
-"Failed to open the installer package. Please try opening it manually from the Downloads folder" = "Falha ao abrir o pacote de instalação. Tente abri-lo manualmente da pasta de downloads";
 "Failed to create installer app. Error: %@" = "Falha ao criar o aplicativo de instalação do macOS. Erro: %@";
-"No write permission to /Applications folder" = "Sem permissão de escrita na pasta /Applications";
-"Failed to create AppleScript" = "Falha ao criar AppleScript";
 
 /* Multi-download support */
 "Maximum Downloads Reached" = "Número máximo de downloads atingido";
-"You can only download up to 3 installers at the same time. Please wait for a download to complete before starting a new one." = "Você pode baixar apenas 3 instaladores ao mesmo tempo. Por favor, aguarde um download terminar antes de iniciar um novo.";
 "Dismiss" = "Dispensar";
 
 /* Visual indicator*/
@@ -71,8 +59,6 @@
 
 /* Legacy macOS installers */
 "Legacy macOS Installers" = "↓ Versões legadas (arquivo único)";
-"Download legacy macOS installers (10.7 - 10.12)" = "Baixar versões antigas do macOS (10.7 - 10.12)";
-"Download macOS %@ %@" = "Baixar macOS %@ %@";
 
 /* Update Check */
 "Check for Updates..." = "Verificar atualizações...";
@@ -113,7 +99,6 @@
 "This catalog does not provide all six required installer components. Try the Regular catalog." = "This catalog does not provide all six required installer components. Try the Regular catalog.";
 
 /* Apple Configurator Restore */
-"Restore with Apple Configurator" = "Restaurar com Apple Configurator";
 "Restore with Apple Configurator: How to" = "Restaurar com Apple Configurator:\nFirmwares do macOS são arquivos IPSW que podem ser usados para restaurar Macs Silicon usando o Apple Configurator.\nPara esta tarefa, você precisa de outro Mac e de um cabo USB C que possa transmitir energia e dados.\nRestaurar um Mac Silicon apaga todo o conteúdo da unidade e o usuário perde todos os dados que não foram previamente salvos em backup.";
 
 /* In-app multipart installer assembly */
@@ -123,19 +108,14 @@
 "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished.";
 "Download all six installer components before creating the app." = "Download all six installer components before creating the app.";
 "InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist has an unsupported payload format. The installer app was not created.";
-"Installer creation canceled" = "Installer creation canceled";
 "Installer creation in progress" = "Installer creation in progress";
 "Opening BaseSystem.dmg..." = "Opening BaseSystem.dmg...";
-"Select" = "Select";
-"Select Base System Volume" = "Select Base System Volume";
 "Select the mounted Base System volume containing the Apple installer app for this download." = "Select the mounted Base System volume containing the Apple installer app for this download.";
-"Select the mounted Base System volume..." = "Select the mounted Base System volume...";
 "The component %@ is missing, incomplete, or not a regular file. Download it again." = "The component %@ is missing, incomplete, or not a regular file. Download it again.";
 "The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "O aplicativo instalador foi criado junto com os componentes baixados do %@, com o nome \"%@\".";
 "The installer image could not be ejected. Eject it in Finder. Error: %@" = "The installer image could not be ejected. Eject it in Finder. Error: %@";
 "These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "These components are being used to create an installer app. Wait for creation to finish before downloading them again.";
 "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs.";
-"Wait for BaseSystem.dmg to mount, then select its Base System volume in the /Volumes folder. Select the volume itself, not the installer app inside it. This grants Download Full Installer access to copy the app. Cancel if the image did not mount." = "Wait for BaseSystem.dmg to mount, then select its Base System volume.
 Select the volume itself, not the installer app inside it.
 This grants Download Full Installer access to copy the app.
 Cancel if the image did not mount.";
@@ -144,3 +124,4 @@ Cancel if the image did not mount.";
 /* Multipart components */
 "Download the components again?" = "Baixar os componentes novamente?";
 "The components of %@ have already been downloaded. Do you want to download them again and replace the existing files?" = "Todos ou alguns dos componentes de %@ já foram baixados. Deseja baixá-los novamente e substituir os arquivos existentes?";
+"The installer app was created at %@." = "O aplicativo instalador foi criado em %@.";

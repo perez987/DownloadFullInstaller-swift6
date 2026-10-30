@@ -102,20 +102,20 @@
 "Restore with Apple Configurator: How to" = "使用 Apple Configurator 恢复：操作方法\nmacOS 固件是 IPSW 文件，可通过 Apple Configurator 用于恢复 Apple 芯片 Mac。\n执行此操作需要另一台 Mac 以及一根可同时传输电力和数据的 USB-C 线缆。\n恢复 Apple 芯片 Mac 会抹掉磁盘上的所有内容，用户将丢失所有此前未备份的数据。";
 
 /* In-app multipart installer assembly */
-"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@";
-"An item already exists at %@. Move it or rename it before creating another installer app." = "An item already exists at %@. Move it or rename it before creating another installer app.";
-"Assembling installer app. Copying large files may take several minutes..." = "Assembling installer app. Copying large files may take several minutes...";
-"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished.";
-"Download all six installer components before creating the app." = "Download all six installer components before creating the app.";
-"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist has an unsupported payload format. The installer app was not created.";
-"Installer creation in progress" = "Installer creation in progress";
-"Opening BaseSystem.dmg..." = "Opening BaseSystem.dmg...";
-"Select the mounted Base System volume containing the Apple installer app for this download." = "Select the mounted Base System volume containing the Apple installer app for this download.";
-"The component %@ is missing, incomplete, or not a regular file. Download it again." = "The component %@ is missing, incomplete, or not a regular file. Download it again.";
-"The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "The installer app has been created alongside the downloaded %@ components, under the name \"%@\".";
-"The installer image could not be ejected. Eject it in Finder. Error: %@" = "The installer image could not be ejected. Eject it in Finder. Error: %@";
-"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "These components are being used to create an installer app. Wait for creation to finish before downloading them again.";
-"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs.";
+"%@\n\nCould not remove the incomplete build at %@. Remove it in Finder. Error: %@" = "%@\n\n无法移除位于 %@ 的未完成构建。请在访达中移除。错误：%@";
+"An item already exists at %@. Move it or rename it before creating another installer app." = "%@ 处已存在项目。请先移动或重命名该项目，再创建另一个安装器 App。";
+"Assembling installer app. Copying large files may take several minutes..." = "正在组装安装器 App。复制大文件可能需要几分钟…";
+"BaseSystem.dmg may still be mounted. Eject the Base System image in Finder when finished." = "BaseSystem.dmg 可能仍处于已挂载状态。完成后请在访达中推出 Base System 映像。";
+"Download all six installer components before creating the app." = "请先下载全部六个安装器组件，再创建 App。";
+"InstallInfo.plist has an unsupported payload format. The installer app was not created." = "InstallInfo.plist 的负载格式不受支持。未创建安装器 App。";
+"Installer creation in progress" = "正在创建安装器";
+"Opening BaseSystem.dmg..." = "正在打开 BaseSystem.dmg…";
+"Select the mounted Base System volume containing the Apple installer app for this download." = "请选择已挂载的 Base System 卷，其中包含此次下载对应的 Apple 安装器 App。";
+"The component %@ is missing, incomplete, or not a regular file. Download it again." = "组件 %@ 缺失、不完整或不是常规文件。请重新下载。";
+"The installer app has been created alongside the downloaded %@ components, under the name \"%@\"." = "安装器 App 已创建在已下载的 %@ 组件旁，名称为“%@”。";
+"The installer image could not be ejected. Eject it in Finder. Error: %@" = "无法推出安装器映像。请在访达中推出。错误：%@";
+"These components are being used to create an installer app. Wait for creation to finish before downloading them again." = "这些组件正用于创建安装器 App。请等待创建完成后再重新下载。";
+"This is an Intel installer. Creating the app does not make it compatible with Apple Silicon or unsupported Macs." = "这是 Intel 安装器。创建 App 不会使其与 Apple Silicon 或不受支持的 Mac 兼容。";
 
 /* Multipart components */
 "Download the components again?" = "要重新下载组件吗？";

@@ -12,7 +12,7 @@ This file is automatically read by GitHub Copilot coding agents (and Claude) whe
 
 There is **one application target** in this repository:
 
-- `DownloadFullInstaller` → requires macOS 15.6 or later.
+- `DownloadFullInstaller` → requires macOS 15 or later.
 
 ## Tech Stack
 

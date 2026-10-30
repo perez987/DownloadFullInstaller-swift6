@@ -34,7 +34,6 @@ Multipart installers are currently available for High Sierra, Mojave, and Catali
 |     |
 |:---:|
 | ![Multipart installer cards](Images/Multipart-macOS/Multipart-1.png) |
-| ![Multipart installer download and assembly](Images/Multipart-macOS/Multipart-2.png) |
 
 ### Preface
 

@@ -1,8 +1,8 @@
 # Download legacy macOS
 
-### Preface
+## Direct link to DMG (Sierra, El Capitan, Yosemite, Mpuntain Lion, Lion)
 
-There may be users interested in obtaining legacy versions of macOS, prior to Big Sur.  [5T33Z0](https://github.com/5T33Z0) has proposed adding this to Download Full Installer as a way to complement the app or add an extra feature. The most significant challenge is finding direct links to legacy versions of macOS that can be integrated into Download Full Installer without requiring extensive code modifications.
+There are be users interested in obtaining legacy versions of macOS, prior to Big Sur. The most significant challenge is finding direct links to legacy versions of macOS that can be integrated into Download Full Installer without requiring extensive code modifications.
 
 There is a support article by Apple on "[How to download and install macOS](https://support.apple.com/en-us/102662)” with a section called "Use a web browser for older versions" that contains direct download links for macOS Lion to Sierra:
 
@@ -29,7 +29,7 @@ Legacy downloads are managed similarly to modern downloads:
 - The download destination folder is the one configured in the app settings
 - The selected software update catalog does not affect these fixed Apple download links.
 
-### Catalog-based installers: High Sierra,  Mojave and Catalina
+## Catalog-based installers: High Sierra,  Mojave and Catalina
 
 The five fixed disk-image links above remain independent of the catalog. Additional pre-Big Sur installers are discovered dynamically in Apple's software update catalogs, using the `OSInstall = com.apple.mpkg.OSInstall` metadata marker. The previous catalog filter only recognized the newer `SharedSupport` marker.
 
@@ -48,7 +48,7 @@ The multipart card offers the six inputs needed for in-app assembly, the same in
 | `AppleDiagnostics.dmg` | Diagnostics image |
 | `AppleDiagnostics.chunklist` | Diagnostics chunk metadata |
 
-#### Download and create the app
+### Download and create the app
 
 1. Select a catalog-based legacy release, then download **all six components** using their individual buttons. They share the existing three-transfer limit, cancellation, retry, replacement confirmation, and Finder actions. Start the remaining files as slots become available.
 2. Wait for all six green checkmarks. Files retain their original names under `macOS-<catalog-product-ID>` inside the configured download folder, preventing collisions between releases/builds.
@@ -65,7 +65,7 @@ The app uses Launch Services (`NSWorkspace`) to open the image rather than launc
 
 Executable validation reads the binary's POSIX permission bits. Assembly only copies the installer.
 
-#### Why gibMacOS downloads eleven files
+### Why gibMacOS downloads eleven files
 
 In its normal installer-download mode, gibMacOS downloads every package listed for the catalog product. For the High Sierra product reported here, the five additional files are `InstallAssistantAuto.pkg`, `InstallESDDmg.chunklist`, `MajorOSInfo.pkg`, `OSInstall.mpkg`, and `RecoveryHDMetaDmg.pkg`. Its separate app builder does not use those five files. Downloading them therefore does not make `InstallESDDmg.pkg` independently installable, and they are not needed for that builder's six-file workflow.
 
@@ -73,7 +73,7 @@ The [upstream builder source](https://github.com/corpnewt/gibMacOS/blob/bf8f2abd
 
 These are **Intel** installers. Downloading them on macOS 15+ does not make them compatible with Apple Silicon or permit installation on unsupported hardware. No Mavericks download has been added.
 
-#### Validation on macOS
+### Validation on macOS
 
 Build the application with Xcode 26, then check High Sierra and Mojave in the Regular catalog if available, plus Catalina when published. Exercise all six downloads, the three-download limit, cancel/retry, replacement, switching releases, and a custom download folder.
 

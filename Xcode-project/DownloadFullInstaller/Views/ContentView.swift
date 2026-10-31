@@ -135,8 +135,8 @@ struct ContentView: View {
                 firmwareCatalog.load()
             }
         }
-        .onChange(of: selectedTab) { selectedRelease = nil }
-        .onChange(of: seedProgram) { selectedRelease = nil }
+        .onChangeCompat(of: selectedTab) { selectedRelease = nil }
+        .onChangeCompat(of: seedProgram) { selectedRelease = nil }
         .onReceive(NotificationCenter.default.publisher(for: .languageChanged))
         { _ in
             localizationID = UUID()

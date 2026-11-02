@@ -195,7 +195,7 @@ enum AppAlertType: Identifiable {
             Alert(
                 title: Text(title),
                 message: Text(message),
-                dismissButton: .cancel(Text(dismissButtonText))
+                dismissButton: .default(Text(dismissButtonText))
             )
         }
     }

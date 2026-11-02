@@ -233,6 +233,57 @@ extension View {
     }
 }
 
+// MARK: - Centralized alert presentation
+
+/// Single presenter hosted at the main window root, so alerts raised from
+/// nested rows/lists are not lost when several `.alert` modifiers coexist.
+@MainActor
+final class AlertCenter: ObservableObject {
+    static let shared = AlertCenter()
+    @Published var current: AppAlertType?
+    private var action: (() -> Void)?
+
+    func present(_ alert: AppAlertType, action: (() -> Void)? = nil) {
+        self.action = action
+        current = alert
+    }
+
+    fileprivate func perform() {
+        let pending = action
+        action = nil
+        pending?()
+    }
+}
+
+extension View {
+    /// Forwards alerts set on `alertType` to the root-hosted `AlertCenter`
+    func routedAlert(
+        item alertType: Binding<AppAlertType?>,
+        onAction: ((AppAlertType) -> Void)? = nil
+    ) -> some View {
+        onChangeCompat(of: alertType.wrappedValue?.id) {
+            guard let alert = alertType.wrappedValue else { return }
+            alertType.wrappedValue = nil
+            AlertCenter.shared.present(alert) { onAction?(alert) }
+        }
+    }
+
+    /// Hosts the app-wide alert; apply once at the main window root
+    func alertHost() -> some View {
+        modifier(AlertHostModifier())
+    }
+}
+
+private struct AlertHostModifier: ViewModifier {
+    @ObservedObject private var center = AlertCenter.shared
+
+    func body(content: Content) -> some View {
+        content.alert(item: $center.current) { alert in
+            alert.createAlert(primaryAction: { center.perform() })
+        }
+    }
+}
+
 // MARK: - Free disk space check
 
 enum DiskSpace {

@@ -157,11 +157,11 @@ struct ContentView: View {
         .background { GlassBackground() }
         .frame(
             minWidth: 950,
-//            idealWidth: 950,
-//            maxWidth: 950,
+            //            idealWidth: 950,
+            //            maxWidth: 950,
             minHeight: 650,
-//            idealHeight: 650,
-//            maxHeight: 672
+            //            idealHeight: 650,
+            //            maxHeight: 672
         )
         .navigationTitle(
             NSLocalizedString(

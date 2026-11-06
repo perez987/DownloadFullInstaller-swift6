@@ -4,6 +4,7 @@
 //  Created by Armin Briegel on 2021-06-09
 //
 
+import AppKit
 import Sparkle
 import SwiftUI
 
@@ -27,6 +28,7 @@ struct FetchInstallerPkgApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .background(WindowSizeObserver())
                 .environmentObject(sucatalog)
                 .environmentObject(languageManager)
                 .navigationTitle("")
@@ -55,7 +57,10 @@ struct FetchInstallerPkgApp: App {
                     SettingsView()
                 }
         }
-        //        .defaultSize(width: 1000, height: 820)
+        .defaultSize(
+            width: Prefs.windowSize?.width ?? 950,
+            height: Prefs.windowSize?.height ?? 650
+        )
         //        .windowResizability(.contentSize)
         .commands {
             CommandGroup(replacing: .appSettings) {
@@ -97,5 +102,78 @@ struct FetchInstallerPkgApp: App {
                 .disabled(!updaterController.canCheckForUpdates)
             }
         }
+    }
+}
+
+private struct WindowSizeObserver: NSViewRepresentable {
+    func makeNSView(context: Context) -> WindowSizeObserverView {
+        WindowSizeObserverView()
+    }
+
+    func updateNSView(_ nsView: WindowSizeObserverView, context: Context) {}
+}
+
+private final class WindowSizeObserverView: NSView {
+    private var transitioningFullScreen = false
+
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        nil
+    }
+
+    override func viewWillMove(toWindow newWindow: NSWindow?) {
+        NotificationCenter.default.removeObserver(self)
+        transitioningFullScreen = false
+        super.viewWillMove(toWindow: newWindow)
+    }
+
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        guard let window else { return }
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(windowDidResize(_:)),
+                           name: NSWindow.didResizeNotification, object: window)
+        center.addObserver(self, selector: #selector(windowDidEndLiveResize(_:)),
+                           name: NSWindow.didEndLiveResizeNotification, object: window)
+        center.addObserver(self, selector: #selector(windowWillChangeFullScreen(_:)),
+                           name: NSWindow.willEnterFullScreenNotification, object: window)
+        center.addObserver(self, selector: #selector(windowWillChangeFullScreen(_:)),
+                           name: NSWindow.willExitFullScreenNotification, object: window)
+        center.addObserver(self, selector: #selector(windowDidEnterFullScreen(_:)),
+                           name: NSWindow.didEnterFullScreenNotification, object: window)
+        center.addObserver(self, selector: #selector(windowDidExitFullScreen(_:)),
+                           name: NSWindow.didExitFullScreenNotification, object: window)
+    }
+
+    @objc private func windowDidResize(_ notification: Notification) {
+        guard let window = notification.object as? NSWindow, !window.inLiveResize else { return }
+        saveSize(of: window)
+    }
+
+    @objc private func windowDidEndLiveResize(_ notification: Notification) {
+        guard let window = notification.object as? NSWindow else { return }
+        saveSize(of: window)
+    }
+
+    @objc private func windowWillChangeFullScreen(_ notification: Notification) {
+        transitioningFullScreen = true
+    }
+
+    @objc private func windowDidEnterFullScreen(_ notification: Notification) {
+        transitioningFullScreen = false
+    }
+
+    @objc private func windowDidExitFullScreen(_ notification: Notification) {
+        transitioningFullScreen = false
+        guard let window = notification.object as? NSWindow else { return }
+        saveSize(of: window)
+    }
+
+    private func saveSize(of window: NSWindow) {
+        guard window.isVisible, !transitioningFullScreen,
+              !window.styleMask.contains(.fullScreen)
+        else {
+            return
+        }
+        Prefs.saveWindowSize(window.contentRect(forFrameRect: window.frame).size)
     }
 }

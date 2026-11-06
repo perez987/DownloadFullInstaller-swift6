@@ -14,6 +14,7 @@ enum Prefs {
         case downloadPath = "DownloadPath"
         case downloadPathBookmark = "DownloadPathBookmark"
         case languageSelectionShown = "LanguageSelectionShown"
+        case windowSize = "WindowSize"
     }
 
     // Track whether we've already logged the stale bookmark message to avoid console spam
@@ -22,6 +23,28 @@ enum Prefs {
 
     static func key(_ key: Key) -> String {
         key.rawValue
+    }
+
+    static var windowSize: CGSize? {
+        guard let values = UserDefaults.standard.array(forKey: key(.windowSize)) as? [Double],
+              values.count == 2,
+              values.allSatisfy({ $0.isFinite && $0 > 0 })
+        else {
+            return nil
+        }
+        return CGSize(width: values[0], height: values[1])
+    }
+
+    static func saveWindowSize(_ size: CGSize) {
+        guard size.width.isFinite, size.height.isFinite,
+              size.width > 0, size.height > 0
+        else {
+            return
+        }
+        UserDefaults.standard.set(
+            [Double(size.width), Double(size.height)],
+            forKey: key(.windowSize)
+        )
     }
 
     /// Save user preferences (AppleLanguages, LanguageSelectionShown and downloadURL)

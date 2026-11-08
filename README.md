@@ -13,8 +13,6 @@ It also discovers:
 - Multipart pre-Big Sur Intel installers, including High Sierra, Mojave, and Catalina, when Apple includes all six components in the selected software update catalog. Download the grouped components and use **Create Installer App** to assemble the installer app.  Do not open `InstallESDDmg.pkg` as a standalone installer
 - Legacy macOS installers while Apple available direct links are available (Sierra, El Capitan, Yosemite, Mountain Lion, and Lion), the downloaded file is not a PKG installer but a DMG disk image containing the PKG installer.
 
-See [legacy installer instructions](DOCS/Legacy-macos.md) for details about this legacy macOS.
-
 **Versions**:
 
  - There is a version 2.5.5, built with Swift 5, that runs on macOS Big Sur or later, you can get the source code or the notarized app from the [releases page](https://github.com/perez987/DownloadFullInstaller/releases/tag/2.5.5).

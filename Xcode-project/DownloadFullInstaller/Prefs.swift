@@ -2,7 +2,7 @@
 //  Prefs.swift
 //
 //  Created by Armin Briegel on 2021-06-15
-// Modified by Emilio P Egido on 2026-01-18
+//  Modified by Emilio P Egido on 2026-01-18
 //
 
 import Foundation

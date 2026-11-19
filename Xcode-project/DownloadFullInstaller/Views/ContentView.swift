@@ -216,7 +216,6 @@ struct ContentView: View {
             }
         }
         .onChangeCompat(of: selectedTab) { selectedRelease = nil }
-        .onChangeCompat(of: seedProgram) { selectedRelease = nil }
         .onReceive(NotificationCenter.default.publisher(for: .languageChanged))
         { _ in
             localizationID = UUID()
@@ -395,11 +394,28 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(8)
                         } else if isInstaller {
-                            ForEach(displayedInstallers) { product in
-                                if product.isMultipartInstaller {
-                                    MultipartInstallerView(product: product)
+                            if displayedInstallers.isEmpty {
+                                if sucatalog.isLoading {
+                                    ProgressView(
+                                        NSLocalizedString(
+                                            "Loading...",
+                                            comment: "Catalog loading"
+                                        )
+                                    )
                                 } else {
-                                    InstallerView(product: product)
+                                    Text(
+                                        sucatalog.errorMessage
+                                            ?? emptyCatalogMessage
+                                    )
+                                    .foregroundStyle(.secondary)
+                                }
+                            } else {
+                                ForEach(displayedInstallers) { product in
+                                    if product.isMultipartInstaller {
+                                        MultipartInstallerView(product: product)
+                                    } else {
+                                        InstallerView(product: product)
+                                    }
                                 }
                             }
                         } else {
@@ -467,14 +483,10 @@ struct ContentView: View {
                 .foregroundStyle(.secondary)
             }
             Spacer()
-            if isInstaller, selectedLegacy == nil,
-                !multipartInstallerNames.contains(name)
-            {
-                Text(seedProgram)
-                    .font(.body.weight(.medium))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 7)
-                    .glassSubtle()
+            if isInstaller, selectedLegacy == nil {
+                CatalogPicker(seedProgram: $seedProgram)
+                    .labelsHidden()
+                    .help(NSLocalizedString("Catalog", comment: ""))
             }
         }
         .padding(24)

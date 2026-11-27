@@ -27,7 +27,7 @@ SCHEME=DownloadFullInstaller
 APP="Download Full Installer"
 ASSET_BASE="Download.Full.Installer"
 PROJECT="$XCODE_DIR/$SCHEME.xcodeproj"
-REPO=perez987/DownloadFullInstaller-swift6
+REPO=perez987/DownloadFullInstaller
 BRANCH=main                           # SUFeedURL reads appcast.xml from this branch
 # Title of every 6.x GitHub Release: tells them apart from older releases that support macOS 11+.
 RELEASE_TITLE="App for macOS 13+"

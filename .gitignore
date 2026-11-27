@@ -9,5 +9,8 @@
 Temporary Items
 Thumbs.db
 
-**xcuserdata
+*.xcuserstate
 .build/
+
+# Release output (built by Scripts/release.sh)
+/Distribute/

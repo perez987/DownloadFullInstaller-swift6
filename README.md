@@ -17,17 +17,11 @@ It also discovers:
 
  - There is a version 2.5.5, built with Swift 5, that runs on macOS Big Sur or later, you can get the source code or the notarized app from the [releases page](https://github.com/perez987/DownloadFullInstaller/releases/tag/2.5.5).
 
-### 🆕 New in version 6.0.0
+### 🆕 New in version 6.2.0
 
-The main window is now a wide, two-pane library with soft gradients and translucent surfaces. Choose Installers or Firmwares and a software update catalog on the left, then select a macOS release to see its available versions, build numbers, dates, sizes, and download actions on the right. For catalog-based installers, you can also switch catalogs in the detail header; both pickers stay in sync and refresh the selected release. The detail pane starts empty until you select a release.
+Scripts were added to automate the creation of the signed release and the DMG file, as well as the uploading of the latter to the GitHub repository, with a corresponding update to the `appcast.xml` file. There are no changes to the app's code, other than an update to the version and build number; this addition is solely intended to streamline the maintainer's workflow.
 
-Legacy installers appear at the end of the installer list. All downloads share the queue at the bottom right, with up to three simultaneous transfers, individual Cancel buttons, and Show in Finder actions. Changing the selected release or content type does not hide or interrupt downloads. Firmware comes from a separate feed, so the catalog picker is disabled in firmware mode.
-
-|     |
-|:---:|
-| ![Main window](Images/Main-window.png) |
-
-### 🆕 New in version 6.1.0
+### New in version 6.1.0
 
 Catalog-based multipart Intel installers are presented as one card per release. The app downloads all six required components into a product-specific folder, tracks the group as one item in the shared download queue, and limits component transfers to the existing three-download maximum. Once every component is present, choose **Create Installer App**. The app mounts `BaseSystem.dmg`, asks for access to its mounted Base System volume, and assembles the installer app alongside the components.
 
@@ -36,6 +30,16 @@ Multipart installers are currently available for High Sierra, Mojave, and Catali
 |     |
 |:---:|
 | ![Multipart installer cards](Images/Multipart-macOS/Multipart-1.png) |
+
+### New in version 6.0.0
+
+The main window is now a wide, two-pane library with soft gradients and translucent surfaces. Choose Installers or Firmwares and a software update catalog on the left, then select a macOS release to see its available versions, build numbers, dates, sizes, and download actions on the right. For catalog-based installers, you can also switch catalogs in the detail header; both pickers stay in sync and refresh the selected release. The detail pane starts empty until you select a release.
+
+Legacy installers appear at the end of the installer list. All downloads share the queue at the bottom right, with up to three simultaneous transfers, individual Cancel buttons, and Show in Finder actions. Changing the selected release or content type does not hide or interrupt downloads. Firmware comes from a separate feed, so the catalog picker is disabled in firmware mode.
+
+|     |
+|:---:|
+| ![Main window](Images/Main-window.png) |
 
 ### Preface
 
@@ -112,6 +116,31 @@ If you see this message when you open Download Full Installer for the first time
 Or this one:
 <br>`Could not verify that Download Full Installer does not contain malicious software.`<br>
 With the recommendation in both cases to move the file to the Trash, read this [document](DOCS/App-damaged.md). -->
+
+### Releasing
+
+Two scripts in `Scripts/` automate a release (macOS only; run them with `./Scripts/…` or `sh Scripts/…`):
+
+- **`release.sh`** archives a Release build, signs it with Developer ID, notarizes and staples the app, then builds `Distribute/Download.Full.Installer.<version>.dmg` and signs, notarizes and staples the DMG too.
+- **`publish.sh`** uploads that DMG to a GitHub Release (tag `<version>`, as in earlier releases), signs it for Sparkle and updates `appcast.xml` on `main`, keeping the earlier release notes.
+
+What they need, all kept out of the repository:
+
+- A *Developer ID Application* certificate in the login keychain.
+- Notarization credentials saved once with `xcrun notarytool store-credentials "notary-profile" --apple-id <Apple ID> --team-id <team>` (the app-specific password is typed at the prompt, never stored in a file).
+- `appdmg` or `create-dmg` from npm (`npm install -g create-dmg` brings both).
+- The Sparkle EdDSA private key in the keychain, and `gh` signed in (`gh auth login`).
+
+Steps:
+
+1. Raise `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` in the project (Sparkle compares the build number, e.g. `6.1.9` → `0619`).
+2. `./Scripts/release.sh`
+3. `RELEASE_NOTES=$'First change\nSecond change' ./Scripts/publish.sh`
+
+Options for `release.sh`:
+
+- `DMG_TOOL=appdmg` (default) uses the window background in `Xcode-project/Backgrounds/`; `DMG_TOOL=node` uses the standard design of `create-dmg`.
+- `DMG_ONLY=1` reuses the app notarized in the last full run and only rebuilds the DMG, which is handy for trying DMG layouts.
 
 # Original repository README
 (by *scriptingosx*)
